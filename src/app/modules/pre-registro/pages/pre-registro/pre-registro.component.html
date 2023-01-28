@@ -1,0 +1,44 @@
+<div class="wrapper login-auth-page">
+    <div style="padding-left: 15%;">
+        <img width="500" src="https://gottwesen.co/wp-content/uploads/2022/09/cropped-gott-logo-001-600x127.png" alt=""
+            loading="lazy">
+        <p style="font-weight: bold;">Una compañía de servicios a nivel nacional, con un modelo único en salud y
+            servicios que brinda una
+            alternativa rápida, confiable y con un amplio cubrimiento a nivel nacional.</p>
+    </div>
+    <div>
+        <div>
+            <div class="login-auth-wrapper">
+                <form (ngSubmit)="sendLogin()" [formGroup]="formLogin" class="login-auth-form">
+                    <h2>¡Bienvenido!<br>
+                        Regístrate
+                    </h2>
+                    <div class="form-group">
+                        <label for="nombre">Nombre*</label>
+                        <input formControlName="nombre" type="text" placeholder="Nombre completo" class="form-input">
+                    </div>
+                    <div class="form-group">
+                        <label for="correo">Correo*</label>
+                        <input formControlName="correo" type="text" placeholder="Correo" class="form-input">
+                    </div>
+                    <div class="form-group">
+                        <label for="celular">Celular*</label>
+                        <input formControlName="celular" type="text" placeholder="Celular" class="form-input">
+                    </div>
+                    <div class="form-steps">
+                        <p>Al registrarse acepta nuestras condiciones de uso y <a class="link"
+                                href="https://gottwesen.co/nosotros/" target="_blank">políticas de
+                                privacidad</a></p>
+                    </div>
+                    <div *ngIf="errorSession">
+                        Ocurrio un generando el registro
+                    </div>
+                    <div class="form-action">
+                        <button [disabled]="formLogin.invalid" class="login social-btn">Enviar</button>
+                    </div>
+                    <h3>Hydra ®</h3>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
