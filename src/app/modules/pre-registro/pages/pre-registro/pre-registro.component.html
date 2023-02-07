@@ -1,6 +1,5 @@
-<div fxLayout="row" style="color:black" fxLayout.xs="column" fxLayoutAlign="space-between"
-    fxLayoutAlign="center center">
-    <div fxFlex="50%" style=" text-align: center; padding: 3% 3% 3% 3%;">
+<div fxLayout="row" fxLayout.xs="column" fxLayoutAlign="space-between" fxLayoutAlign="center center">
+    <div fxFlex="50%" class="seccionIzquierda">
         <img width="80%" src="https://gottwesen.co/wp-content/uploads/2022/09/cropped-gott-logo-001-600x127.png" alt=""
             loading="lazy">
         <br /><br />
@@ -8,8 +7,8 @@
             servicios que brinda una
             alternativa rápida, confiable y con un amplio cubrimiento a nivel nacional.</p>
     </div>
-    <div fxFlex="50%" style="padding: 2% 5% 2% 5%;">
-        <form (ngSubmit)="generarPreRegistro()" [formGroup]="formPreRegistro">
+    <div fxFlex="50%" class="seccionDerecha">
+        <form (ngSubmit)="generarPreRegistro()" [formGroup]="formPreRegistro" class="formulario">
             <h1>¡Bienvenido!<br>
                 Regístrate
             </h1>
@@ -42,7 +41,7 @@
             <div>
                 <button mat-raised-button color="primary" [disabled]="formPreRegistro.invalid">Enviar</button>
             </div>
-            <h2>Hydra ®</h2>
-        </form>
+            <h2 class="derecha">Hydra ®</h2>
+        </form> 
     </div>
 </div>

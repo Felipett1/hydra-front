@@ -1,31 +1,23 @@
-mat-grid-tile {
-    height: 60%;
-}
-
-mat-grid-list {
-    height: auto;
-    color: black;
-}
-
 /*div {
     border: 2px solid;
     border-color: red;
 }*/
 
-p,
-h1 {
+.seccionIzquierda {
     text-align: center;
-    font-weight: bold
+    font-weight: bold;
+    text-align: center; padding: 3% 3% 3% 3%;
 }
 
-h2 {
-    text-align: right;
+.seccionDerecha {
+    text-align: center;
+    padding: 2% 5% 2% 5%;
 }
 
-mat-form-field {
-    width: 100%;
-}
-
-button {
+mat-form-field, button{
     width: 100%
+}
+
+.derecha {
+    text-align: right;
 }
