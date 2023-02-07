@@ -1,10 +1,15 @@
 import { NgModule } from '@angular/core';
-import { RouterModule, Routes } from '@angular/router';
+import { Router, RouterModule, Routes } from '@angular/router';
 
 const routes: Routes = [
   {
-    path: "registro",
+    path: "registro", //http://localhost:4200/registro
     loadChildren: () => import('./modules/pre-registro/pre-registro.module').then(m => m.PreRegistroModule)
+  },
+  {
+    path: "", //http://localhost:4200/
+    redirectTo: "/registro",
+    pathMatch: "full"
   }
 ];
 

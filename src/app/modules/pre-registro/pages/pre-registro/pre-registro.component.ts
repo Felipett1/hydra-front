@@ -1,5 +1,5 @@
 import { PreRegistroService } from './../../services/pre-registro.service';
-import { Component } from '@angular/core';
+import { Component, HostListener } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 
@@ -9,15 +9,14 @@ import { Router } from '@angular/router';
   styleUrls: ['./pre-registro.component.css']
 })
 export class PreRegistroComponent {
-  errorSession: boolean = false
-  formLogin: FormGroup = new FormGroup({});
+  formPreRegistro: FormGroup = new FormGroup({});
 
   constructor(private prService: PreRegistroService, private router: Router) {
 
   }
 
   ngOnInit(): void {
-    this.formLogin = new FormGroup(
+    this.formPreRegistro = new FormGroup(
       {
         nombre: new FormControl('',
           [
@@ -38,8 +37,8 @@ export class PreRegistroComponent {
     )
   }
 
-  sendLogin(): void {
-    const { nombre, correo, celular } = this.formLogin.value
+  generarPreRegistro(): void {
+    const { nombre, correo, celular } = this.formPreRegistro.value
     this.prService.preRegistro(nombre, correo, celular)
       //TODO: 200 <400
       .subscribe(responseOk => { //TODO: Cuando la notificación se envio correctamente
@@ -48,8 +47,8 @@ export class PreRegistroComponent {
         this.router.navigate(['/registro', 'exitoso'])
       },
         err => {//TODO error 400>=
-          this.errorSession = true
           console.log('Ocurrio un error llamando la API: ' + err);
         })
   }
+
 }

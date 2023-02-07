@@ -9,7 +9,9 @@ import { Observable } from 'rxjs';
 export class PreRegistroService {
   private readonly URL = environment.api
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient) { 
+    
+  }
 
   preRegistro(nombre: string, correo: string, celular: number): Observable<any> {
     const body = {
