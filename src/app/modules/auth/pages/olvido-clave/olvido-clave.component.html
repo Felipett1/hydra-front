@@ -1,0 +1,22 @@
+<h2 mat-dialog-title>Recuperar contraseña</h2>
+<mat-dialog-content class="mat-typography">
+    <p>La acción de recuperación de contraseña enviara
+        una notificación al administrador para reasignar la contraseña.
+    </p>
+    <form [formGroup]="formRecuperar">
+        <div>
+            <h3>Por favor ingrese su nombre de usuario:</h3>
+            <mat-form-field appearance="outline">
+                <mat-label>Nombre de usuario</mat-label>
+                <input matInput placeholder="Usuario" formControlName="usuario">
+                <mat-icon matSuffix>person</mat-icon>
+            </mat-form-field>
+        </div>
+    </form>
+</mat-dialog-content>
+<mat-dialog-actions align="end">
+    <button mat-button mat-dialog-close>Cancel</button>
+    <button mat-button [disabled]="formRecuperar.invalid" 
+    [mat-dialog-close]="true"
+    (click)="recuperar()" cdkFocusInitial>Recuperar</button>
+</mat-dialog-actions>

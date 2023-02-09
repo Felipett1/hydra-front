@@ -1,0 +1,33 @@
+<div fxLayout="row" fxLayout.xs="column" fxLayoutAlign="center center" style="width: 100%;">
+    <div fxFlex="50%" class="seccionIzquierda">
+        <img width="100%" src="https://gottwesen.co/wp-content/uploads/2022/09/cropped-gott-logo-001-600x127.png" alt=""
+            loading="lazy">
+    </div>
+    <div fxFlex="50%" class="seccionDerecha">
+        <form class="formulario" (ngSubmit)="autenticar()" [formGroup]="formLogin">
+            <h1>Hydra ©</h1>
+            <br>
+            <div>
+                <mat-form-field appearance="outline">
+                    <mat-label>Usuario</mat-label>
+                    <input matInput placeholder="Usuario" formControlName="usuario">
+                    <mat-icon matSuffix>person</mat-icon>
+                </mat-form-field>
+            </div>
+            <div>
+                <mat-form-field appearance="outline">
+                    <mat-label>Contraseña</mat-label>
+                    <input matInput [type]="ocultar ? 'password' : 'text'" placeholder="Contraseña"
+                        formControlName="clave">
+                    <mat-icon matSuffix (click)="ocultar = !ocultar">{{ocultar ? 'visibility_off' :
+                        'visibility'}}</mat-icon>
+                </mat-form-field>
+            </div>
+            <div>
+                <button mat-raised-button color="primary" [disabled]="formLogin.invalid">Ingresar</button>
+                <br> <br>
+                <a href="" (click)="dlgOlvido(); $event.preventDefault()">¿Has olvidado tu contraseña?</a>
+            </div>
+        </form>
+    </div>
+</div>

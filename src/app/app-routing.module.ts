@@ -7,6 +7,10 @@ const routes: Routes = [
     loadChildren: () => import('./modules/pre-registro/pre-registro.module').then(m => m.PreRegistroModule)
   },
   {
+    path: "login", //http://localhost:4200/login
+    loadChildren: () => import('./modules/auth/auth.module').then(m => m.AuthModule)
+  },
+  {
     path: "", //http://localhost:4200/
     redirectTo: "/registro",
     pathMatch: "full"

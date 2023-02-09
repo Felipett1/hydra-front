@@ -5,6 +5,7 @@
     --color-4: #FFFFFF;
     --color-5: #181818;
     --color-6: rgb(88, 168, 157, 0.5) 100%;
+    --color-7: #A4A4A4;
     --font-size-1: 1rem;
     --font-size-2: 1.2rem;
     --font-size-3: 1.8rem;
@@ -12,6 +13,7 @@
     --shadow-2: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
     --border-radius-1: .25rem;
     --border-radius-2: .5rem;
+    --border-radius-3: .8rem;
     --font-family-1: 'Poppins', sans-serif;
     --animation-1: 200ms;
 }
@@ -24,7 +26,13 @@ body {
     font-family: var(--font-family-1);
     font-size: var(--font-size-1);
     color: var(--color-3);
-    height: 100%;
+}
+
+body {
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 input,
