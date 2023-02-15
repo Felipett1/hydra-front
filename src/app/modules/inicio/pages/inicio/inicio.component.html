@@ -1,0 +1,9 @@
+<div class="example-container" [class.example-is-mobile]="mobileQuery.matches">
+    <app-toolbar/>
+    <mat-sidenav-container class="example-sidenav-container" [style.marginTop.px]="mobileQuery.matches ? 56 : 0">
+        <app-side-bar/>
+        <mat-sidenav-content>
+            <router-outlet></router-outlet>
+        </mat-sidenav-content>
+    </mat-sidenav-container>
+</div>

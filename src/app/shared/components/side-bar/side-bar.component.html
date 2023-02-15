@@ -1,1 +1,59 @@
-<p>side-bar works!</p>
+<mat-sidenav #snav [mode]="mobileQuery.matches ? 'over' : 'side'" [fixedInViewport]="mobileQuery.matches"
+    fixedTopGap="56">
+    <mat-accordion>
+        <mat-expansion-panel>
+            <mat-expansion-panel-header>
+                <mat-panel-title>Afiliaciones</mat-panel-title>
+            </mat-expansion-panel-header>
+
+            <mat-list>
+                <mat-list-item>Consultar Afiliacion</mat-list-item>
+                <mat-list-item>Nueva Afiliacion</mat-list-item>
+            </mat-list>
+
+        </mat-expansion-panel>
+
+        <mat-expansion-panel>
+            <mat-expansion-panel-header>
+                <mat-panel-title>Servicios</mat-panel-title>
+            </mat-expansion-panel-header>
+            <mat-list>
+                <mat-list-item>Nuevo Servicio</mat-list-item>
+                <mat-list-item>Item 2</mat-list-item>
+                <mat-list-item>Item 3</mat-list-item>
+            </mat-list>
+        </mat-expansion-panel>
+
+        <mat-expansion-panel>
+            <mat-expansion-panel-header>
+                <mat-panel-title>Pagos</mat-panel-title>
+            </mat-expansion-panel-header>
+            <mat-list>
+                <mat-list-item>Consultar Pago</mat-list-item>
+                <mat-list-item>Cargar Pago</mat-list-item>
+            </mat-list>
+        </mat-expansion-panel>
+
+        <mat-expansion-panel>
+            <mat-expansion-panel-header>
+                <mat-panel-title>Reportes</mat-panel-title>
+            </mat-expansion-panel-header>
+            <mat-list>
+                <mat-list-item>Pagos de Afiliado</mat-list-item>
+                <mat-list-item>Pagos</mat-list-item>
+                <mat-list-item>Servicios</mat-list-item>
+            </mat-list>
+        </mat-expansion-panel>
+
+        <mat-expansion-panel>
+            <mat-expansion-panel-header>
+                <mat-panel-title>Configuracion</mat-panel-title>
+            </mat-expansion-panel-header>
+            <mat-list>
+                <mat-list-item>Item 1</mat-list-item>
+                <mat-list-item>Item 2</mat-list-item>
+                <mat-list-item>Item 3</mat-list-item>
+            </mat-list>
+        </mat-expansion-panel>
+    </mat-accordion>
+</mat-sidenav>

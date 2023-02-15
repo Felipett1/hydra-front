@@ -1,0 +1,228 @@
+<br />
+<h1>Consulta de afiliación</h1>
+<form class="formulario">
+    <div fxLayout="row" fxLayout.xs="column" fxLayoutAlign="center center" style="width: 100%;">
+        <div fxFlex="70%" class="seccionIzquierda">
+            <mat-form-field appearance="outline">
+                <mat-icon matSuffix>search</mat-icon>
+                <mat-label>Documento</mat-label>
+                <input matInput placeholder="Ingrese un numero de documento" formControlName="documento">
+            </mat-form-field>
+        </div>
+        <div fxFlex="30%" class="seccionDerecha">
+            <button mat-raised-button color="primary">Buscar</button>
+        </div>
+    </div>
+</form>
+<div fxLayout="row" fxLayout.xs="column" fxLayoutAlign="center center" style="width: 100%;">
+    <div fxFlex="100%" class="contenido">
+        <mat-accordion class="example-headers-align" multi>
+            <mat-expansion-panel [expanded]="true">
+                <mat-expansion-panel-header>
+                    <mat-panel-title>
+                        <h2>Datos personales</h2>
+                    </mat-panel-title>
+                </mat-expansion-panel-header>
+                <div fxLayout="row" fxLayout.xs="column">
+                    <div fxFlex="25%">
+                        <label># Contrato</label>
+                        <p>2112378</p>
+                    </div>
+                    <div fxFlex="25%">
+                        <label>Documento</label>
+                        <p>8973286</p>
+                    </div>
+                    <div fxFlex="25%">
+                        <label>Nombre completo</label>
+                        <p>Luis Felipe Triviño Paredes</p>
+                    </div>
+                    <div fxFlex="25%">
+                        <label>Estado</label>
+                        <p>Al día</p>
+                    </div>
+                </div>
+                <div fxLayout="row" fxLayout.xs="column">
+                    <div fxFlex="25%">
+                        <label>Dirección</label>
+                        <p>Cr con cll</p>
+                    </div>
+                    <div fxFlex="25%">
+                        <label>Correo</label>
+                        <p>corre@correo.com.co</p>
+                    </div>
+                    <div fxFlex="25%">
+                        <label>Celular</label>
+                        <p>3105774108</p>
+                    </div>
+                    <div fxFlex="25%">
+                        <label>Telefono</label>
+                        <p>6015555555</p>
+                    </div>
+                </div>
+
+                <div fxLayout="row" fxLayout.xs="column">
+                    <div fxFlex="25%">
+                        <label>Ciudad</label>
+                        <p>Bogotá</p>
+                    </div>
+                    <div fxFlex="25%">
+                        <label>Grado</label>
+                        <p>General</p>
+                    </div>
+                    <div fxFlex="25%">
+                        <label>Codigo</label>
+                        <p>873292</p>
+                    </div>
+                    <div fxFlex="25%">
+                        <label>Pertenece</label>
+                        <p>Fuerza aérea</p>
+                    </div>
+                </div>
+            </mat-expansion-panel>
+            <mat-expansion-panel>
+                <mat-expansion-panel-header>
+                    <mat-panel-title>
+                        <h2>Beneficiarios</h2>
+                    </mat-panel-title>
+                </mat-expansion-panel-header>
+                <div class="mat-elevation-z8">
+                    <table mat-table [dataSource]="dataSource" matSort>
+
+                        <!-- ID Column -->
+                        <ng-container matColumnDef="nombre">
+                            <th mat-header-cell *matHeaderCellDef mat-sort-header> Nombre </th>
+                            <td mat-cell *matCellDef="let row"> {{row.nombre}} </td>
+                        </ng-container>
+
+                        <!-- Progress Column -->
+                        <ng-container matColumnDef="edad">
+                            <th mat-header-cell *matHeaderCellDef mat-sort-header> Edad </th>
+                            <td mat-cell *matCellDef="let row"> {{row.edad}} años </td>
+                        </ng-container>
+
+                        <!-- Name Column -->
+                        <ng-container matColumnDef="parentesco">
+                            <th mat-header-cell *matHeaderCellDef mat-sort-header> Parentesco </th>
+                            <td mat-cell *matCellDef="let row"> {{row.parentesco}} </td>
+                        </ng-container>
+
+                        <ng-container matColumnDef="contacto">
+                            <th mat-header-cell *matHeaderCellDef mat-sort-header> Contacto </th>
+                            <td mat-cell *matCellDef="let row"> {{row.contacto}} </td>
+                        </ng-container>
+
+                        <!-- Fruit Column -->
+                        <ng-container matColumnDef="emoji">
+                            <th mat-header-cell *matHeaderCellDef mat-sort-header> </th>
+                            <td mat-cell *matCellDef="let row"> {{row.emoji}} </td>
+                        </ng-container>
+
+                        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+                    </table>
+
+                    <mat-paginator [pageSizeOptions]="[5, 10, 25, 100]"
+                        aria-label="Select page of users"></mat-paginator>
+                </div>
+            </mat-expansion-panel>
+
+            <mat-expansion-panel>
+                <mat-expansion-panel-header>
+                    <mat-panel-title>
+                        <h2>Plan</h2>
+                    </mat-panel-title>
+                </mat-expansion-panel-header>
+                <div fxLayout="row" fxLayout.xs="column">
+                    <div fxFlex="25%">
+                        <label>Fecha de inicio</label>
+                        <p>01/12/2022</p>
+                    </div>
+                    <div fxFlex="25%">
+                        <label>Tipo de plan</label>
+                        <p>Zafiro</p>
+                    </div>
+                    <div fxFlex="25%">
+                        <label>Costo total</label>
+                        <p>3'450.000</p>
+                    </div>
+                    <div fxFlex="25%">
+                        <label># de cuotas</label>
+                        <p>36</p>
+                    </div>
+                </div>
+                <div fxLayout="row" fxLayout.xs="column">
+                    <div fxFlex="25%">
+                        <label>Valor mensual</label>
+                        <p>95.833,33</p>
+                    </div>
+                    <div fxFlex="25%">
+                        <label>Cuotas canceladas</label>
+                        <p>2</p>
+                    </div>
+                    <div fxFlex="25%">
+                        <label>Cuotas pendientes</label>
+                        <p>22</p>
+                    </div>
+                    <div fxFlex="25%">
+                        <label>Soporte fisico</label>
+                        <p>Boton descarga</p>
+                    </div>
+                </div>
+            </mat-expansion-panel>
+            <mat-expansion-panel>
+                <mat-expansion-panel-header>
+                    <mat-panel-title>
+                        <h2>Historico de servicios</h2>
+                    </mat-panel-title>
+                </mat-expansion-panel-header>
+                <div class="mat-elevation-z8">
+                    <table mat-table [dataSource]="servicios" matSort>
+
+                        <!-- ID Column -->
+                        <ng-container matColumnDef="id">
+                            <th mat-header-cell *matHeaderCellDef mat-sort-header> Id </th>
+                            <td mat-cell *matCellDef="let row"> {{row.id}} </td>
+                        </ng-container>
+
+                        <!-- Progress Column -->
+                        <ng-container matColumnDef="fecha">
+                            <th mat-header-cell *matHeaderCellDef mat-sort-header> Fecha </th>
+                            <td mat-cell *matCellDef="let row"> {{row.fecha}} </td>
+                        </ng-container>
+
+                        <!-- Name Column -->
+                        <ng-container matColumnDef="tipo">
+                            <th mat-header-cell *matHeaderCellDef mat-sort-header> Tipo </th>
+                            <td mat-cell *matCellDef="let row"> {{row.tipo}} </td>
+                        </ng-container>
+
+                        <ng-container matColumnDef="estado">
+                            <th mat-header-cell *matHeaderCellDef mat-sort-header> Estado </th>
+                            <td mat-cell *matCellDef="let row"> {{row.estado}} </td>
+                        </ng-container>
+
+                        <tr mat-header-row *matHeaderRowDef="columasServicio"></tr>
+                        <tr mat-row *matRowDef="let row; columns: columasServicio;"></tr>
+                    </table>
+
+                    <mat-paginator [pageSizeOptions]="[5, 10, 25, 100]"
+                        aria-label="Select page of users"></mat-paginator>
+                </div>
+            </mat-expansion-panel>
+        </mat-accordion>
+    </div>
+</div>
+<div fxLayout="row" fxLayout.xs="column" fxLayoutAlign="center center" style="width: 100%;">
+    <div fxFlex="50%" class="seccionIzquierda">
+        <button mat-raised-button color="warn" routerLink="modificar">
+            Modificar
+            <mat-icon>edit</mat-icon>
+        </button>
+    </div>
+    <div fxFlex="50%" class="seccionDerecha">
+        <button mat-raised-button color="primary">
+            Pagos
+            <mat-icon>payments</mat-icon>
+        </button>
+    </div>
+</div>

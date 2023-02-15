@@ -4,6 +4,7 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { MatDialog } from '@angular/material/dialog';
 import { OlvidoClaveComponent } from '../olvido-clave/olvido-clave.component';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-login',
@@ -14,7 +15,7 @@ export class LoginComponent {
   formLogin: FormGroup = new FormGroup({});
   ocultar = true;
   constructor(private loginService: LoginService,
-    private router: Router, public dialog: MatDialog) {
+    private router: Router, public dialog: MatDialog, private _snackBar: MatSnackBar) {
 
   }
 
@@ -32,21 +33,33 @@ export class LoginComponent {
     )
   }
 
-  autenticar(): void {
+  async autenticar(): Promise<void> {
     const { usuario, clave } = this.formLogin.value
-    this.loginService.autenticar(usuario, clave)
-      //TODO: 200 <400
+    let mensaje = ""
+    await this.loginService.autenticar(usuario, clave)
       .subscribe(response => {
-        console.log(response)
+
         if (response.autenticar) {
-          console.log("Autenticación exitosa");
+          this.router.navigate(['inicio', 'contrato'])
         } else {
-          console.log("Usuario y/o contraseña invalida!");
+          mensaje = "¡Usuario y/o contraseña invalida!"
+          this._snackBar.open(mensaje, '', {
+            horizontalPosition: 'center',
+            verticalPosition: 'top',
+            duration: 3000,
+          });
         }
       },
-        err => {//TODO error 400>=
+        err => {
           console.log('Ocurrio un error llamando la API: ' + err);
+          mensaje = "Presentamos problemas técnicos, por favor intente más tarde"
+          this._snackBar.open(mensaje, '', {
+            horizontalPosition: 'center',
+            verticalPosition: 'top',
+            duration: 3000,
+          });
         })
+
   }
 
   dlgOlvido() {
