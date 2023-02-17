@@ -1,3 +1,33 @@
 .contenido {
     margin: 2% 5% 2% 5%;
 }
+
+h1 {
+    font-weight: bold;
+    text-align: center;
+}
+
+label {
+    font-weight: bold;
+}
+
+.flex {
+    width: 100%;
+    text-align: center;
+    justify-content: center;
+}
+
+mat-form-field {
+    width: 100%
+}
+
+
+div {
+    /*border: 2px solid;
+    border-color: red;*/
+    padding: 0px 5px 0px 5px;
+}
+
+.amarillo{
+    background-color: #F1CD3B !important;
+}

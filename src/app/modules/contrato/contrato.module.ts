@@ -14,6 +14,8 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { MatExpansionModule } from '@angular/material/expansion';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatTableModule } from '@angular/material/table';
+import { MatTabsModule } from '@angular/material/tabs';
+import { MatSelectModule } from '@angular/material/select';
 
 @NgModule({
   declarations: [
@@ -32,7 +34,9 @@ import { MatTableModule } from '@angular/material/table';
     ReactiveFormsModule,
     MatExpansionModule,
     MatPaginatorModule,
-    MatTableModule
+    MatTableModule,
+    MatTabsModule,
+    MatSelectModule
   ]
 })
 export class ContratoModule { }
