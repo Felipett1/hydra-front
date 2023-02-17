@@ -1,7 +1,10 @@
+import { ContratoService } from './../../service/contrato.service';
 import { AfterViewInit, Component, ViewChild } from '@angular/core';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
+//import { ConsultaModelo } from 'src/app/core/models/consulta.models';
 
 @Component({
   selector: 'app-consultar',
@@ -9,73 +12,95 @@ import { MatTableDataSource } from '@angular/material/table';
   styleUrls: ['./consultar.component.css']
 })
 export class ConsultarComponent {
+  formulario: FormGroup = new FormGroup({});
   displayedColumns: string[] = ['nombre', 'edad', 'parentesco', 'contacto', 'emoji'];
   dataSource!: MatTableDataSource<any>;
+  consulta!: any
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
 
-  columasServicio: string[] = ['id', 'fecha', 'tipo', 'estado'];
+  columasServicio: string[] = ['secuencia', 'fecha_inicial', 'tipo', 'fecha_final'];
   servicios!: MatTableDataSource<any>;
 
-  constructor() {
-    // Create 100 users
-    const data = [
-      {
-        nombre: "Yoskerlin Maria Brito Zapata",
-        edad: 28,
-        parentesco: "Esposa",
-        contacto: "3102424650",
-        emoji: ":)"
-      },
-      {
-        nombre: "Samantha Isabell Brito Zapata",
-        edad: 5,
-        parentesco: "Hija",
-        contacto: "Sin numero",
-        emoji: "xD"
-      },
-      {
-        nombre: "Juan Felipe Triviño",
-        edad: 7,
-        parentesco: "Hijo",
-        contacto: "Sin numero",
-        emoji: ">:)"
-      }
-    ]
-
-    const servicios = [
-      {
-        id: "4234",
-        fecha: "07/12/2022",
-        tipo: "Legal",
-        estado: "Cerrado"
-      },
-      {
-        id: "5644",
-        fecha: "28/12/2022",
-        tipo: "Medico",
-        estado: "Cerrado"
-      },
-      {
-        id: "32398",
-        fecha: "15/01/2023",
-        tipo: "Medico",
-        estado: "Cerrado"
-      },
-      {
-        id: "67545",
-        fecha: "05/02/2023",
-        tipo: "Medico",
-        estado: "Abierto"
-      }
-    ]
-    // Assign the data to the data source for the table to render
-    this.dataSource = new MatTableDataSource(data);
-    this.servicios = new MatTableDataSource(servicios);
+  constructor(private contratoService: ContratoService) {
   }
 
-  ngAfterViewInit() {
-    this.dataSource.paginator = this.paginator;
-    this.dataSource.sort = this.sort;
+  ngOnInit(): void {
+    this.formulario = new FormGroup(
+      {
+        cliente: new FormControl('',
+          [
+            Validators.required
+          ])
+      }
+    )
+  }
+
+  async consultar() {
+    const { cliente } = this.formulario.value
+    var consolidado: any = {}
+    this.consulta = undefined
+    await this.contratoService.consultarContrato(cliente)
+      .subscribe(response => {
+        if (response.resultados) {
+          consolidado.contrato = response.resultados[0]
+          this.contratoService.consultarCliente(cliente)
+            .subscribe(response => {
+              if (response.resultados) {
+                consolidado.cliente = response.resultados[0]
+                this.contratoService.consultarBeneficiario(consolidado.contrato.id)
+                  .subscribe(response => {
+                    if (response.resultados) {
+                      consolidado.beneficiarios = response.resultados
+                      this.dataSource = new MatTableDataSource(consolidado.beneficiarios);
+                      this.dataSource.paginator = this.paginator;
+                      this.dataSource.sort = this.sort;
+
+                      this.contratoService.consultarEstadoContrato(cliente)
+                        .subscribe(response => {
+                          if (response.resultados) {
+                            consolidado.contrato.mora = response.resultados[0].mora
+                            this.contratoService.consultarHistoricoServicios(consolidado.contrato.id)
+                              .subscribe(response => {
+                                if (response.resultados) {
+                                  consolidado.servicios = response.resultados
+                                  this.consulta = consolidado
+                                  this.servicios = new MatTableDataSource(consolidado.servicios);
+                                } else {
+                                  console.log('No se encontraron resultados')
+                                }
+                              },
+                                err => {
+                                  console.log('Ocurrio un error llamando la API: ' + err);
+                                })
+                          } else {
+                            console.log('No se encontraron resultados')
+                          }
+                        },
+                          err => {
+                            console.log('Ocurrio un error llamando la API: ' + err);
+                          })
+                      this.consulta = consolidado
+                    } else {
+                      console.log('No se encontraron resultados')
+                    }
+                  },
+                    err => {
+                      console.log('Ocurrio un error llamando la API: ' + err);
+                    })
+              } else {
+                console.log('No se encontraron resultados')
+              }
+            },
+              err => {
+                console.log('Ocurrio un error llamando la API: ' + err);
+              })
+        } else {
+          console.log('No se encontraron resultados')
+        }
+      },
+        err => {
+          console.log('Ocurrio un error llamando la API: ' + err);
+        })
   }
 }

@@ -1,0 +1,39 @@
+.contenido {
+    margin: 2% 5% 2% 5%;
+}
+
+.contenido2 {
+    margin: 0% 5% 0% 0%;
+}
+
+h1 {
+    font-weight: bold;
+    text-align: center;
+}
+
+label {
+    font-weight: bold;
+}
+
+.amarillo {
+    background-color: #F1CD3B !important;
+}
+
+.example-stepper {
+    margin-top: 8px;
+}
+
+.mat-mdc-form-field {
+    margin-top: 16px;
+}
+
+mat-form-field {
+    width: 100%
+}
+
+
+div {
+    /*border: 2px solid;
+    border-color: red;*/
+    padding: 0px 5px 0px 5px;
+}
