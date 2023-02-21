@@ -17,12 +17,15 @@ import { MatTableModule } from '@angular/material/table';
 import { MatTabsModule } from '@angular/material/tabs';
 import { MatSelectModule } from '@angular/material/select';
 import { MatStepperModule } from '@angular/material/stepper';
+import { BeneficiarioComponent } from './pages/beneficiario/beneficiario.component';
+import { MatDialogModule } from '@angular/material/dialog';
 
 @NgModule({
   declarations: [
     ConsultarComponent,
     ModificarComponent,
-    CrearComponent
+    CrearComponent,
+    BeneficiarioComponent
   ],
   imports: [
     CommonModule,
@@ -38,7 +41,8 @@ import { MatStepperModule } from '@angular/material/stepper';
     MatTableModule,
     MatTabsModule,
     MatSelectModule,
-    MatStepperModule
+    MatStepperModule,
+    MatDialogModule
   ]
 })
 export class ContratoModule { }

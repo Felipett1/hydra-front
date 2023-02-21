@@ -7,6 +7,9 @@
                 <mat-icon matSuffix>search</mat-icon>
                 <mat-label>Documento</mat-label>
                 <input matInput placeholder="Ingrese un numero de documento" formControlName="cliente">
+                <mat-hint *ngIf="!resultados">
+                    <strong style="color: crimson">No se encontrarón resultados</strong>
+                </mat-hint>
             </mat-form-field>
         </div>
         <div fxFlex="30%" class="seccionDerecha">
@@ -103,7 +106,9 @@
                         <!-- Name Column -->
                         <ng-container matColumnDef="parentesco">
                             <th mat-header-cell *matHeaderCellDef mat-sort-header> Parentesco </th>
-                            <td mat-cell *matCellDef="let row"> {{row.parentesco}} </td>
+                            <td mat-cell *matCellDef="let row"> {{row.parentesco == 'p' ? 'Padre' : (row.parentesco ==
+                                'm' ? 'Madre' : (row.parentesco
+                                == 'h' ? 'Hijo' : row.parentesco))}} </td>
                         </ng-container>
 
                         <ng-container matColumnDef="contacto">
@@ -114,7 +119,7 @@
                         <!-- Fruit Column -->
                         <ng-container matColumnDef="emoji">
                             <th mat-header-cell *matHeaderCellDef mat-sort-header> </th>
-                            <td mat-cell *matCellDef="let row"> {{row.emoji}} </td>
+                            <td mat-cell *matCellDef="let row"> <mat-icon matSuffix>{{row.emoji}}</mat-icon> </td>
                         </ng-container>
 
                         <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
@@ -134,7 +139,7 @@
                 <div fxLayout="row" fxLayout.xs="column">
                     <div fxFlex="25%">
                         <label>Fecha de inicio</label>
-                        <p>{{ consulta?.contrato?.fecha_inicio }}</p>
+                        <p>{{ consulta?.contrato?.fecha_inicio | date:'dd/MM/yyyy' }}</p>
                     </div>
                     <div fxFlex="25%">
                         <label>Tipo de plan</label>
@@ -142,7 +147,7 @@
                     </div>
                     <div fxFlex="25%">
                         <label>Costo total</label>
-                        <p>${{ consulta?.contrato?.valor }}</p>
+                        <p>${{ consulta?.contrato?.valor | number:'1.2-2' }}</p>
                     </div>
                     <div fxFlex="25%">
                         <label># de cuotas</label>
@@ -152,11 +157,11 @@
                 <div fxLayout="row" fxLayout.xs="column">
                     <div fxFlex="25%">
                         <label>Valor mensual</label>
-                        <p>${{ consulta?.contrato?.valor / consulta?.contrato?.cuotas  }}</p>
+                        <p>${{ (consulta?.contrato?.valor / consulta?.contrato?.cuotas) | number:'1.2-2' }}</p>
                     </div>
                     <div fxFlex="25%">
                         <label>Soporte fisico</label>
-                        <p>Boton descarga</p>
+                        <a>Descargar</a>
                     </div>
                     <div fxFlex="50%">
                     </div>
@@ -180,7 +185,7 @@
                         <!-- Progress Column -->
                         <ng-container matColumnDef="fecha_inicial">
                             <th mat-header-cell *matHeaderCellDef mat-sort-header> Fecha </th>
-                            <td mat-cell *matCellDef="let row"> {{row.fecha_inicial}} </td>
+                            <td mat-cell *matCellDef="let row"> {{row.fecha_inicial | date:'dd/MM/yyyy'}} </td>
                         </ng-container>
 
                         <!-- Name Column -->
@@ -207,7 +212,7 @@
 </div>
 <div fxLayout="row" fxLayout.xs="column" fxLayoutAlign="center center" style="width: 100%;" *ngIf="consulta">
     <div fxFlex="50%" class="seccionIzquierda">
-        <button mat-raised-button color="warn" routerLink="modificar">
+        <button mat-raised-button color="warn" (click)="modificar()">
             Modificar
             <mat-icon>edit</mat-icon>
         </button>

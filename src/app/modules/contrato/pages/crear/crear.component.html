@@ -9,7 +9,7 @@
     </div>
     <div class="contenido2">
         <label>Fecha</label>
-        <p>16/02/2023</p>
+        <p>{{fechaActual | date:'dd/MM/yyyy'}}</p>
     </div>
 </div>
 <div fxLayout="row" fxLayout.xs="column" fxLayoutAlign="center center" style="width: 100%;">
@@ -218,15 +218,13 @@
                         </div>
                         <div fxFlex="25%">
                             <label>Valor mensual</label>
-                            <p>$XXXXXX</p>
+                            <p></p>
                         </div>
                     </div>
                     <div fxLayout="row" fxLayout.xs="column" class="flex">
                         <div>
-                            <mat-form-field>
-                                <mat-label>Adjuntar soporte</mat-label>
-                                <input matInput>
-                            </mat-form-field>
+                            <label>Adjuntar soporte</label><br>
+                            <input type="file">
                         </div>
                     </div>
                     <div>

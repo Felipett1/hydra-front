@@ -4,6 +4,7 @@ import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
 //import { ConsultaModelo } from 'src/app/core/models/consulta.models';
 
 @Component({
@@ -16,13 +17,14 @@ export class ConsultarComponent {
   displayedColumns: string[] = ['nombre', 'edad', 'parentesco', 'contacto', 'emoji'];
   dataSource!: MatTableDataSource<any>;
   consulta!: any
+  resultados: boolean = true
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
 
   columasServicio: string[] = ['secuencia', 'fecha_inicial', 'tipo', 'fecha_final'];
   servicios!: MatTableDataSource<any>;
 
-  constructor(private contratoService: ContratoService) {
+  constructor(private contratoService: ContratoService, private router: Router) {
   }
 
   ngOnInit(): void {
@@ -40,67 +42,48 @@ export class ConsultarComponent {
     const { cliente } = this.formulario.value
     var consolidado: any = {}
     this.consulta = undefined
-    await this.contratoService.consultarContrato(cliente)
-      .subscribe(response => {
-        if (response.resultados) {
-          consolidado.contrato = response.resultados[0]
-          this.contratoService.consultarCliente(cliente)
-            .subscribe(response => {
-              if (response.resultados) {
-                consolidado.cliente = response.resultados[0]
-                this.contratoService.consultarBeneficiario(consolidado.contrato.id)
-                  .subscribe(response => {
-                    if (response.resultados) {
-                      consolidado.beneficiarios = response.resultados
-                      this.dataSource = new MatTableDataSource(consolidado.beneficiarios);
-                      this.dataSource.paginator = this.paginator;
-                      this.dataSource.sort = this.sort;
-
-                      this.contratoService.consultarEstadoContrato(cliente)
-                        .subscribe(response => {
-                          if (response.resultados) {
-                            consolidado.contrato.mora = response.resultados[0].mora
-                            this.contratoService.consultarHistoricoServicios(consolidado.contrato.id)
-                              .subscribe(response => {
-                                if (response.resultados) {
-                                  consolidado.servicios = response.resultados
-                                  this.consulta = consolidado
-                                  this.servicios = new MatTableDataSource(consolidado.servicios);
-                                } else {
-                                  console.log('No se encontraron resultados')
-                                }
-                              },
-                                err => {
-                                  console.log('Ocurrio un error llamando la API: ' + err);
-                                })
-                          } else {
-                            console.log('No se encontraron resultados')
-                          }
-                        },
-                          err => {
-                            console.log('Ocurrio un error llamando la API: ' + err);
-                          })
-                      this.consulta = consolidado
-                    } else {
-                      console.log('No se encontraron resultados')
-                    }
-                  },
-                    err => {
-                      console.log('Ocurrio un error llamando la API: ' + err);
-                    })
-              } else {
-                console.log('No se encontraron resultados')
+    this.servicios = new MatTableDataSource();
+    this.dataSource = new MatTableDataSource();
+    try {
+      var respuesta = await this.contratoService.consultarContrato(cliente).toPromise();
+      if (respuesta.resultados) {
+        consolidado.contrato = respuesta.resultados[0]
+        respuesta = await this.contratoService.consultarCliente(cliente).toPromise();
+        if (respuesta.resultados) {
+          consolidado.cliente = respuesta.resultados[0]
+          respuesta = await this.contratoService.consultarBeneficiario(consolidado.contrato.id).toPromise();
+          if (respuesta.resultados) {
+            consolidado.beneficiarios = respuesta.resultados
+            respuesta = await this.contratoService.consultarEstadoContrato(cliente).toPromise();
+            if (respuesta.resultados) {
+              consolidado.contrato.mora = respuesta.resultados[0].mora
+              respuesta = await this.contratoService.consultarHistoricoServicios(consolidado.contrato.id).toPromise();
+              if (respuesta.resultados) {
+                consolidado.servicios = respuesta.resultados
               }
-            },
-              err => {
-                console.log('Ocurrio un error llamando la API: ' + err);
-              })
-        } else {
-          console.log('No se encontraron resultados')
+            }
+          }
         }
-      },
-        err => {
-          console.log('Ocurrio un error llamando la API: ' + err);
-        })
+        this.consulta = consolidado
+        if (this.consulta.servicios) {
+          this.servicios = new MatTableDataSource(this.consulta.servicios);
+        }
+        if (this.consulta.beneficiarios) {
+          this.dataSource = new MatTableDataSource(this.consulta.beneficiarios);
+          this.dataSource.paginator = this.paginator;
+          this.dataSource.sort = this.sort;
+        }
+        this.resultados = true
+      } else {
+        this.resultados = false
+      }
+    } catch (error) {
+      console.log('Error consolidando la consulta: ' + error)
+    }
+  }
+
+  modificar() {
+    this.contratoService.consulta = this.consulta
+    this.router.navigate(['/inicio/contrato/modificar']);
   }
 }

@@ -9,6 +9,7 @@ import { environment } from 'src/environments/environments';
 export class ContratoService {
 
   private readonly URL = environment.api
+  public consulta: any
 
   constructor(private http: HttpClient) {
   }
@@ -67,5 +68,20 @@ export class ContratoService {
       usuario
     }
     return this.http.post(`${this.URL}/notificacion/Recuperacion`, body)
+  }
+
+  agregarBeneficiario(item: any) {
+    if (this.consulta) {
+      if (this.consulta.beneficiarios) {
+        this.consulta.beneficiarios.push(item)
+      } else {
+        this.consulta.beneficiarios = [item]
+      }
+    }
+  }
+
+  modificarBeneficiario(item: any, index: any) {
+    //console.log(this.consulta)
+    //this.consulta.beneficiarios[index] = item;
   }
 }

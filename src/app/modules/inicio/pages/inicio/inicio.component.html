@@ -1,10 +1,10 @@
 <div class="example-container" [class.example-is-mobile]="mobileQuery.matches">
     <mat-toolbar color="primary" class="example-toolbar">
         <button mat-icon-button (click)="snav.toggle()"><mat-icon>menu</mat-icon></button>
-        <h1 class="example-app-name">Hydra!</h1>
+        <h1 class="example-app-name">Hydra</h1>
     </mat-toolbar>
     <mat-sidenav-container class="example-sidenav-container" [style.marginTop.px]="mobileQuery.matches ? 56 : 0">
-        <mat-sidenav #snav [mode]="mobileQuery.matches ? 'over' : 'side'" [fixedInViewport]="mobileQuery.matches"
+        <mat-sidenav #snav opened [mode]="mobileQuery.matches ? 'over' : 'side'" [fixedInViewport]="mobileQuery.matches"
             fixedTopGap="56">
             <mat-accordion>
                 <mat-expansion-panel>
@@ -13,8 +13,16 @@
                     </mat-expansion-panel-header>
 
                     <mat-list>
-                        <mat-list-item>Consultar Afiliacion</mat-list-item>
-                        <mat-list-item>Nueva Afiliacion</mat-list-item>
+                        <mat-list-item>
+                            <button mat-button routerLink="/inicio/contrato">
+                                Consultar Afiliacion
+                            </button>
+                        </mat-list-item>
+                        <mat-list-item>
+                            <button mat-button routerLink="/inicio/contrato/crear">
+                                Nueva Afiliacion
+                            </button>
+                        </mat-list-item>
                     </mat-list>
 
                 </mat-expansion-panel>
@@ -24,9 +32,7 @@
                         <mat-panel-title>Servicios</mat-panel-title>
                     </mat-expansion-panel-header>
                     <mat-list>
-                        <mat-list-item>Nuevo Servicio</mat-list-item>
-                        <mat-list-item>Item 2</mat-list-item>
-                        <mat-list-item>Item 3</mat-list-item>
+                        <mat-list-item><button mat-button>Nuevo Servicio</button></mat-list-item>
                     </mat-list>
                 </mat-expansion-panel>
 
@@ -35,8 +41,8 @@
                         <mat-panel-title>Pagos</mat-panel-title>
                     </mat-expansion-panel-header>
                     <mat-list>
-                        <mat-list-item>Consultar Pago</mat-list-item>
-                        <mat-list-item>Cargar Pago</mat-list-item>
+                        <mat-list-item><button mat-button>Consultar Pago</button></mat-list-item>
+                        <mat-list-item><button mat-button>Cargar Pago</button></mat-list-item>
                     </mat-list>
                 </mat-expansion-panel>
 
@@ -45,9 +51,9 @@
                         <mat-panel-title>Reportes</mat-panel-title>
                     </mat-expansion-panel-header>
                     <mat-list>
-                        <mat-list-item>Pagos de Afiliado</mat-list-item>
-                        <mat-list-item>Pagos</mat-list-item>
-                        <mat-list-item>Servicios</mat-list-item>
+                        <mat-list-item><button mat-button>Pagos de Afiliado</button></mat-list-item>
+                        <mat-list-item><button mat-button>Pagos</button></mat-list-item>
+                        <mat-list-item><button mat-button>Servicios</button></mat-list-item>
                     </mat-list>
                 </mat-expansion-panel>
 
@@ -56,9 +62,13 @@
                         <mat-panel-title>Configuracion</mat-panel-title>
                     </mat-expansion-panel-header>
                     <mat-list>
-                        <mat-list-item>Cambiar contraseña</mat-list-item>
+                        <mat-list-item><button mat-button>Cambiar contraseña</button></mat-list-item>
                     </mat-list>
                 </mat-expansion-panel>
+                <div class="footer-sidebar">
+                    <button mat-button routerLink="/login" style="width: 100%; text-align: center;">Cerrar
+                        sesión</button>
+                </div>
             </mat-accordion>
         </mat-sidenav>
         <mat-sidenav-content>

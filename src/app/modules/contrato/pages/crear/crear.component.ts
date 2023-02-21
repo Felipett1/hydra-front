@@ -31,6 +31,8 @@ export class CrearComponent {
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
 
+  fechaActual: Date = new Date();
+
   constructor(private _formBuilder: FormBuilder, breakpointObserver: BreakpointObserver) {
     this.stepperOrientation = breakpointObserver
       .observe('(min-width: 800px)')
@@ -59,6 +61,6 @@ export class CrearComponent {
         emoji: ">:)"
       }
     ]
-    this.dataSource = new MatTableDataSource(data);
+    this.dataSource = new MatTableDataSource();
   }
 }
