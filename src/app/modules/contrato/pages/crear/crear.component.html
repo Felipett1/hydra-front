@@ -1,9 +1,9 @@
 <br />
-<h1>Crear afiliación</h1>
+<h1>Crear subcontrato</h1>
 <div fxLayout="row" fxLayoutAlign="end center" style="width: 100%;">
     <div>
         <mat-form-field>
-            <mat-label># Contrato</mat-label>
+            <mat-label># Sub contrato</mat-label>
             <input matInput placeholder="# Contrato">
         </mat-form-field>
     </div>
@@ -119,7 +119,7 @@
                         </div>
                     </div>
                     <div>
-                        <button mat-button matStepperNext>Siguiente</button>
+                        <button class="boton" mat-button matStepperNext>Siguiente</button>
                     </div>
                 </form>
             </mat-step>
@@ -180,8 +180,8 @@
                         </div>
                     </div>
                     <div>
-                        <button mat-button matStepperPrevious>Atrás</button>
-                        <button mat-button matStepperNext>Siguiente</button>
+                        <button class="boton" mat-button matStepperPrevious>Atrás</button>
+                        <button class="boton" mat-button matStepperNext>Siguiente</button>
                     </div>
                 </form>
             </mat-step>
@@ -218,12 +218,12 @@
                     </div>
                     <div fxLayout="row" fxLayout.xs="column" class="flex">
                         <div>
-                            <label>Adjuntar soporte</label><br>
-                            <input type="file">
+                          <label id="soporte" for="file-upload">Adjuntar soporte</label>
+                          <input type="file" id="file-upload" class="boton-estilo">
                         </div>
                     </div>
                     <div>
-                        <button mat-button matStepperPrevious>Atrás</button>
+                        <button class="boton" mat-button matStepperPrevious>Atrás</button>
                     </div>
                 </form>
             </mat-step>
