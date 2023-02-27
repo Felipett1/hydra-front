@@ -1,0 +1,35 @@
+div {
+    border: 2px solid;
+    border-color: red;
+}
+
+.seccionIzquierda {
+    text-align: right;
+    font-weight: bold;
+    justify-content: center;
+    padding-right: 1%;
+}
+
+.seccionDerecha {
+    padding-left: 1%;
+}
+
+h1 {
+    font-weight: bold;
+    text-align: center;
+}
+
+mat-form-field,
+button {
+    height: 55px;
+    width: 60px;
+}
+
+mat-form-field {
+    width: 80%;
+}
+
+label {
+    font-weight: bold;
+}
+

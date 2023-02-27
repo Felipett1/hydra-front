@@ -1,0 +1,19 @@
+<br />
+<h1>Numero de Subcontrato</h1>
+<form class="formulario">
+    <div fxLayout="row" fxLayout.xs="column" fxLayoutAlign="center center" style="width: 100%;">
+        <div fxFlex="20%" class="seccionIzquierda">
+            <mat-form-field appearance="outline">
+                <mat-icon matSuffix>search</mat-icon>
+                <mat-label>Documento</mat-label>
+                <input matInput placeholder="Ingrese un numero de documento" formControlName="cliente">
+                <mat-hint>
+                    <strong style="color: crimson">No se encontrarón resultados</strong>
+                </mat-hint>
+            </mat-form-field>
+        </div>
+        <div fxFlex="10%" class="seccionDerecha">
+            <button mat-raised-button color="primary">Buscar</button>
+        </div>
+    </div>
+</form>
