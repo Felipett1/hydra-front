@@ -19,8 +19,8 @@ label {
     background-color: #F1CD3B !important;
 }
 
-.example-stepper {
-    margin-top: 8px;
+.azul:not(:disabled) {
+    background-color: var(--color-1) !important;
 }
 
 .mat-mdc-form-field {
@@ -36,4 +36,8 @@ div {
     /*border: 2px solid;
     border-color: red;*/
     padding: 0px 5px 0px 5px;
+}
+
+::n-deep .mat-horizontal-stepper-header .mat-step-header {
+    pointer-events: none !important;
 }

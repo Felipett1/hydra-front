@@ -1,0 +1,106 @@
+<br />
+<h1>Consulta de servicios</h1>
+<form class="formulario" (ngSubmit)="consultar()" [formGroup]="formulario">
+    <div fxLayout="row" fxLayout.xs="column" fxLayoutAlign="center center" style="width: 100%;">
+        <div fxFlex="70%" class="seccionIzquierda">
+            <mat-form-field appearance="outline">
+                <mat-icon matSuffix>search</mat-icon>
+                <mat-label>Documento</mat-label>
+                <input matInput placeholder="Ingrese un numero de documento" formControlName="cliente">
+                <mat-hint *ngIf="!resultados">
+                    <strong style="color: crimson">No se encontrarón resultados</strong>
+                </mat-hint>
+            </mat-form-field>
+        </div>
+        <div fxFlex="30%" class="seccionDerecha">
+            <button mat-raised-button color="primary" [disabled]="formulario.invalid">Buscar</button>
+        </div>
+    </div>
+</form>
+<div fxLayout="row" fxLayout.xs="column" fxLayoutAlign="center center" style="width: 100%;"
+    *ngIf="consulta && !seleccion">
+    <div fxFlex="100%" class="contenido">
+        <ng-container *ngFor="let item of consulta.subcontratos">
+            <div>
+                <div fxFlex="20%" class="listado">
+                    <label>Subcontrato</label>
+                    <p>{{ item.id }}</p>
+                </div>
+                <div fxFlex="20%" class="listado">
+                    <label>Plan</label>
+                    <p>{{ item.plan }}</p>
+                </div>
+                <div fxFlex="20%" class="listado">
+                    <label>Valor</label>
+                    <p>${{ item.valor | number:'1.2-2' }}</p>
+                </div>
+                <div fxFlex="20%" class="listado">
+                    <label>Cuotas</label>
+                    <p>{{ item.cuotas }}</p>
+                </div>
+                <div fxFlex="20%" class="listado">
+                    <button mat-raised-button color="primary" (click)="consultarServicios(item)">
+                        Ver
+                        <mat-icon matSuffix>open_in_new</mat-icon>
+                    </button>
+                </div>
+            </div>
+        </ng-container>
+    </div>
+</div>
+
+<div fxLayout="row" fxLayout.xs="column" fxLayoutAlign="center center" class="flex" *ngIf="seleccion">
+    <div fxFlex="33%">
+        <label># SubContrato</label>
+        <p>{{ consulta?.subcontrato?.id }}</p>
+    </div>
+    <div fxFlex="33%">
+        <label>Documento</label>
+        <p>{{ consulta?.cliente?.documento }}</p>
+    </div>
+    <div fxFlex="34%">
+        <label>Estado</label>
+        <p>{{ consulta?.subcontrato?.mora ? 'En mora' : 'Al día' }}</p>
+    </div>
+</div>
+<br><br>
+<div fxLayout="row" fxLayout.xs="column" fxLayoutAlign="center center" *ngIf="seleccion">
+    <div style="width: 100%;">
+        <table mat-table [dataSource]="servicios" matSort>
+
+            <!-- ID Column -->
+            <ng-container matColumnDef="secuencia">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header> Id </th>
+                <td mat-cell *matCellDef="let row"> {{row.secuencia}} </td>
+            </ng-container>
+
+            <!-- Progress Column -->
+            <ng-container matColumnDef="fecha_inicial">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header> Fecha </th>
+                <td mat-cell *matCellDef="let row"> {{row.fecha_inicial | date:'dd/MM/yyyy'}} </td>
+            </ng-container>
+
+            <!-- Name Column -->
+            <ng-container matColumnDef="tipo">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header> Tipo </th>
+                <td mat-cell *matCellDef="let row"> {{row.tipo}} </td>
+            </ng-container>
+
+            <ng-container matColumnDef="fecha_final">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header> Estado </th>
+                <td mat-cell *matCellDef="let row"> {{row.fecha_final ? 'Cerrado' : 'Abierto'}} </td>
+            </ng-container>
+
+            <tr mat-header-row *matHeaderRowDef="columasServicio"></tr>
+            <tr mat-row *matRowDef="let row; columns: columasServicio;"></tr>
+        </table>
+
+        <mat-paginator [pageSizeOptions]="[5, 10, 25, 100]" aria-label="Select page of users"></mat-paginator>
+    </div>
+</div>
+<div fxLayout="row" fxLayout.xs="column" fxLayoutAlign="center center" *ngIf="seleccion">
+    <button mat-raised-button color="primary" (click)="agregarServicio()">
+        Nuevo servicio
+        <mat-icon>add</mat-icon>
+    </button>
+</div>

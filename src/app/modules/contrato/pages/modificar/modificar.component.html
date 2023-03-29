@@ -2,8 +2,8 @@
 <h1>Modificar afiliación</h1>
 <div fxLayout="row" fxLayout.xs="column" fxLayoutAlign="center center" class="flex">
     <div fxFlex="33%">
-        <label># Contrato</label>
-        <p>{{ consulta?.contrato?.id }}</p>
+        <label># SubContrato</label>
+        <p>{{ consulta?.subcontrato?.id }}</p>
     </div>
     <div fxFlex="33%">
         <label>Documento</label>
@@ -11,7 +11,7 @@
     </div>
     <div fxFlex="34%">
         <label>Estado</label>
-        <p>{{ consulta?.contrato?.mora ? 'En mora' : 'Al día' }}</p>
+        <p>{{ consulta?.subcontrato?.mora ? 'En mora' : 'Al día' }}</p>
     </div>
 </div>
 <div fxLayout="row" fxLayout.xs="column" fxLayoutAlign="center center" style="width: 100%;">
@@ -62,11 +62,13 @@
                             <mat-form-field>
                                 <mat-icon matSuffix>pin_drop</mat-icon>
                                 <mat-label>Ciudad</mat-label>
-                                <mat-select name="ciudad" formControlName="ciudad">
-                                    <mat-option value="Bogota">Bogotá</mat-option>
-                                    <mat-option value="Medellin">Medellin</mat-option>
-                                    <mat-option value="Cali">Cali</mat-option>
-                                </mat-select>
+                                <input type="text" placeholder="Ciudad" aria-label="Ciudad" matInput
+                                    [matAutocomplete]="auto" name="ciudad" formControlName="ciudad">
+                                <mat-autocomplete #auto="matAutocomplete">
+                                    <mat-option *ngFor="let option of filteredOptions | async" [value]="option">
+                                        {{option}}
+                                    </mat-option>
+                                </mat-autocomplete>
                             </mat-form-field>
                         </div>
                         <div fxFlex="25%">
@@ -88,21 +90,25 @@
                         <div fxFlex="25%">
                             <mat-form-field>
                                 <mat-icon matSuffix>hub</mat-icon>
-                                <mat-label>Pertenece</mat-label>
+                                <mat-label>Pagaduria</mat-label>
                                 <mat-select name="dependencia" formControlName="dependencia">
                                     <mat-option value="EJC">Ejercito</mat-option>
                                     <mat-option value="FA">Fuerza aérea</mat-option>
-                                    <mat-option value="PL">Policía</mat-option>
+                                    <mat-option value="PL">Policía</mat-option><mat-option
+                                        value="Ejército">Ejército</mat-option>
+                                    <mat-option value="Armada">Armada</mat-option>
+                                    <mat-option value="Pensionados">Pensionados</mat-option>
+                                    <mat-option value="Policía">Policía</mat-option>
+                                    <mat-option value="Fuerza Aérea">Fuerza Aérea</mat-option>
+                                    <mat-option value="Caja de Retiro">Caja de Retiro</mat-option>
+                                    <mat-option value="Gabinete">Gabinete</mat-option>
+                                    <mat-option value="Comando General">Comando General</mat-option>
+                                    <mat-option value="Individual">Individual</mat-option>
+                                    <mat-option value="Otro">Otro</mat-option>
                                 </mat-select>
                             </mat-form-field>
                         </div>
-                        <div fxFlex="25%">
-                            <mat-form-field>
-                                <mat-icon matSuffix>Otro</mat-icon>
-                                <input matInput placeholder="Otro">
-                            </mat-form-field>
-                        </div>
-                        <div fxFlex="50%">
+                        <div fxFlex="75%">
                         </div>
                     </div>
                     <div fxLayout="row" fxLayout.xs="column" fxLayoutAlign="center center" class="flex">
@@ -119,11 +125,11 @@
             </mat-tab>
             <mat-tab label="Beneficiario">
                 <div>
-                    <table mat-table [dataSource]="dataSource" matSort>
+                    <table mat-table [dataSource]="beneficiarios" matSort>
 
                         <ng-container matColumnDef="nombre">
                             <th mat-header-cell *matHeaderCellDef mat-sort-header> Nombre </th>
-                            <td mat-cell *matCellDef="let row"> {{row.nombre}} </td>
+                            <td mat-cell *matCellDef="let row; let i = index"> {{row.nombre}}</td>
                         </ng-container>
 
                         <ng-container matColumnDef="edad">
@@ -133,9 +139,7 @@
 
                         <ng-container matColumnDef="parentesco">
                             <th mat-header-cell *matHeaderCellDef mat-sort-header> Parentesco </th>
-                            <td mat-cell *matCellDef="let row">
-                                {{row.parentesco == 'p' ? 'Padre' : (row.parentesco == 'm' ? 'Madre' : (row.parentesco
-                                == 'h' ? 'Hijo' : row.parentesco))}}
+                            <td mat-cell *matCellDef="let row">{{homologarParentesco(row.parentesco)}}
                             </td>
                         </ng-container>
 
@@ -149,6 +153,18 @@
                             <td mat-cell *matCellDef="let row"> <mat-icon matSuffix>{{row.emoji}}</mat-icon></td>
                         </ng-container>
 
+                        <ng-container matColumnDef="adicional">
+                            <th mat-header-cell *matHeaderCellDef>Adicional</th>
+                            <td mat-cell *matCellDef="let row">{{row.adicional ? "Si" : "No"}}
+                            </td>
+                        </ng-container>
+
+                        <ng-container matColumnDef="estado">
+                            <th mat-header-cell *matHeaderCellDef>Estado</th>
+                            <td mat-cell *matCellDef="let row">{{row.estado ? "Activo" :
+                                "Inactivo"}}</td>
+                        </ng-container>
+
                         <ng-container matColumnDef="editar">
                             <th mat-header-cell *matHeaderCellDef mat-sort-header></th>
                             <td mat-cell *matCellDef="let row; let i = index">
@@ -157,16 +173,6 @@
                                 </button>
                             </td>
                         </ng-container>
-
-                        <ng-container matColumnDef="borrar">
-                            <th mat-header-cell *matHeaderCellDef mat-sort-header></th>
-                            <td mat-cell *matCellDef="let row; let i = index">
-                                <button mat-mini-fab color="warn" (click)="eliminarBeneficiario(i)">
-                                    <mat-icon>delete</mat-icon>
-                                </button>
-                            </td>
-                        </ng-container>
-
 
                         <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
                         <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
@@ -178,7 +184,7 @@
 
                 <div fxLayout="column" fxLayoutAlign="center center" style="width: 100%;">
                     <div fxFlex="100%">
-                        <button mat-raised-button color="yellow" class="amarillo">
+                        <button mat-raised-button color="yellow" class="amarillo" (click)="agregarBeneficiario()">
                             Nuevo beneficiario
                             <mat-icon>add</mat-icon>
                         </button>
@@ -190,43 +196,74 @@
                 <div fxLayout="row" fxLayout.xs="column">
                     <div fxFlex="25%">
                         <label>Fecha de inicio</label>
-                        <p>{{ consulta?.contrato?.fecha_inicio | date:'dd/MM/yyyy' }}</p>
+                        <p>{{ consulta?.subcontrato?.fecha_inicio | date:'dd/MM/yyyy' }}</p>
                     </div>
                     <div fxFlex="25%">
                         <label>Tipo de plan</label>
-                        <p>{{ consulta?.contrato?.plan }}</p>
+                        <p>{{ consulta?.subcontrato?.plan }}</p>
                     </div>
                     <div fxFlex="25%">
-                        <label>Costo total</label>
-                        <p>${{ consulta?.contrato?.valor | number:'1.2-2' }}</p>
+                        <label>Valor mensual</label>
+                        <p>{{ consulta?.subcontrato?.valor | number:'1.0-0' }}</p>
                     </div>
-                    <div fxFlex="25%">
-                        <label># de cuotas</label>
-                        <p>{{ consulta?.contrato?.cuotas }}</p>
+                    <div fxFlex="25%" [formGroup]="formulario">
+                        <mat-form-field>
+                            <mat-label># de cuotas</mat-label>
+                            <input type="number" matInput placeholder="# de cuotas" formControlName="cuotas"
+                                (input)="calcularValorTotal()">
+                        </mat-form-field>
                     </div>
                 </div>
                 <div fxLayout="row" fxLayout.xs="column">
                     <div fxFlex="25%">
-                        <label>Valor mensual</label>
-                        <p>${{ consulta?.contrato?.valor / consulta?.contrato?.cuotas | number:'1.2-2' }}</p>
+                        <label>Valor contrato</label>
+                        <p>${{ consulta?.subcontrato?.valor_total | number:'1.0-0' }}</p>
+                    </div>
+                    <div fxFlex="25%">
+                        <label>Valor restante</label>
+                        <p>${{ consulta?.subcontrato?.valor_total | number:'1.0-0' }}</p>
+                    </div>
+                    <div fxFlex="25%">
+                        <label>Valor adicional</label>
+                        <p>${{ consulta?.subcontrato?.adicional | number:'1.0-0' }}</p>
+                    </div>
+                    <div fxFlex="25%">
+                        <label>Valor mascota</label>
+                        <p>${{ consulta?.subcontrato?.mascota | number:'1.0-0' }}</p>
+                    </div>
+                </div>
+                <div fxLayout="row" fxLayout.xs="column">
+                    <div fxFlex="25%">
+                        <label>Mensualidad total</label>
+                        <p>${{ mensualidadTotal | number:'1.0-0' }}</p>
                     </div>
                     <div fxFlex="25%">
                         <label>Adjuntar soporte</label><br>
-                        <input type="file">
+                        <input accept=".pdf" type="file" formControlName="soporte" (change)="cargarSoporte($event)">
                     </div>
                     <div fxFlex="50%">
                     </div>
                 </div>
                 <br>
-                <div fxLayout="column" fxLayoutAlign="center end" style="width: 100%;">
-                    <div fxFlex="100%">
-                        <button mat-raised-button color="yellow" class="amarillo">
-                            Cancelar contrato
-                            <mat-icon>close</mat-icon>
-                        </button>
-                    </div>
-                </div>
             </mat-tab>
         </mat-tab-group>
+        <br>
+        <div fxLayout="row" fxLayout.xs="column" fxLayoutAlign="center center" style="width: 100%;">
+            <div fxFlex="50%" class="seccionIzquierda">
+                <button mat-raised-button color="primary" (click)="volver()">
+                    Cancelar
+                    <mat-icon>arrow_back</mat-icon>
+                </button>
+            </div>
+            <div fxFlex="50%" class="seccionDerecha">
+                <div fxFlex="100%">
+                    <button mat-raised-button class="verde" [disabled]="formulario.invalid"
+                        (click)="modificarSubContrato()">
+                        Enviar
+                        <mat-icon>send</mat-icon>
+                    </button>
+                </div>
+            </div>
+        </div>
     </div>
 </div>

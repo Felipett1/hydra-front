@@ -8,7 +8,7 @@ import { RouterModule, Routes } from '@angular/router';
 
 const routes: Routes = [
   {
-    path: "contrato", //http://localhost:4200/inico/contrato
+    path: "subcontrato", //http://localhost:4200/inico/contrato
     loadChildren: () => import('../contrato/contrato.module').then(m => m.ContratoModule)
   },
   {

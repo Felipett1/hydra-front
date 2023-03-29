@@ -1,5 +1,6 @@
 import { MediaMatcher } from '@angular/cdk/layout';
 import { ChangeDetectorRef, Component, OnDestroy } from '@angular/core';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-inicio',
@@ -19,5 +20,14 @@ export class InicioComponent implements OnDestroy {
 
   ngOnDestroy(): void {
     this.mobileQuery.removeListener(this._mobileQueryListener);
+  }
+
+  contruccion(): void {
+    Swal.fire({
+      title: 'En construcción',
+      text: 'Esta funcionalidad actualmente se esta desarrollando, muy pronto estará disponible',
+      icon: 'warning',
+      confirmButtonText: 'Aceptar'
+    });
   }
 }

@@ -1,0 +1,43 @@
+<h2 mat-dialog-title>Servicio</h2>
+<mat-dialog-content class="mat-typography">
+    <form [formGroup]="formulario">
+        <div fxLayout="row" fxLayout.xs="column" fxLayoutAlign="center center" class="flex">
+            <div fxFlex="50%">
+                <mat-form-field>
+                    <mat-label>Tipo</mat-label>
+                    <mat-select name="tipo" formControlName="tipo">
+                        <mat-option value="4">Asesoria Juridica</mat-option>
+                        <mat-option value="5">Asesoria Financiera</mat-option>
+                        <mat-option value="6">Asesoria Educación y recreación</mat-option>
+                        <mat-option value="7">Gestion documental</mat-option>
+                        <mat-option value="8">Asesoria Juridica</mat-option>
+                        <mat-option value="9">Medicina especializada</mat-option>
+                        <mat-option value="10">Medicina especializada beneficiarios</mat-option>
+                        <mat-option value="11">Servicio Funerario</mat-option>
+                    </mat-select>
+                </mat-form-field>
+            </div>
+            <div fxFlex="40%">
+                <mat-form-field>
+                    <mat-label>Contacto</mat-label>
+                    <input matInput placeholder="Contacto" formControlName="contacto">
+                </mat-form-field>
+            </div>
+        </div>
+        <div fxLayout="row" fxLayout.xs="column" fxLayoutAlign="center center" class="flex">
+            <div fxFlex="50%">
+                <mat-form-field>
+                    <mat-label>Detalle</mat-label>
+                    <input matInput placeholder="detalle" formControlName="detalle">
+                </mat-form-field>
+            </div>
+            <div fxFlex="40%">
+            </div>
+        </div>
+    </form>
+</mat-dialog-content>
+<mat-dialog-actions align="end">
+    <button mat-button mat-dialog-close>Cancel</button>
+    <button mat-button [disabled]="formulario.invalid" [mat-dialog-close]="true" (click)="confirmar()"
+        cdkFocusInitial>Confirmar</button>
+</mat-dialog-actions>

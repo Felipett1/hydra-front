@@ -39,3 +39,9 @@ mat-form-field {
 label {
     font-weight: bold;
 }
+
+.flex {
+    width: 100%;
+    text-align: center;
+    justify-content: center;
+}

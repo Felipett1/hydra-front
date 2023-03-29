@@ -17,7 +17,42 @@
         </div>
     </div>
 </form>
-<div fxLayout="row" fxLayout.xs="column" fxLayoutAlign="center center" style="width: 100%;" *ngIf="consulta">
+<div fxLayout="row" fxLayout.xs="column" fxLayoutAlign="center center" style="width: 100%;"
+    *ngIf="consulta && !seleccion">
+    <div fxFlex="100%" class="contenido">
+        <ng-container *ngFor="let item of consulta.subcontratos">
+            <div>
+                <div fxFlex="16%" class="listado">
+                    <label>Subcontrato</label>
+                    <p>{{ item.id }}</p>
+                </div>
+                <div fxFlex="16%" class="listado">
+                    <label>Plan</label>
+                    <p>{{ item.plan }}</p>
+                </div>
+                <div fxFlex="16%" class="listado">
+                    <label>Valor</label>
+                    <p>${{ item.valor | number:'1.2-2' }}</p>
+                </div>
+                <div fxFlex="16%" class="listado">
+                    <label>Cuotas</label>
+                    <p>{{ item.cuotas }}</p>
+                </div>
+                <div fxFlex="16%" class="listado">
+                    <label>Estado</label>
+                    <p [style.color]="item.mora ? '#B40404' : '#088A29'">{{ item.mora ? 'En mora' : 'Al día' }}</p>
+                </div>
+                <div class="listado">
+                    <button mat-raised-button color="primary" (click)="consultarDetalleSubContrato(item)">
+                        Ver
+                        <mat-icon matSuffix>open_in_new</mat-icon>
+                    </button>
+                </div>
+            </div>
+        </ng-container>
+    </div>
+</div>
+<div fxLayout="row" fxLayout.xs="column" fxLayoutAlign="center center" style="width: 100%;" *ngIf="seleccion">
     <div fxFlex="100%" class="contenido">
         <mat-accordion class="example-headers-align" multi>
             <mat-expansion-panel [expanded]="true">
@@ -28,8 +63,8 @@
                 </mat-expansion-panel-header>
                 <div fxLayout="row" fxLayout.xs="column">
                     <div fxFlex="25%">
-                        <label># Contrato</label>
-                        <p>{{ consulta?.contrato?.id }}</p>
+                        <label># Subcontrato</label>
+                        <p>{{ consulta?.subcontrato?.id }}</p>
                     </div>
                     <div fxFlex="25%">
                         <label>Documento</label>
@@ -41,44 +76,44 @@
                     </div>
                     <div fxFlex="25%">
                         <label>Estado</label>
-                        <p>{{ consulta?.contrato?.mora ? 'En mora' : 'Al día' }}</p>
+                        <p>{{ consulta?.subcontrato?.mora ? 'En mora' : 'Al día' }}</p>
                     </div>
                 </div>
                 <div fxLayout="row" fxLayout.xs="column">
                     <div fxFlex="25%">
                         <label>Dirección</label>
-                        <p>{{ consulta?.cliente?.direccion }}</p>
+                        <p>{{ consulta?.subcontrato?.direccion }}</p>
                     </div>
                     <div fxFlex="25%">
                         <label>Correo</label>
-                        <p>{{ consulta?.cliente?.correo }}</p>
+                        <p>{{ consulta?.subcontrato?.correo }}</p>
                     </div>
                     <div fxFlex="25%">
                         <label>Celular</label>
-                        <p>{{ consulta?.cliente?.celular }}</p>
+                        <p>{{ consulta?.subcontrato?.celular }}</p>
                     </div>
                     <div fxFlex="25%">
                         <label>Telefono</label>
-                        <p>{{ consulta?.cliente?.telefono }}</p>
+                        <p>{{ consulta?.subcontrato?.telefono }}</p>
                     </div>
                 </div>
 
                 <div fxLayout="row" fxLayout.xs="column">
                     <div fxFlex="25%">
                         <label>Ciudad</label>
-                        <p>{{ consulta?.cliente?.ciudad }}</p>
+                        <p>{{ consulta?.subcontrato?.ciudad }}</p>
                     </div>
                     <div fxFlex="25%">
                         <label>Grado</label>
-                        <p>{{ consulta?.cliente?.grado }}</p>
+                        <p>{{ consulta?.subcontrato?.grado }}</p>
                     </div>
                     <div fxFlex="25%">
                         <label>Codigo</label>
-                        <p>{{ consulta?.cliente?.codigo }}</p>
+                        <p>{{ consulta?.subcontrato?.codigo }}</p>
                     </div>
                     <div fxFlex="25%">
-                        <label>Pertenece</label>
-                        <p>{{ consulta?.cliente?.dependencia }}</p>
+                        <label>Pagaduria</label>
+                        <p>{{ consulta?.subcontrato?.dependencia }}</p>
                     </div>
                 </div>
             </mat-expansion-panel>
@@ -89,7 +124,7 @@
                     </mat-panel-title>
                 </mat-expansion-panel-header>
                 <div>
-                    <table mat-table [dataSource]="dataSource" matSort>
+                    <table mat-table [dataSource]="beneficiarios" matSort>
 
                         <!-- ID Column -->
                         <ng-container matColumnDef="nombre">
@@ -106,14 +141,22 @@
                         <!-- Name Column -->
                         <ng-container matColumnDef="parentesco">
                             <th mat-header-cell *matHeaderCellDef mat-sort-header> Parentesco </th>
-                            <td mat-cell *matCellDef="let row"> {{row.parentesco == 'p' ? 'Padre' : (row.parentesco ==
-                                'm' ? 'Madre' : (row.parentesco
-                                == 'h' ? 'Hijo' : row.parentesco))}} </td>
+                            <td mat-cell *matCellDef="let row"> {{homologarParentesco(row.parentesco)}} </td>
                         </ng-container>
 
                         <ng-container matColumnDef="contacto">
                             <th mat-header-cell *matHeaderCellDef mat-sort-header> Contacto </th>
                             <td mat-cell *matCellDef="let row"> {{row.contacto}} </td>
+                        </ng-container>
+
+                        <ng-container matColumnDef="estado">
+                            <th mat-header-cell *matHeaderCellDef mat-sort-header> Estado </th>
+                            <td mat-cell *matCellDef="let row"> {{row.estado ? "Activo" : "Inactivo"}} </td>
+                        </ng-container>
+
+                        <ng-container matColumnDef="adicional">
+                            <th mat-header-cell *matHeaderCellDef mat-sort-header> Adicional </th>
+                            <td mat-cell *matCellDef="let row"> {{row.adicional ? "Si" : "No"}} </td>
                         </ng-container>
 
                         <!-- Fruit Column -->
@@ -139,31 +182,53 @@
                 <div fxLayout="row" fxLayout.xs="column">
                     <div fxFlex="25%">
                         <label>Fecha de inicio</label>
-                        <p>{{ consulta?.contrato?.fecha_inicio | date:'dd/MM/yyyy' }}</p>
+                        <p>{{ consulta?.subcontrato?.fecha_inicio | date:'dd/MM/yyyy' }}</p>
                     </div>
                     <div fxFlex="25%">
                         <label>Tipo de plan</label>
-                        <p>{{ consulta?.contrato?.plan }}</p>
+                        <p>{{ consulta?.subcontrato?.plan }}</p>
                     </div>
                     <div fxFlex="25%">
-                        <label>Costo total</label>
-                        <p>${{ consulta?.contrato?.valor | number:'1.2-2' }}</p>
+                        <label>Valor mensual</label>
+                        <p>${{ consulta?.subcontrato?.valor | number:'1.0-0' }}</p>
                     </div>
                     <div fxFlex="25%">
                         <label># de cuotas</label>
-                        <p>{{ consulta?.contrato?.cuotas }}</p>
+                        <p>{{ consulta?.subcontrato?.cuotas }}</p>
                     </div>
                 </div>
                 <div fxLayout="row" fxLayout.xs="column">
                     <div fxFlex="25%">
-                        <label>Valor mensual</label>
-                        <p>${{ (consulta?.contrato?.valor / consulta?.contrato?.cuotas) | number:'1.2-2' }}</p>
+                        <label>Valor total</label>
+                        <p>${{ consulta?.subcontrato?.valor_total | number:'1.0-0'}}</p>
+                    </div>
+                    <div fxFlex="25%">
+                        <label>Valor beneficiario</label>
+                        <p>${{ consulta?.subcontrato?.adicional | number:'1.0-0'}}</p>
+                    </div>
+                    <div fxFlex="25%">
+                        <label>Valor mascota</label>
+                        <p>${{ consulta?.subcontrato?.mascota | number:'1.0-0'}}</p>
                     </div>
                     <div fxFlex="25%">
                         <label>Soporte fisico</label>
-                        <a>Descargar</a>
+                        <br>
+                        <button mat-raised-button color="primary" (click)="previsualizarSoporte()">
+                            Ver
+                            <mat-icon>visibility</mat-icon>
+                        </button>
+                        <br>
+                        <pdf-viewer [src]="pdfSoporte"></pdf-viewer>
                     </div>
-                    <div fxFlex="50%">
+                </div>
+                <div fxLayout="row" fxLayout.xs="column">
+                    <div fxFlex="25%">
+                        <label>Mensualidad total</label>
+                        <p>${{ mensualidadTotal | number:'1.0-0'}}</p>
+                    </div>
+                    <div fxFlex="75%">
+                        <label>Valor beneficiario</label>
+                        <p>${{ consulta?.subcontrato?.adicional | number:'1.0-0'}}</p>
                     </div>
                 </div>
             </mat-expansion-panel>
@@ -210,7 +275,7 @@
         </mat-accordion>
     </div>
 </div>
-<div fxLayout="row" fxLayout.xs="column" fxLayoutAlign="center center" style="width: 100%;" *ngIf="consulta">
+<div fxLayout="row" fxLayout.xs="column" fxLayoutAlign="center center" style="width: 100%;" *ngIf="seleccion">
     <div fxFlex="50%" class="seccionIzquierda">
         <button mat-raised-button color="warn" (click)="modificar()">
             Modificar
@@ -218,7 +283,7 @@
         </button>
     </div>
     <div fxFlex="50%" class="seccionDerecha">
-        <button mat-raised-button color="primary">
+        <button mat-raised-button color="primary" (click)="contruccion()">
             Pagos
             <mat-icon>payments</mat-icon>
         </button>

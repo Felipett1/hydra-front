@@ -14,12 +14,12 @@
 
                     <mat-list>
                         <mat-list-item>
-                            <button mat-button routerLink="/inicio/contrato">
+                            <button mat-button routerLink="/inicio/subcontrato">
                                 Consultar Afiliacion
                             </button>
                         </mat-list-item>
                         <mat-list-item>
-                            <button mat-button routerLink="/inicio/contrato/crear">
+                            <button mat-button routerLink="/inicio/subcontrato/crear">
                                 Nueva Afiliacion
                             </button>
                         </mat-list-item>
@@ -32,7 +32,9 @@
                         <mat-panel-title>Servicios</mat-panel-title>
                     </mat-expansion-panel-header>
                     <mat-list>
-                        <mat-list-item><button mat-button>Nuevo Servicio</button></mat-list-item>
+                        <!--mat-list-item><button mat-button routerLink="/inicio/servicio">Crear Servicio</button></mat-list-item-->
+                        <mat-list-item><button mat-button (click)="contruccion()">Crear
+                                Servicio</button></mat-list-item>
                     </mat-list>
                 </mat-expansion-panel>
 
@@ -41,8 +43,9 @@
                         <mat-panel-title>Pagos</mat-panel-title>
                     </mat-expansion-panel-header>
                     <mat-list>
-                        <mat-list-item><button mat-button>Consultar Pago</button></mat-list-item>
-                        <mat-list-item><button mat-button>Cargar Pago</button></mat-list-item>
+                        <mat-list-item><button mat-button (click)="contruccion()">Consultar
+                                Pago</button></mat-list-item>
+                        <mat-list-item><button mat-button (click)="contruccion()">Cargar Pago</button></mat-list-item>
                     </mat-list>
                 </mat-expansion-panel>
 
@@ -51,9 +54,10 @@
                         <mat-panel-title>Reportes</mat-panel-title>
                     </mat-expansion-panel-header>
                     <mat-list>
-                        <mat-list-item><button mat-button>Pagos de Afiliado</button></mat-list-item>
-                        <mat-list-item><button mat-button>Pagos</button></mat-list-item>
-                        <mat-list-item><button mat-button>Servicios</button></mat-list-item>
+                        <mat-list-item><button mat-button (click)="contruccion()">Pagos de
+                                Afiliado</button></mat-list-item>
+                        <mat-list-item><button mat-button (click)="contruccion()">Pagos</button></mat-list-item>
+                        <mat-list-item><button mat-button (click)="contruccion()">Servicios</button></mat-list-item>
                     </mat-list>
                 </mat-expansion-panel>
 
@@ -62,7 +66,8 @@
                         <mat-panel-title>Configuracion</mat-panel-title>
                     </mat-expansion-panel-header>
                     <mat-list>
-                        <mat-list-item><button mat-button>Cambiar contraseña</button></mat-list-item>
+                        <mat-list-item><button mat-button (click)="contruccion()">Cambiar
+                                contraseña</button></mat-list-item>
                     </mat-list>
                 </mat-expansion-panel>
                 <div class="footer-sidebar">

@@ -40,7 +40,7 @@ export class LoginComponent {
       .subscribe(response => {
 
         if (response.autenticar) {
-          this.router.navigate(['inicio', 'contrato'])
+          this.router.navigate(['inicio', 'subcontrato'])
         } else {
           mensaje = "¡Usuario y/o contraseña invalida!"
           this._snackBar.open(mensaje, '', {

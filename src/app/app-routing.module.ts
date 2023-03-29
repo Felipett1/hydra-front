@@ -1,3 +1,4 @@
+import { SoporteComponent } from './modules/contrato/pages/soporte/soporte.component';
 import { InicioComponent } from './modules/inicio/pages/inicio/inicio.component';
 import { NgModule } from '@angular/core';
 import { Router, RouterModule, Routes } from '@angular/router';
@@ -18,7 +19,7 @@ const routes: Routes = [
   },
   {
     path: "", //http://localhost:4200/
-    redirectTo: "/registro",
+    redirectTo: "/login",
     pathMatch: "full"
   }
 ];
