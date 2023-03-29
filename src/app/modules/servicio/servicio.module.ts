@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-
+import { MatFormFieldModule } from '@angular/material/form-field';
 import { ServicioRoutingModule } from './servicio-routing.module';
 import { ConsultaComponent } from './pages/consulta/consulta.component';
 import { ServicioComponent } from './pages/servicio/servicio.component';
