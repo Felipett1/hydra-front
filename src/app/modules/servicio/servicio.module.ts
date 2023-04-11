@@ -5,7 +5,6 @@ import { ServicioRoutingModule } from './servicio-routing.module';
 import { ConsultaComponent } from './pages/consulta/consulta.component';
 import { ServicioComponent } from './pages/servicio/servicio.component';
 import { FlexLayoutModule } from '@angular/flex-layout';
-import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button'
