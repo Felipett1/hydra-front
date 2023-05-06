@@ -1,3 +1,5 @@
+import { CookieService } from 'ngx-cookie-service';
+import { SolicitudService } from './../../../solicitud/service/solicitud.service';
 import { SoporteComponent } from './../soporte/soporte.component';
 import { ContratoService } from './../../service/contrato.service';
 import { AfterViewInit, Component, ViewChild } from '@angular/core';
@@ -21,15 +23,18 @@ export class ConsultarComponent {
   consulta!: any
   resultados: boolean = true
   seleccion: boolean = false
-  @ViewChild(MatPaginator) paginator!: MatPaginator;
+  @ViewChild('pgtServcios') paginator!: MatPaginator;
+  @ViewChild('pgtBeneficiario') paginatorBeneficiario!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
   //Ver PDF
   public pdfSoporte: any = null;
-  columasServicio: string[] = ['secuencia', 'fecha_inicial', 'tipo', 'fecha_final'];
+  columasServicio: string[] = ['secuencia', 'fecha_inicial', 'tipo', 'detalle', 'fecha_final'];
   servicios!: MatTableDataSource<any>;
   mensualidadTotal = 0
+  adminitrador: boolean = false
 
-  constructor(private contratoService: ContratoService, private router: Router, public dialogo: MatDialog) {
+  constructor(private contratoService: ContratoService, private router: Router, public dialogo: MatDialog,
+    private solicitudService: SolicitudService, private cookieService: CookieService) {
   }
 
   ngOnInit(): void {
@@ -41,7 +46,15 @@ export class ConsultarComponent {
           ])
       }
     )
+
+    let rol = this.cookieService.get('rol')
+    if (rol == 'administrador') {
+      this.adminitrador = true;
+    } else {
+      this.adminitrador = false;
+    }
   }
+
 
   async consultar() {
     const { cliente } = this.formulario.value
@@ -99,11 +112,16 @@ export class ConsultarComponent {
       }
       if (this.consulta.beneficiarios) {
         this.beneficiarios = new MatTableDataSource(this.consulta.beneficiarios);
-        this.beneficiarios.paginator = this.paginator;
-        this.beneficiarios.sort = this.sort;
       }
 
       this.seleccion = true
+      // Refrescamos el paginador después de que se muestre la tabla
+      setTimeout(() => {
+        this.servicios.paginator = this.paginator;
+        //this.servicios.sort = this.sort;
+        this.beneficiarios.paginator = this.paginatorBeneficiario;
+        //this.beneficiarios.sort = this.sort;
+      }, 0);
       this.calcularMensualidadTotal()
     } catch (error) {
       console.log('Error consolidando la consulta: ' + error)
@@ -113,6 +131,11 @@ export class ConsultarComponent {
   modificar() {
     this.contratoService.consulta = this.consulta
     this.router.navigate(['/inicio/subcontrato/modificar']);
+  }
+
+  solicitar() {
+    this.solicitudService.consulta = this.consulta
+    this.router.navigate(['/inicio/solicitud']);
   }
 
   previsualizarSoporte() {

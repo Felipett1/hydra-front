@@ -1,8 +1,8 @@
-<h2 mat-dialog-title>Servicio</h2>
+<h1 mat-dialog-title class="titulo">Servicio</h1>
 <mat-dialog-content class="mat-typography">
     <form [formGroup]="formulario">
-        <div fxLayout="row" fxLayout.xs="column" fxLayoutAlign="center center" class="flex">
-            <div fxFlex="50%">
+        <div fxLayout="row" fxLayout.xs="column">
+            <div fxFlex="60%">
                 <mat-form-field>
                     <mat-label>Tipo</mat-label>
                     <mat-select name="tipo" formControlName="tipo">
@@ -10,10 +10,11 @@
                         <mat-option value="5">Asesoria Financiera</mat-option>
                         <mat-option value="6">Asesoria Educación y recreación</mat-option>
                         <mat-option value="7">Gestion documental</mat-option>
-                        <mat-option value="8">Asesoria Juridica</mat-option>
                         <mat-option value="9">Medicina especializada</mat-option>
                         <mat-option value="10">Medicina especializada beneficiarios</mat-option>
                         <mat-option value="11">Servicio Funerario</mat-option>
+                        <mat-option value="12">Consulta</mat-option>
+                        <mat-option value="8">Otros</mat-option>
                     </mat-select>
                 </mat-form-field>
             </div>
@@ -24,14 +25,13 @@
                 </mat-form-field>
             </div>
         </div>
-        <div fxLayout="row" fxLayout.xs="column" fxLayoutAlign="center center" class="flex">
-            <div fxFlex="50%">
+        <div fxLayout="row" fxLayout.xs="column" fxLayoutAlign="center center">
+            <div fxFlex="100%">
                 <mat-form-field>
                     <mat-label>Detalle</mat-label>
-                    <input matInput placeholder="detalle" formControlName="detalle">
+                    <textarea matInput placeholder="Indique los detalles del servicio..." formControlName="detalle"
+                        rows="4"></textarea>
                 </mat-form-field>
-            </div>
-            <div fxFlex="40%">
             </div>
         </div>
     </form>

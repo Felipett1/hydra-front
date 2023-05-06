@@ -124,11 +124,11 @@ export class ModificarComponent {
         this.alertaAdvertencia('El tamaño maximo del archivo es 5MB.')
         this.soporte = ''
         this.formulario.get('soporte')?.setValue(null)
-      } else if (nombreArchivo != this.consulta.subcontrato.id) {
+      } /*else if (nombreArchivo != this.consulta.subcontrato.id) {
         this.alertaAdvertencia('El nombre del archivo debe ser igual al identificador del subcontrato.')
         this.soporte = ''
         this.formulario.get('soporte')?.setValue(null)
-      } else {
+      }*/ else {
         const reader = new FileReader();
         reader.onload = (e: any) => {
           try {
@@ -218,7 +218,7 @@ export class ModificarComponent {
 
   calcularMensualidadTotal() {
     let cuota = parseFloat(this.consulta.subcontrato.valor)
-    let adicional =  parseFloat(this.consulta.subcontrato.adicional)
+    let adicional = parseFloat(this.consulta.subcontrato.adicional)
     let mascota = parseFloat(this.consulta.subcontrato.mascota)
     let mensualidad = 0
     if (cuota) {

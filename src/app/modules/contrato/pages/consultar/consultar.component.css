@@ -39,3 +39,7 @@ mat-form-field {
 label {
     font-weight: bold;
 }
+
+.amarillo {
+    background-color: #F1CD3B !important;
+}

@@ -1,9 +1,18 @@
 div {
     /*border: 2px solid;
     border-color: red;*/
-    padding: 0px 5px 0px 5px;
+    padding: 0px 1% 0px 1%;
 }
 
 mat-option {
-    justify-content: center
+    justify-content: left
+}
+
+mat-form-field {
+    width: 100%;
+}
+
+.titulo {
+    text-align: center !important;
+    font-weight: bold !important;
 }

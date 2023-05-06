@@ -1,0 +1,73 @@
+<br />
+<h1>Solicitud de servicio</h1>
+<br>
+<div fxLayout="row" fxLayout.xs="column" fxLayoutAlign="center center" class="flex">
+    <div fxFlex="20%">
+        <label># SubContrato</label>
+        <p>{{ consulta?.subcontrato?.id }}</p>
+    </div>
+    <div fxFlex="20%">
+        <label>Documento</label>
+        <p>{{ consulta?.cliente?.documento }}</p>
+    </div>
+    <div fxFlex="20%">
+        <label>Nombre</label>
+        <p>{{ consulta?.cliente?.nombre_completo }}</p>
+    </div>
+    <div fxFlex="20%">
+        <label>Celular</label>
+        <p>{{ consulta?.subcontrato?.celular }}</p>
+    </div>
+    <div fxFlex="20%">
+        <label>Estado</label>
+        <p>{{ consulta?.subcontrato?.mora ? 'En mora' : 'Al día' }}</p>
+    </div>
+</div>
+<br>
+<div fxLayout="row" fxLayout.xs="column" fxLayoutAlign="center center">
+    <div fxFlex="100%" class="contenido">
+        <div fxFlex="40%">
+            <section [formGroup]="solicitud">
+                <h4>Seleccione los servicios:</h4>
+                <mat-checkbox formControlName="juridica">Asesoria Juridica</mat-checkbox><br>
+                <mat-checkbox formControlName="financiera">Asesoria Financiera</mat-checkbox><br>
+                <mat-checkbox formControlName="educacion">Asesoria Educación y recreación</mat-checkbox><br>
+                <mat-checkbox formControlName="documental">Gestion documental</mat-checkbox><br>
+                <mat-checkbox formControlName="especializada">Medicina especializada</mat-checkbox><br>
+                <mat-checkbox formControlName="especializada_beneficiario">Medicina especializada
+                    beneficiarios</mat-checkbox><br>
+                <mat-checkbox formControlName="funerario">Servicio Funerario</mat-checkbox><br>
+                <mat-checkbox formControlName="consulta">Consulta</mat-checkbox><br>
+                <mat-checkbox formControlName="otros">Otros</mat-checkbox><br>
+            </section>
+        </div>
+        <div fxFlex="60%">
+            <div fxLayout="column">
+                <div>
+                    <mat-form-field [formGroup]="solicitud">
+                        <mat-label>Detalle</mat-label>
+                        <textarea matInput placeholder="Indique los detalles por favor..." rows="8"
+                            formControlName="detalle"></textarea>
+                    </mat-form-field>
+                </div>
+                <div>
+                    <div fxLayout="row" fxLayout.xs="column" fxLayoutAlign="center center" style="width: 100%;">
+                        <div fxFlex="50%" class="seccionIzquierda">
+                            <button mat-raised-button (click)="limpiar()">
+                                Limpiar
+                                <mat-icon>cleaning_services</mat-icon>
+                            </button>
+                        </div>
+                        <div fxFlex="50%" class="seccionDerecha">
+                            <button mat-raised-button color="primary" (click)="solicitarServicio()">
+                                Enviar
+                                <mat-icon>send</mat-icon>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>

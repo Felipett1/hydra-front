@@ -11,6 +11,7 @@ import { MatButtonModule } from '@angular/material/button'
 import { ReactiveFormsModule } from '@angular/forms';
 import { MatExpansionModule } from '@angular/material/expansion';
 import { MatPaginatorModule } from '@angular/material/paginator';
+import { MatSortModule } from '@angular/material/sort';
 import { MatTableModule } from '@angular/material/table';
 import { MatTabsModule } from '@angular/material/tabs';
 import { MatSelectModule } from '@angular/material/select';
@@ -18,11 +19,14 @@ import { MatStepperModule } from '@angular/material/stepper';
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { MatCheckboxModule } from '@angular/material/checkbox';
+import { DatePipe } from '@angular/common';
+import { CerrarComponent } from './pages/cerrar/cerrar.component';
 
 @NgModule({
   declarations: [
     ConsultaComponent,
-    ServicioComponent
+    ServicioComponent,
+    CerrarComponent
   ],
   imports: [
     CommonModule,
@@ -41,7 +45,9 @@ import { MatCheckboxModule } from '@angular/material/checkbox';
     MatStepperModule,
     MatDialogModule,
     MatAutocompleteModule,
-    MatCheckboxModule
-  ]
+    MatCheckboxModule,
+    MatSortModule
+  ],
+  providers: [DatePipe]
 })
 export class ServicioModule { }

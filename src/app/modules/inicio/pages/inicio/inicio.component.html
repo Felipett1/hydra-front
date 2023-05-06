@@ -18,7 +18,7 @@
                                 Consultar Afiliacion
                             </button>
                         </mat-list-item>
-                        <mat-list-item>
+                        <mat-list-item *ngIf="adminitrador">
                             <button mat-button routerLink="/inicio/subcontrato/crear">
                                 Nueva Afiliacion
                             </button>
@@ -27,18 +27,17 @@
 
                 </mat-expansion-panel>
 
-                <mat-expansion-panel>
+                <mat-expansion-panel *ngIf="adminitrador">
                     <mat-expansion-panel-header>
                         <mat-panel-title>Servicios</mat-panel-title>
                     </mat-expansion-panel-header>
                     <mat-list>
-                        <!--mat-list-item><button mat-button routerLink="/inicio/servicio">Crear Servicio</button></mat-list-item-->
-                        <mat-list-item><button mat-button (click)="contruccion()">Crear
+                        <mat-list-item><button mat-button routerLink="/inicio/servicio">Crear
                                 Servicio</button></mat-list-item>
                     </mat-list>
                 </mat-expansion-panel>
 
-                <mat-expansion-panel>
+                <mat-expansion-panel *ngIf="adminitrador">
                     <mat-expansion-panel-header>
                         <mat-panel-title>Pagos</mat-panel-title>
                     </mat-expansion-panel-header>
@@ -49,7 +48,7 @@
                     </mat-list>
                 </mat-expansion-panel>
 
-                <mat-expansion-panel>
+                <mat-expansion-panel *ngIf="adminitrador">
                     <mat-expansion-panel-header>
                         <mat-panel-title>Reportes</mat-panel-title>
                     </mat-expansion-panel-header>
@@ -61,7 +60,7 @@
                     </mat-list>
                 </mat-expansion-panel>
 
-                <mat-expansion-panel>
+                <mat-expansion-panel *ngIf="adminitrador">
                     <mat-expansion-panel-header>
                         <mat-panel-title>Configuracion</mat-panel-title>
                     </mat-expansion-panel-header>
@@ -71,7 +70,7 @@
                     </mat-list>
                 </mat-expansion-panel>
                 <div class="footer-sidebar">
-                    <button mat-button routerLink="/login" style="width: 100%; text-align: center;">Cerrar
+                    <button mat-button style="width: 100%; text-align: center;" (click)="cerrarSesion()">Cerrar
                         sesión</button>
                 </div>
             </mat-accordion>

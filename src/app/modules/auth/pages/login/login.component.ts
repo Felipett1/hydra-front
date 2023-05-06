@@ -1,3 +1,4 @@
+import { CookieService } from 'ngx-cookie-service';
 import { LoginService } from './../../service/login.service';
 import { Component } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
@@ -15,7 +16,8 @@ export class LoginComponent {
   formLogin: FormGroup = new FormGroup({});
   ocultar = true;
   constructor(private loginService: LoginService,
-    private router: Router, public dialog: MatDialog, private _snackBar: MatSnackBar) {
+    private router: Router, public dialog: MatDialog, private _snackBar: MatSnackBar,
+    private cookieService: CookieService) {
 
   }
 
@@ -38,8 +40,10 @@ export class LoginComponent {
     let mensaje = ""
     await this.loginService.autenticar(usuario, clave)
       .subscribe(response => {
-
         if (response.autenticar) {
+          this.cookieService.set('token', response.token, 1, '/');
+          this.cookieService.set('usuario', response.usuario.usuario, 1, '/');
+          this.cookieService.set('rol', response.usuario.rol, 1, '/');
           this.router.navigate(['inicio', 'subcontrato'])
         } else {
           mensaje = "¡Usuario y/o contraseña invalida!"

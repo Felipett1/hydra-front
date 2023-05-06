@@ -1,3 +1,4 @@
+import { SolicitudModule } from './../solicitud/solicitud.module';
 import { ConfiguracionModule } from './../configuracion/configuracion.module';
 import { ReporteModule } from './../reporte/reporte.module';
 import { PagoModule } from './../pago/pago.module';
@@ -14,6 +15,10 @@ const routes: Routes = [
   {
     path: "servicio", //http://localhost:4200/inico/servicio
     loadChildren: () => import('../servicio/servicio.module').then(m => m.ServicioModule)
+  },
+  {
+    path: "solicitud", //http://localhost:4200/inico/solicitud
+    loadChildren: () => import('../solicitud/solicitud.module').then(m => m.SolicitudModule)
   },
   {
     path: "pago", //http://localhost:4200/inico/pago

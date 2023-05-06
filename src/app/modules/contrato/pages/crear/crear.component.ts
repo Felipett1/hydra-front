@@ -133,11 +133,11 @@ export class CrearComponent {
         this.alertaAdvertencia('El tamaño maximo del archivo es 5MB.')
         this.soporte = ''
         this.planGrupo.get('soporte')?.setValue(null)
-      } else if (nombreArchivo != this.idControl.value) {
+      } /*else if (nombreArchivo != this.idControl.value) {
         this.alertaAdvertencia('El nombre del archivo debe ser igual al identificador del subcontrato.')
         this.soporte = ''
         this.planGrupo.get('soporte')?.setValue(null)
-      } else {
+      }*/ else {
         const reader = new FileReader();
         reader.onload = (e: any) => {
           try {

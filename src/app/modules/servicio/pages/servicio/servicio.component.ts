@@ -1,3 +1,4 @@
+import { ServicioService } from './../../service/servicio.service';
 import { Component, Inject } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { MAT_DIALOG_DATA } from '@angular/material/dialog';
@@ -12,7 +13,7 @@ import { Router } from '@angular/router';
 export class ServicioComponent {
   formulario: FormGroup = new FormGroup({});
 
-  constructor(@Inject(MAT_DIALOG_DATA) public data: any, private router: Router) {
+  constructor(@Inject(MAT_DIALOG_DATA) public data: any, private router: Router, private servicioService: ServicioService,) {
 
   }
 
@@ -28,21 +29,6 @@ export class ServicioComponent {
 
   confirmar(): void {
     const servicio = this.formulario.value
-    /*beneficiario.secuencia = (this.data.beneficiario ? this.data.beneficiario.secuencia : null)
-    beneficiario.index = this.data.index
-    this.contratoService.sendData(beneficiario);*/
-    this.alertaExitoso('¡Servicio creado exitosamente!');
-  }
-
-  alertaExitoso(mensaje: string): void {
-    Swal.fire({
-      title: 'Transacción exitosa',
-      text: mensaje,
-      icon: 'success',
-      confirmButtonText: 'Aceptar',
-      preConfirm: () => {
-        return this.router.navigate(['inicio', 'subcontrato']);
-      }
-    });
+    this.servicioService.sendData(servicio);
   }
 }

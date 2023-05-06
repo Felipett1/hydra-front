@@ -8,6 +8,7 @@ import { environment } from 'src/environments/environments';
 })
 export class ServicioService {
   private readonly URL = environment.api
+  private dataSubject = new Subject<any>();
 
   constructor(private http: HttpClient) { }
 
@@ -34,5 +35,29 @@ export class ServicioService {
       id
     }
     return this.http.post(`${this.URL}/servicio/subcontrato`, body)
+  }
+
+  consultarHistoricoServiciosActivos(id: number): Observable<any> {
+    const body = {
+      id
+    }
+    return this.http.post(`${this.URL}/servicio/subcontrato/activo`, body)
+  }
+
+  crearServicio(body: any): Observable<any> {
+    return this.http.put(`${this.URL}/servicio`, body)
+  }
+
+  notificarServicio(body: any): Observable<any> {
+    return this.http.post(`${this.URL}/notificacion/servicio`, body)
+  }
+
+  //Utilidades
+  sendData(data: any): void {
+    this.dataSubject.next(data);
+  }
+
+  getData(): Subject<any> {
+    return this.dataSubject;
   }
 }

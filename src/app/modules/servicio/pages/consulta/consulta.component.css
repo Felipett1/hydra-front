@@ -45,3 +45,7 @@ label {
     text-align: center;
     justify-content: center;
 }
+
+.detalle {
+    max-width: 400px;
+}
