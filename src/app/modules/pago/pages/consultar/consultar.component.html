@@ -1,0 +1,29 @@
+
+<div class="encabezado">
+    <div class="item-encabezado">
+    <label>No. Contrato</label><input type="number">
+    <button mat-raised-button color="primary">Buscar</button>
+    </div>
+    
+    <fieldset class="item-encabezado">
+        <legend>Valor del plan actual</legend>
+        <label>$29.000</label>
+    </fieldset>
+</div>
+
+<div class="grilla">
+    <mat-grid-list cols="6" rowHeight="60px">
+        <mat-grid-tile  *ngFor="let tile of fechas ">
+        <button mat-raised-button [ngStyle]="{'background-color': asignarColor(tile.estado) }" >{{tile.fecha}}</button> 
+        </mat-grid-tile>
+    </mat-grid-list>
+</div>
+
+<div class="leyenda">
+    <mat-grid-list cols="4" rowHeight="5em">
+        <mat-grid-tile><h2 id="alDia"></h2><h3>Al dia</h3></mat-grid-tile>
+        <mat-grid-tile><h2 id="pendiente"></h2><h3>Pendiente</h3></mat-grid-tile>
+        <mat-grid-tile><h2 id="incompleto"></h2><h3>Pago incompleto</h3></mat-grid-tile>
+        <mat-grid-tile><h2 id="enMora"></h2><h3>En mora</h3></mat-grid-tile>
+    </mat-grid-list>
+</div>

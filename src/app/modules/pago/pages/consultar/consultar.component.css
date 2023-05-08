@@ -1,0 +1,72 @@
+h2{
+    width: 5em;
+    text-align: center;
+    padding: 5px;
+    border: 1px solid gray;
+    border-radius: 14px;
+    height: 35px;
+    
+}
+.encabezado{
+    width: 100%;
+    margin: 3em auto 3em auto;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.item-encabezado{
+    padding: 5%;
+    
+}
+.item-encabezado label{
+    font-size: 2em;
+}
+.encabezado button{
+    width: 110px;
+    background-color: #61CE70;
+   
+}
+.encabezado input{
+    width: 95px;
+    margin: 0 20px ;
+    position: relative;
+}
+
+.grilla{
+    width: 60%;
+    margin: auto;
+    display: flexbox;
+    flex-direction: row; /* Establecemos la dirección de los elementos en fila (horizontal) */
+    justify-content: space-between;
+}
+.grilla button{
+    border-radius: 10px;
+}
+
+.leyenda{
+    width: 60%;
+    margin: 70px auto auto auto;
+    justify-content: center;
+    align-items: center;
+}
+
+#alDia{
+    background-color:#61CE70;
+}
+#pendiente{
+    background-color:#BDBDBD;
+}
+
+#incompleto{
+    background-color:#CDDC39;
+}
+
+#enMora{
+    background-color: #F37B72;
+}
+
+.estadoPago{
+    
+    border-radius: 1em;
+}

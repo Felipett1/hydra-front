@@ -1,7 +1,13 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
+import { ConsultarComponent } from './pages/consultar/consultar.component';
 
-const routes: Routes = [];
+const routes: Routes = [
+  {
+    path: "", //http:localhost:4200/inicio/contrato
+    component: ConsultarComponent
+  },
+];
 
 @NgModule({
   imports: [RouterModule.forChild(routes)],
