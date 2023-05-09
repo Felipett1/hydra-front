@@ -6,6 +6,7 @@
             <input matInput formControlName="subcontrato">
             <mat-icon matSuffix>search</mat-icon>
         </mat-form-field>
+        <br>
         <button mat-raised-button color="primary" >Consultar</button>
         <br/>
         <!-- mostrar dependiendo de la condicion -->
@@ -14,20 +15,19 @@
         </mat-hint>
     </form>  
     
-    <fieldset class="item-encabezado">
+    <fieldset class="item-encabezado" *ngIf="hayConsulta">
         <legend>Valor del plan actual</legend>
-        <label>$29.000</label>
+        <label>{{consulta.valorPlan}}</label>
     </fieldset>
 </div>
 
-<div class="grilla">
+<div class="grilla" *ngIf="hayConsulta">
     <mat-grid-list cols="6" rowHeight="60px">
-        <mat-grid-tile  *ngFor="let tile of fechas ">
+        <mat-grid-tile  *ngFor="let tile of listadoPagos ">
         <button mat-raised-button [ngStyle]="{'background-color': asignarColor(tile.estado) }" >{{tile.fecha}}</button> 
         </mat-grid-tile>
     </mat-grid-list>
 </div>
-
 <div class="leyenda">
     <mat-grid-list cols="4" rowHeight="5em">
         <mat-grid-tile><h2 id="alDia"></h2><h3>Al dia</h3></mat-grid-tile>

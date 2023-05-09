@@ -9,11 +9,13 @@ import { PagoService } from '@modules/pago/service/pago.service';
 })
 export class ConsultarComponent implements OnInit{
   formPagos : FormGroup = new FormGroup ({});
-  resultados : boolean = true;
+  consulta!: any;
+  resultados: boolean = true
+  hayConsulta: boolean = false
+  listadoPagos : any = []
 
   constructor(private pagoService : PagoService){}
   
-
   ngOnInit(): void {
     this.formPagos = new FormGroup(
       {
@@ -23,58 +25,6 @@ export class ConsultarComponent implements OnInit{
       ])
     })
   }
-
-
-
-
-
-
-  fechas: any[] = [
-    {
-      fecha: 'ene-22',
-      estado: 1,
-      valor: 29.000
-
-    },
-    {
-      fecha: 'ene-22',
-      estado: 1,
-    },
-    {
-      fecha: 'ene-22',
-      estado: 1,
-    },
-    {
-      fecha: 'ene-22',
-      estado: 1,
-      valor: 29.000
-
-    },
-    {
-      fecha: 'ene-22',
-      estado: 1,
-    },
-    {
-      fecha: 'ene-22',
-      estado: 1,
-    },
-    {
-      fecha: 'ene-22',
-      estado: 3,
-      valor: 29.000
-
-    },
-    {
-      fecha: 'ene-22',
-      estado: 4,
-    },
-    {
-      fecha: 'ene-22',
-      estado: 2,
-    },
-
-  ];
-
   /*
     Estado
     1:al dia 
@@ -98,14 +48,37 @@ export class ConsultarComponent implements OnInit{
     }
   }
 
-  async consultar(){
-    const {subcontrato}= this.formPagos.value
+  async consultar() {
+    const { subcontrato } = this.formPagos.value
     try {
       var respuesta = await this.pagoService.consultarPagos(subcontrato).toPromise();
-      console.log(respuesta)
+      console.log(respuesta.listaPagos.length)
+      if (respuesta.valorPlan) {
+        this.resultados = true;
+        this.hayConsulta = true;
+        this.consulta = respuesta;
+        for (let i = 0; i < respuesta.listaPagos.length; i++) {
+
+          this.listadoPagos.push(
+            {
+              fecha: this.consulta.listaPagos[i].mes,
+              estado: this.consulta.listaPagos[i].estado,
+              valor: this.consulta.listaPagos[i].valor
+            }
+          )
+        }
+        console.log(this.listadoPagos)
+
+      }
+
+      else {
+        this.resultados = false;
+        this.hayConsulta = false;
+      }
+
     } catch (error) {
       console.log("ERROR DE API")
     }
   }
-  
+
 }

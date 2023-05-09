@@ -14,9 +14,16 @@ h2{
     justify-content: center;
     align-items: center;
 }
-
+.encabezado form {
+    text-align: center;
+}
 .item-encabezado{
-    padding: 5%;
+    width: 20%;
+    height: 50px;
+    text-align: center;
+    margin-left: 5em;
+    border-radius: 10px;
+
     
 }
 .item-encabezado label{
@@ -34,7 +41,7 @@ h2{
 }
 
 .grilla{
-    width: 60%;
+    width: 80%;
     margin: auto;
     display: flexbox;
     flex-direction: row; /* Establecemos la dirección de los elementos en fila (horizontal) */
