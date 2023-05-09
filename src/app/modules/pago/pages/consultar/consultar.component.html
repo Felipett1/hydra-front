@@ -1,9 +1,18 @@
 
 <div class="encabezado">
-    <div class="item-encabezado">
-    <label>No. Contrato</label><input type="number">
-    <button mat-raised-button color="primary">Buscar</button>
-    </div>
+    <form [formGroup]="formPagos"(ngSubmit)="consultar()">
+        <mat-form-field appearance="outline">
+            <mat-label>No. Subcontrato</mat-label>
+            <input matInput formControlName="subcontrato">
+            <mat-icon matSuffix>search</mat-icon>
+        </mat-form-field>
+        <button mat-raised-button color="primary" >Consultar</button>
+        <br/>
+        <!-- mostrar dependiendo de la condicion -->
+        <mat-hint *ngIf="!resultados">
+            <strong style="color: crimson">No se encontraron resultados</strong>
+        </mat-hint>
+    </form>  
     
     <fieldset class="item-encabezado">
         <legend>Valor del plan actual</legend>

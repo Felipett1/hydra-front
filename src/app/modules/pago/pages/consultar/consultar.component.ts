@@ -1,11 +1,34 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { PagoService } from '@modules/pago/service/pago.service';
 
 @Component({
   selector: 'app-consultar',
   templateUrl: './consultar.component.html',
   styleUrls: ['./consultar.component.css']
 })
-export class ConsultarComponent {
+export class ConsultarComponent implements OnInit{
+  formPagos : FormGroup = new FormGroup ({});
+  resultados : boolean = true;
+
+  constructor(private pagoService : PagoService){}
+  
+
+  ngOnInit(): void {
+    this.formPagos = new FormGroup(
+      {
+      subcontrato: new FormControl('',
+      [
+        Validators.required
+      ])
+    })
+  }
+
+
+
+
+
+
   fechas: any[] = [
     {
       fecha: 'ene-22',
@@ -74,4 +97,15 @@ export class ConsultarComponent {
         return '';
     }
   }
+
+  async consultar(){
+    const {subcontrato}= this.formPagos.value
+    try {
+      var respuesta = await this.pagoService.consultarPagos(subcontrato).toPromise();
+      console.log(respuesta)
+    } catch (error) {
+      console.log("ERROR DE API")
+    }
+  }
+  
 }

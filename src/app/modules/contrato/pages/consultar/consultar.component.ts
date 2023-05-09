@@ -61,10 +61,12 @@ export class ConsultarComponent {
     var consolidado: any = {}
     try {
       var respuesta = await this.contratoService.consultarCliente(cliente).toPromise();
+      console.log(respuesta)
       if (respuesta.resultados) {
         consolidado.cliente = respuesta.resultados[0]
       }
       respuesta = await this.contratoService.consultarContrato(cliente).toPromise();
+      console.log(respuesta)
       if (respuesta.resultados) {
         consolidado.subcontratos = respuesta.resultados
         for (let i = 0; i < consolidado.subcontratos.length; i++) {

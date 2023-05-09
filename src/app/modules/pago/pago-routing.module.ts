@@ -4,7 +4,7 @@ import { ConsultarComponent } from './pages/consultar/consultar.component';
 
 const routes: Routes = [
   {
-    path: "", //http:localhost:4200/inicio/contrato
+    path: "", //http:localhost:4200/inicio/pago
     component: ConsultarComponent
   },
 ];
