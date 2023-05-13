@@ -1,79 +1,92 @@
-h2{
+h2 {
     width: 5em;
     text-align: center;
     padding: 5px;
     border: 1px solid gray;
     border-radius: 14px;
     height: 35px;
-    
+
 }
-.encabezado{
+
+.encabezado {
     width: 100%;
-    margin: 3em auto 3em auto;
+    margin: 1em auto 1em auto;
     display: flex;
     justify-content: center;
     align-items: center;
 }
+
 .encabezado form {
     text-align: center;
 }
-.item-encabezado{
-    width: 20%;
-    height: 50px;
-    text-align: center;
-    margin-left: 5em;
-    border-radius: 10px;
 
-    
+.item-encabezado {
+    text-align: center;
+    margin-left: 2em;
+    border-radius: 10px;
 }
-.item-encabezado label{
+
+.item-encabezado label {
     font-size: 2em;
 }
-.encabezado button{
+
+.encabezado button {
     width: 110px;
     background-color: #61CE70;
-   
+
 }
-.encabezado input{
+
+.encabezado input {
     width: 95px;
-    margin: 0 20px ;
+    margin: 0 20px;
     position: relative;
 }
 
-.grilla{
+.grilla {
     width: 80%;
     margin: auto;
     display: flexbox;
-    flex-direction: row; /* Establecemos la dirección de los elementos en fila (horizontal) */
+    flex-direction: row;
+    /* Establecemos la dirección de los elementos en fila (horizontal) */
     justify-content: space-between;
 }
-.grilla button{
+
+.grilla button {
     border-radius: 10px;
 }
 
-.leyenda{
-    width: 60%;
-    margin: 70px auto auto auto;
+.leyenda {
+    width: 80%;
+    margin: 2em auto auto auto;
     justify-content: center;
     align-items: center;
 }
 
-#alDia{
-    background-color:#61CE70;
-}
-#pendiente{
-    background-color:#BDBDBD;
+#alDia {
+    background-color: #61CE70;
 }
 
-#incompleto{
-    background-color:#CDDC39;
+#pendiente {
+    background-color: #BDBDBD;
 }
 
-#enMora{
+#incompleto {
+    background-color: #CDDC39;
+}
+
+#enMora {
     background-color: #F37B72;
 }
 
-.estadoPago{
-    
+.estadoPago {
+
     border-radius: 1em;
+}
+
+.btnPago {
+    width: 150px;
+}
+
+h3 {
+    padding-left: 1em;
 }

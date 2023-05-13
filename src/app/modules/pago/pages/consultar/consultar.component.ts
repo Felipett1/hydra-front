@@ -1,5 +1,7 @@
+import { DetallePagoComponent } from './../detalle-pago/detalle-pago.component';
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { MatDialog } from '@angular/material/dialog';
 import { PagoService } from '@modules/pago/service/pago.service';
 
 @Component({
@@ -7,23 +9,23 @@ import { PagoService } from '@modules/pago/service/pago.service';
   templateUrl: './consultar.component.html',
   styleUrls: ['./consultar.component.css']
 })
-export class ConsultarComponent implements OnInit{
-  formPagos : FormGroup = new FormGroup ({});
+export class ConsultarComponent implements OnInit {
+  formPagos: FormGroup = new FormGroup({});
   consulta!: any;
   resultados: boolean = true
   hayConsulta: boolean = false
-  listadoPagos : any = []
+  listadoPagos: any = []
 
-  constructor(private pagoService : PagoService){}
-  
+  constructor(private pagoService: PagoService, public dialog: MatDialog) { }
+
   ngOnInit(): void {
     this.formPagos = new FormGroup(
       {
-      subcontrato: new FormControl('',
-      [
-        Validators.required
-      ])
-    })
+        subcontrato: new FormControl('',
+          [
+            Validators.required
+          ])
+      })
   }
   /*
     Estado
@@ -50,6 +52,7 @@ export class ConsultarComponent implements OnInit{
 
   async consultar() {
     const { subcontrato } = this.formPagos.value
+    this.listadoPagos = []
     try {
       var respuesta = await this.pagoService.consultarPagos(subcontrato).toPromise();
       console.log(respuesta.listaPagos.length)
@@ -59,16 +62,9 @@ export class ConsultarComponent implements OnInit{
         this.consulta = respuesta;
         for (let i = 0; i < respuesta.listaPagos.length; i++) {
 
-          this.listadoPagos.push(
-            {
-              fecha: this.consulta.listaPagos[i].mes,
-              estado: this.consulta.listaPagos[i].estado,
-              valor: this.consulta.listaPagos[i].valor
-            }
-          )
+          this.listadoPagos.push(this.consulta.listaPagos[i])
         }
         console.log(this.listadoPagos)
-
       }
 
       else {
@@ -79,6 +75,12 @@ export class ConsultarComponent implements OnInit{
     } catch (error) {
       console.log("ERROR DE API")
     }
+  }
+
+  detallePago(pago: any) {
+    this.dialog.open(DetallePagoComponent, {
+      data: { pago },
+    })
   }
 
 }
