@@ -1,3 +1,4 @@
+import { CerrarComponent } from './../cerrar/cerrar.component';
 import { BeneficiarioComponent } from './../beneficiario/beneficiario.component';
 import { AfterViewInit, Component, ViewChild } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
@@ -5,7 +6,7 @@ import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 import { ContratoService } from './../../service/contrato.service';
-import { MatDialog } from '@angular/material/dialog';
+import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import { map, Observable, startWith } from 'rxjs';
 import Swal from 'sweetalert2';
 import { Router } from '@angular/router';
@@ -34,14 +35,18 @@ export class ModificarComponent {
     private location: Location) {
     //Se suscribe al agregar un nuevo beneficiario
     this.contratoService.getData().subscribe(beneficiario => {
-      const data = this.beneficiarios.data;
-      if (beneficiario.index >= 0) {
-        data[beneficiario.index] = beneficiario;
+      if (this.beneficiarios) {
+        const data = this.beneficiarios.data;
+        if (beneficiario.index >= 0) {
+          data[beneficiario.index] = beneficiario;
+        } else {
+          data.push(beneficiario)
+        }
+        this.beneficiarios.data = data;
+        this.calcularMensualidadTotal()
       } else {
-        data.push(beneficiario)
+        this.beneficiarios = new MatTableDataSource([beneficiario]);
       }
-      this.beneficiarios.data = data;
-      this.calcularMensualidadTotal()
     });
   }
 
@@ -104,6 +109,15 @@ export class ModificarComponent {
     })
   }
 
+  cerrarSubcontrato() {
+    let subcontrato = this.consulta.subcontrato.id
+    this.dialog.open(CerrarComponent, {
+      data: { subcontrato },
+      maxWidth: '600px',
+      width: '100%'
+    })
+  }
+
   agregarBeneficiario() {
     this.dialog.open(BeneficiarioComponent, {
       data: { accion: 'C' },
@@ -114,8 +128,6 @@ export class ModificarComponent {
     const file = event.target.files[0];
     if (file) {
       const nombreArchivo = file.name.split('.').slice(0, -1).join('.');
-      console.log(nombreArchivo)
-      console.log(this.consulta.subcontrato.id)
       if (file.type !== 'application/pdf') {
         this.alertaAdvertencia('Solo se permiten archivos PDF.')
         this.soporte = ''
@@ -201,7 +213,7 @@ export class ModificarComponent {
         mascota: this.consulta.subcontrato.mascota,
         anticipado: false
       },
-      beneficiarios: this.mapeoBeneficiarios(this.beneficiarios.data)
+      beneficiarios: this.beneficiarios ? this.mapeoBeneficiarios(this.beneficiarios.data) : []
     }
     return data
   }
@@ -223,7 +235,7 @@ export class ModificarComponent {
     let mensualidad = 0
     if (cuota) {
       mensualidad = cuota
-      if (this.beneficiarios.data.length > 0) {
+      if (this.beneficiarios && this.beneficiarios.data.length > 0) {
         this.beneficiarios.data.forEach(beneficiario => {
           if (beneficiario.estado) {
             if (beneficiario.adicional && beneficiario.parentesco != 'MA'

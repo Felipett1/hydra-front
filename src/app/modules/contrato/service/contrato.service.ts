@@ -59,6 +59,11 @@ export class ContratoService {
     return this.http.put(`${this.URL}/subcontrato`, body)
   }
 
+  
+  cerrarSubcontrato(body: any): Observable<any> {
+    return this.http.put(`${this.URL}/cierreSubcontrato`, body)
+  }
+
   //Utilidades
   agregarBeneficiario(item: any) {
     if (this.consulta) {

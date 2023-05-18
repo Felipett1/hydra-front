@@ -249,13 +249,19 @@
         </mat-tab-group>
         <br>
         <div fxLayout="row" fxLayout.xs="column" fxLayoutAlign="center center" style="width: 100%;">
-            <div fxFlex="50%" class="seccionIzquierda">
+            <div  class="seccionIzquierda">
                 <button mat-raised-button color="primary" (click)="volver()">
                     Cancelar
                     <mat-icon>arrow_back</mat-icon>
                 </button>
             </div>
-            <div fxFlex="50%" class="seccionDerecha">
+            <div >
+                <button mat-raised-button color="warn" (click)="cerrarSubcontrato()">
+                    Cerrar Subcontrato
+                    <mat-icon>cancel</mat-icon>
+                </button>
+            </div>
+            <div class="seccionDerecha">
                 <div fxFlex="100%">
                     <button mat-raised-button class="verde" [disabled]="formulario.invalid"
                         (click)="modificarSubContrato()">

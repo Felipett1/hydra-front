@@ -40,7 +40,8 @@
                 </div>
                 <div fxFlex="16%" class="listado">
                     <label>Estado</label>
-                    <p [style.color]="item.mora ? '#B40404' : '#088A29'">{{ item.mora ? 'En mora' : 'Al día' }}</p>
+                    <p [style.color]="item.estado ? item.mora ? '#B40404' : '#088A29' : '083F8A'"
+                        style="font-weight: bold;">{{ item.estado ? item.mora ? 'En mora' : 'Al día' : 'Cerrado'}}</p>
                 </div>
                 <div class="listado">
                     <button mat-raised-button color="primary" (click)="consultarDetalleSubContrato(item)">
@@ -76,7 +77,8 @@
                     </div>
                     <div fxFlex="25%">
                         <label>Estado</label>
-                        <p>{{ consulta?.subcontrato?.mora ? 'En mora' : 'Al día' }}</p>
+                        <p>{{ consulta?.subcontrato?.estado ? consulta?.subcontrato?.mora ? 'En mora' : 'Al día' :
+                            'Cerrado'}}</p>
                     </div>
                 </div>
                 <div fxLayout="row" fxLayout.xs="column">
@@ -280,7 +282,7 @@
         </mat-accordion>
     </div>
 </div>
-<div fxLayout="row" fxLayout.xs="column" fxLayoutAlign="center center" style="width: 100%;" *ngIf="seleccion">
+<div fxLayout="row" fxLayout.xs="column" fxLayoutAlign="center center" style="width: 100%;" *ngIf="seleccion && consulta?.subcontrato?.estado">
     <div class="seccionIzquierda" *ngIf="adminitrador">
         <button mat-raised-button color="warn" (click)="modificar()">
             Modificar

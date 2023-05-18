@@ -23,6 +23,7 @@ import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { PdfViewerModule } from 'ng2-pdf-viewer';
 import { SoporteComponent } from './pages/soporte/soporte.component';
+import { CerrarComponent } from './pages/cerrar/cerrar.component';
 
 
 @NgModule({
@@ -31,7 +32,8 @@ import { SoporteComponent } from './pages/soporte/soporte.component';
     ModificarComponent,
     CrearComponent,
     BeneficiarioComponent,
-    SoporteComponent
+    SoporteComponent,
+    CerrarComponent
   ],
   imports: [
     CommonModule,

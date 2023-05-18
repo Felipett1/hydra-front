@@ -9,6 +9,7 @@ import { Router } from '@angular/router';
 import Swal from 'sweetalert2';
 import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import { DatePipe } from '@angular/common';
+import { CerrarComponent } from '../cerrar/cerrar.component';
 
 @Component({
   selector: 'app-consulta',
@@ -142,7 +143,11 @@ export class ConsultaComponent {
   }
 
   cerrarServicio(servicio: any) {
-    this.contruccion()
+    this.dialogo.open(CerrarComponent, {
+      data: { secuencia : servicio.secuencia },
+      maxWidth: '600px',
+      width: '100%'
+    })
   }
 
   mapeoServicio(servicio: any) {
