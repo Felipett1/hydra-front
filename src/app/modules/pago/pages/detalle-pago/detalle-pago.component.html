@@ -1,1 +1,62 @@
-<p>{{data | json}}</p>
+<h2 mat-dialog-title>Cargar Pago</h2>
+<mat-dialog-content class="mat-typography">
+  <form [formGroup]="formulario">
+    <div
+      fxLayout="row"
+      fxLayout.xs="column"
+      fxLayoutAlign="center center"
+      class="flex"
+      *ngIf="tipoFormulario; else elseBlock">
+
+      <div fxFlex="33%">
+        <mat-form-field>
+          <mat-label>Valor</mat-label>
+          <input matInput [placeholder]="placeholder" formControlName="pago" />
+        </mat-form-field>
+      </div>
+    </div>
+
+    <ng-template 
+    #elseBlock fxLayout="row" fxLayout.xs="column" 
+    fxLayoutAlign="center center" class="flex">
+        <div fxFlex="33%">
+            <mat-form-field>
+                <mat-label>Valor</mat-label>
+                <input matInput [placeholder]="placeholder" formControlName="pago" />
+            </mat-form-field>
+        </div>
+<!--         <div fxFlex="33%">
+            <mat-form-field>
+                <mat-label>Anticipado</mat-label>
+                <input matInput [placeholder]="placeholder" formControlName="anticipado"  />
+            </mat-form-field>
+        </div> -->
+    </ng-template>
+  </form>
+</mat-dialog-content>
+<mat-dialog-actions align="end" *ngIf="tipoFormulario; else btnelse">
+  <button mat-button mat-dialog-close>Cancel</button>
+  <button
+    mat-button
+    [disabled]="formulario.invalid"
+    [mat-dialog-close]="true"
+    (click)="modificarPago()"
+    cdkFocusInitial
+  >
+    Confirmar
+  </button>
+</mat-dialog-actions>
+<ng-template #btnelse align="end">
+  <button mat-button mat-dialog-close>Cancel</button>
+  <button
+    mat-button
+    [disabled]="formulario.invalid"
+    [mat-dialog-close]="true"
+    (click)="cargarPago()"
+    cdkFocusInitial
+  >
+    Confirmar
+  </button>
+</ng-template>
+
+<!-- <p>{{data | json}}</p> -->

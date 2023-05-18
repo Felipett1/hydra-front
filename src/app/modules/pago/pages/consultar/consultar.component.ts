@@ -10,11 +10,13 @@ import { PagoService } from '@modules/pago/service/pago.service';
   styleUrls: ['./consultar.component.css']
 })
 export class ConsultarComponent implements OnInit {
+
   formPagos: FormGroup = new FormGroup({});
   consulta!: any;
   resultados: boolean = true
   hayConsulta: boolean = false
   listadoPagos: any = []
+  
 
   constructor(private pagoService: PagoService, public dialog: MatDialog) { }
 
@@ -55,7 +57,7 @@ export class ConsultarComponent implements OnInit {
     this.listadoPagos = []
     try {
       var respuesta = await this.pagoService.consultarPagos(subcontrato).toPromise();
-      console.log(respuesta.listaPagos.length)
+      
       if (respuesta.valorPlan) {
         this.resultados = true;
         this.hayConsulta = true;
@@ -64,7 +66,7 @@ export class ConsultarComponent implements OnInit {
 
           this.listadoPagos.push(this.consulta.listaPagos[i])
         }
-        console.log(this.listadoPagos)
+        console.log(respuesta)
       }
 
       else {
@@ -79,7 +81,7 @@ export class ConsultarComponent implements OnInit {
 
   detallePago(pago: any) {
     this.dialog.open(DetallePagoComponent, {
-      data: { pago },
+      data: { pago,subcontrato: this.formPagos.value.subcontrato },
     })
   }
 
