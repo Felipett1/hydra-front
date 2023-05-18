@@ -70,9 +70,11 @@ export class ConsultarComponent {
         consolidado.subcontratos = respuesta.resultados
         for (let i = 0; i < consolidado.subcontratos.length; i++) {
           const subcontrato = consolidado.subcontratos[i];
-          respuesta = await this.contratoService.consultarEstadoContrato(subcontrato.id).toPromise();
-          if (respuesta) {
-            consolidado.subcontratos[i].mora = respuesta.resultado
+          if (subcontrato.estado) {
+            respuesta = await this.contratoService.consultarEstadoContrato(subcontrato.id).toPromise();
+            if (respuesta) {
+              consolidado.subcontratos[i].mora = respuesta.resultado
+            }
           }
         }
         this.consulta = consolidado

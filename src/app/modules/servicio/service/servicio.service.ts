@@ -48,6 +48,10 @@ export class ServicioService {
     return this.http.put(`${this.URL}/servicio`, body)
   }
 
+  cerrarServicio(body: any): Observable<any> {
+    return this.http.put(`${this.URL}/servicio/cerrar`, body)
+  }
+
   notificarServicio(body: any): Observable<any> {
     return this.http.post(`${this.URL}/notificacion/servicio`, body)
   }
