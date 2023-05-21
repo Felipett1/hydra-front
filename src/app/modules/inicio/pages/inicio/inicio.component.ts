@@ -3,6 +3,9 @@ import { CookieService } from 'ngx-cookie-service';
 import { MediaMatcher } from '@angular/cdk/layout';
 import { ChangeDetectorRef, Component, OnDestroy } from '@angular/core';
 import Swal from 'sweetalert2';
+import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
+import { ServicioComponent } from '@modules/reporte/pages/servicio/servicio.component';
+import { PagoComponent } from '@modules/reporte/pages/pago/pago.component';
 
 @Component({
   selector: 'app-inicio',
@@ -16,7 +19,7 @@ export class InicioComponent implements OnDestroy {
   private _mobileQueryListener: () => void;
 
   constructor(changeDetectorRef: ChangeDetectorRef, media: MediaMatcher, private cookieService: CookieService,
-    private router: Router) {
+    private router: Router, public dialogo: MatDialog) {
     this.mobileQuery = media.matchMedia('(max-width: 600px)');
     this._mobileQueryListener = () => changeDetectorRef.detectChanges();
     this.mobileQuery.addListener(this._mobileQueryListener);
@@ -50,5 +53,19 @@ export class InicioComponent implements OnDestroy {
       icon: 'warning',
       confirmButtonText: 'Aceptar'
     });
+  }
+
+  reporteServicio() {
+    const dialogConfig = new MatDialogConfig();
+    dialogConfig.maxWidth = '600px';
+    dialogConfig.width = '100%';
+    this.dialogo.open(ServicioComponent, dialogConfig)
+  }
+
+  reportePago() {
+    const dialogConfig = new MatDialogConfig();
+    dialogConfig.maxWidth = '600px';
+    dialogConfig.width = '100%';
+    this.dialogo.open(PagoComponent, dialogConfig)
   }
 }

@@ -15,7 +15,7 @@
         </mat-form-field>
     </div>
     <div fxFlex="30%" class="seccionDerecha">
-        <button mat-raised-button color="primary" [disabled]="formulario.invalid">Generar</button>
-        <p>{{formulario.value | json}}</p>
+        <button mat-raised-button color="primary" [disabled]="formulario.invalid"
+            (click)="generarReporte()">Generar</button>
     </div>
 </div>

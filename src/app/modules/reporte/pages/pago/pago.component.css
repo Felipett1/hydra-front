@@ -1,0 +1,19 @@
+.seccionIzquierda {
+    text-align: right;
+    font-weight: bold;
+    justify-content: center;
+    padding-right: 1%;
+}
+
+.seccionDerecha {
+    padding-left: 1%;
+}
+
+.contenido {
+    margin: 2% 5% 2% 5%;
+}
+
+h1 {
+    font-weight: bold;
+    text-align: center;
+}
