@@ -40,11 +40,18 @@ export class ContratoService {
     return this.http.post(`${this.URL}/subcontrato/IdEstado`, body)
   }
 
-  consultarHistoricoServicios(id: number): Observable<any> {
+  consultarServicioAbierto(id: number): Observable<any> {
     const body = {
       id
     }
-    return this.http.post(`${this.URL}/servicio/subcontrato`, body)
+    return this.http.post(`${this.URL}/servicio/subcontrato/activo`, body)
+  }
+
+  consultarServicioCerrado(id: number): Observable<any> {
+    const body = {
+      id
+    }
+    return this.http.post(`${this.URL}/servicio/subcontrato/cerrado`, body)
   }
 
   consultarCiudades(): Observable<any> {

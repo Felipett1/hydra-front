@@ -24,6 +24,7 @@ import { MatCheckboxModule } from '@angular/material/checkbox';
 import { PdfViewerModule } from 'ng2-pdf-viewer';
 import { SoporteComponent } from './pages/soporte/soporte.component';
 import { CerrarComponent } from './pages/cerrar/cerrar.component';
+import { DetalleComponent } from './pages/detalle/detalle.component';
 
 
 @NgModule({
@@ -33,7 +34,8 @@ import { CerrarComponent } from './pages/cerrar/cerrar.component';
     CrearComponent,
     BeneficiarioComponent,
     SoporteComponent,
-    CerrarComponent
+    CerrarComponent,
+    DetalleComponent
   ],
   imports: [
     CommonModule,

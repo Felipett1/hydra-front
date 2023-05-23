@@ -1,3 +1,4 @@
+import { DetalleComponent } from './../detalle/detalle.component';
 import { CookieService } from 'ngx-cookie-service';
 import { SolicitudService } from './../../../solicitud/service/solicitud.service';
 import { SoporteComponent } from './../soporte/soporte.component';
@@ -24,12 +25,15 @@ export class ConsultarComponent {
   resultados: boolean = true
   seleccion: boolean = false
   @ViewChild('pgtServcios') paginator!: MatPaginator;
+  @ViewChild('pgtServicioCerrado') paginatorServicioCerrado!: MatPaginator;
   @ViewChild('pgtBeneficiario') paginatorBeneficiario!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
   //Ver PDF
   public pdfSoporte: any = null;
-  columasServicio: string[] = ['secuencia', 'fecha_inicial', 'tipo', 'detalle', 'fecha_final'];
+  columasServicio: string[] = ['secuencia', 'fecha_inicial', 'tipo', 'detalle'];
+  columasServicioCerrado: string[] = ['secuencia', 'fecha_inicial', 'tipo', 'detalle', 'consulta'];
   servicios!: MatTableDataSource<any>;
+  serviciosCerrados!: MatTableDataSource<any>;
   mensualidadTotal = 0
   adminitrador: boolean = false
 
@@ -97,6 +101,7 @@ export class ConsultarComponent {
 
   async consultarDetalleSubContrato(subcontrato: any) {
     this.servicios = new MatTableDataSource();
+    this.serviciosCerrados = new MatTableDataSource();
     this.beneficiarios = new MatTableDataSource();
     try {
       this.consulta.subcontrato = subcontrato
@@ -105,13 +110,23 @@ export class ConsultarComponent {
         this.consulta.beneficiarios = respuesta.resultados
       }
 
-      respuesta = await this.contratoService.consultarHistoricoServicios(subcontrato.id).toPromise();
+      //Consulta servicios Abiertos
+      respuesta = await this.contratoService.consultarServicioAbierto(subcontrato.id).toPromise();
       if (respuesta.resultados) {
-        this.consulta.servicios = respuesta.resultados
+        this.consulta.servicioAbierto = respuesta.resultados
       }
 
-      if (this.consulta.servicios) {
-        this.servicios = new MatTableDataSource(this.consulta.servicios);
+      //Consulta servicios Cerrados
+      respuesta = await this.contratoService.consultarServicioCerrado(subcontrato.id).toPromise();
+      if (respuesta.resultados) {
+        this.consulta.servicioCerrado = respuesta.resultados
+      }
+
+      if (this.consulta.servicioAbierto) {
+        this.servicios = new MatTableDataSource(this.consulta.servicioAbierto);
+      }
+      if (this.consulta.servicioCerrado) {
+        this.serviciosCerrados = new MatTableDataSource(this.consulta.servicioCerrado);
       }
       if (this.consulta.beneficiarios) {
         this.beneficiarios = new MatTableDataSource(this.consulta.beneficiarios);
@@ -121,9 +136,8 @@ export class ConsultarComponent {
       // Refrescamos el paginador después de que se muestre la tabla
       setTimeout(() => {
         this.servicios.paginator = this.paginator;
-        //this.servicios.sort = this.sort;
+        this.serviciosCerrados.paginator = this.paginatorServicioCerrado;
         this.beneficiarios.paginator = this.paginatorBeneficiario;
-        //this.beneficiarios.sort = this.sort;
       }, 0);
       this.calcularMensualidadTotal()
     } catch (error) {
@@ -167,6 +181,13 @@ export class ConsultarComponent {
     dialogConfig.width = '100%';
     dialogConfig.data = { soporte };
     this.dialogo.open(SoporteComponent, dialogConfig)
+  }
+
+  verDetalleCierre(servicio: any) {
+    this.dialogo.open(DetalleComponent, {
+      data: servicio,
+      maxWidth: '600px',
+    })
   }
 
   calcularMensualidadTotal() {

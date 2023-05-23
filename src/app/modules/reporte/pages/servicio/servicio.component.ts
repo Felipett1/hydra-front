@@ -2,6 +2,7 @@ import { ReporteService } from './../../service/reporte.service';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { Component } from '@angular/core';
 import * as XLSX from 'xlsx';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-servicio',
@@ -48,6 +49,17 @@ export class ServicioComponent {
       link.click();
       // Liberar la URL creada para el Blob
       URL.revokeObjectURL(url);
+    } else {
+      this.alertaAdvertencia(respuesta.detalle)
     }
+  }
+
+  alertaAdvertencia(mensaje: string): void {
+    Swal.fire({
+      title: 'Alerta',
+      text: mensaje,
+      icon: 'warning',
+      confirmButtonText: 'Aceptar'
+    });
   }
 }
