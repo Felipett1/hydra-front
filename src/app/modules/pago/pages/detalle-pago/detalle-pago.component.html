@@ -5,8 +5,7 @@
       fxLayout="row"
       fxLayout.xs="column"
       fxLayoutAlign="center center"
-      class="flex"
-      *ngIf="tipoFormulario; else elseBlock">
+      class="flex">
 
       <div fxFlex="33%">
         <mat-form-field>
@@ -15,23 +14,6 @@
         </mat-form-field>
       </div>
     </div>
-
-    <ng-template 
-    #elseBlock fxLayout="row" fxLayout.xs="column" 
-    fxLayoutAlign="center center" class="flex">
-        <div fxFlex="33%">
-            <mat-form-field>
-                <mat-label>Valor</mat-label>
-                <input matInput [placeholder]="placeholder" formControlName="pago" />
-            </mat-form-field>
-        </div>
-<!--         <div fxFlex="33%">
-            <mat-form-field>
-                <mat-label>Anticipado</mat-label>
-                <input matInput [placeholder]="placeholder" formControlName="anticipado"  />
-            </mat-form-field>
-        </div> -->
-    </ng-template>
   </form>
 </mat-dialog-content>
 <mat-dialog-actions align="end" *ngIf="tipoFormulario; else btnelse">
@@ -47,6 +29,7 @@
   </button>
 </mat-dialog-actions>
 <ng-template #btnelse align="end">
+  <mat-dialog-actions align="end" >
   <button mat-button mat-dialog-close>Cancel</button>
   <button
     mat-button
@@ -57,6 +40,8 @@
   >
     Confirmar
   </button>
+</mat-dialog-actions>
+
 </ng-template>
 
 <!-- <p>{{data | json}}</p> -->
