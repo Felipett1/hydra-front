@@ -27,7 +27,16 @@ export class ServicioComponent {
   }
 
   async generarReporte() {
-    var respuesta = await this.reporteService.obtenerServicioTiempo(this.formulario.value).toPromise();
+    let fechaFin = this.formulario.value.fechaFin
+    //Se ajusta la hora al finalizar el día para que la consulta tome los pagos del ultimo día
+    fechaFin.setHours(23);
+    fechaFin.setMinutes(59);
+    fechaFin.setSeconds(59);
+    let body = {
+      fechaInicio: this.formulario.value.fechaInicio,
+      fechaFin
+    }
+    var respuesta = await this.reporteService.obtenerServicioTiempo(body).toPromise();
     if (respuesta.resultados) {
       let data = respuesta.resultados
       // Crear una nueva instancia de la hoja de cálculo
@@ -45,7 +54,9 @@ export class ServicioComponent {
       // Crear un enlace de descarga
       const link = document.createElement('a');
       link.href = url;
-      link.download = 'Servicios.xlsx';
+      let fechaI = this.formulario.value.fechaInicio
+      let fechaF = this.formulario.value.fechaFin
+      link.download = `Servicios(${this.formatoFecha(fechaI)} - ${this.formatoFecha(fechaF)}).xlsx`;
       link.click();
       // Liberar la URL creada para el Blob
       URL.revokeObjectURL(url);
@@ -61,5 +72,16 @@ export class ServicioComponent {
       icon: 'warning',
       confirmButtonText: 'Aceptar'
     });
+  }
+
+  formatoFecha(fecha: any) {
+    // Obtener los componentes de la fecha (año, mes y día)
+    var año = fecha.getFullYear();
+    var mes = ('0' + (fecha.getMonth() + 1)).slice(-2); // Agregar cero inicial si el mes es menor a 10
+    var día = ('0' + fecha.getDate()).slice(-2); // Agregar cero inicial si el día es menor a 10
+    // Formatear la fecha en el formato "yyyy-MM-dd"
+    var fechaFormateada = año + '-' + mes + '-' + día;
+
+    return fechaFormateada; // Ejemplo de salida: "2023-05-19"
   }
 }

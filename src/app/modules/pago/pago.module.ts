@@ -14,11 +14,14 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { DetallePagoComponent } from './pages/detalle-pago/detalle-pago.component';
 import { MatDialogModule } from '@angular/material/dialog';
+import { MasivoComponent } from './pages/masivo/masivo.component';
+import { FlexLayoutModule } from '@angular/flex-layout';
 
 @NgModule({
   declarations: [
     ConsultarComponent,
-    DetallePagoComponent
+    DetallePagoComponent,
+    MasivoComponent
   ],
   imports: [
     CommonModule,
@@ -31,7 +34,8 @@ import { MatDialogModule } from '@angular/material/dialog';
     HttpClientModule,
     MatFormFieldModule,
     MatInputModule,
-    MatDialogModule
+    MatDialogModule,
+    FlexLayoutModule
   ]
 })
 export class PagoModule { }

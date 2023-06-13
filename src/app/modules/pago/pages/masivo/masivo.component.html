@@ -1,0 +1,12 @@
+<br />
+<h1>Cargue de pagos masivos</h1>
+
+<div fxLayout="row" fxLayout.xs="column" fxLayoutAlign="center center" style="width: 100%;">
+    <div fxFlex="50%" class="contenido">
+        <input accept=".csv" type="file" formControlName="soporte" (change)="cargarArchivo($event)">
+    </div>
+    <div fxFlex="50%" class="contenido">
+        <button mat-raised-button color="primary" [disabled]="soporte.invalid"
+            (click)="cargarPagos()">Cargar pagos</button>
+    </div>
+</div>
