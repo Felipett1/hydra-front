@@ -1,47 +1,69 @@
 <h2 mat-dialog-title>Cargar Pago</h2>
-<mat-dialog-content class="mat-typography">
+
+<mat-dialog-content class="mat-typography" *ngIf="tipoPago; else tipoPagoElse">
   <form [formGroup]="formulario">
-    <div
-      fxLayout="row"
-      fxLayout.xs="column"
-      fxLayoutAlign="center center"
-      class="flex">
+    <div fxLayout="row" fxLayout.xs="column" fxLayoutAlign="center center" class="flex">
 
       <div fxFlex="33%">
         <mat-form-field>
           <mat-label>Valor</mat-label>
-          <input matInput [placeholder]="placeholder" formControlName="pago" />
+          <input matInput formControlName="pago" />
         </mat-form-field>
+        <div *ngIf="pendiente" class="esperado">
+          <p>Valor esperado: {{valorEsperado}}</p>
+        </div>
+        
       </div>
     </div>
   </form>
 </mat-dialog-content>
+
+<ng-template #tipoPagoElse align="end">
+  <mat-dialog-content>
+    <form [formGroup]="formulario">
+      <div fxLayout="row" fxLayout.xs="column" fxLayoutAlign="center center" class="flex">
+
+        <div fxFlex="33%">
+          <label>Pendiente por pagar: {{consolidadoAnticipado.pendiente}}</label>
+        </div>
+
+        <div fxFlex="33%">
+          
+            <mat-label>Porcentaje Dcto</mat-label>
+            <input matInput formControlName="porcentaje" (keyup)="consolidarAnticipado()" />
+          
+        </div>
+
+        <div fxFlex="33%">
+          <label>Valor a pagar: {{consolidadoAnticipado.pagado}}</label>
+        </div>
+
+        <div fxFlex="33%">
+          <label >Total Descuento: {{descuento}}</label>
+        </div>
+
+      </div>
+    </form>
+  </mat-dialog-content>
+</ng-template>
+
+
 <mat-dialog-actions align="end" *ngIf="tipoFormulario; else btnelse">
   <button mat-button mat-dialog-close>Cancel</button>
-  <button
-    mat-button
-    [disabled]="formulario.invalid"
-    [mat-dialog-close]="true"
-    (click)="modificarPago()"
-    cdkFocusInitial
-  >
-    Confirmar
-  </button>
-</mat-dialog-actions>
-<ng-template #btnelse align="end">
-  <mat-dialog-actions align="end" >
-  <button mat-button mat-dialog-close>Cancel</button>
-  <button
-    mat-button
-    [disabled]="formulario.invalid"
-    [mat-dialog-close]="true"
-    (click)="cargarPago()"
-    cdkFocusInitial
-  >
+  <button mat-button [mat-dialog-close]="true" (click)="modificarPago()"
+    cdkFocusInitial>
     Confirmar
   </button>
 </mat-dialog-actions>
 
+<ng-template #btnelse align="end">
+  <mat-dialog-actions align="end">
+    <button mat-button mat-dialog-close>Cancel</button>
+    <button mat-button [mat-dialog-close]="true" (click)="cargarPago()" cdkFocusInitial>
+      Confirmar
+    </button>
+    <mat-checkbox [(ngModel)]="checked" (click)="validarTipoPago()">Pago Anticipado?</mat-checkbox>
+  </mat-dialog-actions>
 </ng-template>
 
 <!-- <p>{{data | json}}</p> -->

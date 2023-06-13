@@ -29,4 +29,11 @@ export class PagoService {
 
     return this.http.put(`${this.URL}/pago/cargar`, body)
   }
+
+  cargarPagoAnticipado(body : any): Observable<any> {
+
+    return this.http.put(`${this.URL}/pago_anticipado/cargar`, body)
+  }
+
+ 
 }
