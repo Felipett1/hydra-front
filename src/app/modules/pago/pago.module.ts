@@ -17,12 +17,15 @@ import { MatDialogModule } from '@angular/material/dialog';
 import { PagoAnticipadoComponent } from './pages/pago-anticipado/pago-anticipado.component';
 import {MatCheckboxModule} from '@angular/material/checkbox';
 import { FormsModule } from '@angular/forms';
+import { MasivoComponent } from './pages/masivo/masivo.component';
+import { FlexLayoutModule } from '@angular/flex-layout';
 
 @NgModule({
   declarations: [
     ConsultarComponent,
     DetallePagoComponent,
-    PagoAnticipadoComponent
+    PagoAnticipadoComponent,
+    MasivoComponent
   ],
   imports: [
     CommonModule,
@@ -37,7 +40,8 @@ import { FormsModule } from '@angular/forms';
     MatInputModule,
     MatDialogModule,
     MatCheckboxModule,
-    FormsModule
+    FormsModule,
+    FlexLayoutModule
   ]
 })
 export class PagoModule { }

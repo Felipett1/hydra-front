@@ -1,3 +1,4 @@
+import { MasivoComponent } from './../../../pago/pages/masivo/masivo.component';
 import { Router } from '@angular/router';
 import { CookieService } from 'ngx-cookie-service';
 import { MediaMatcher } from '@angular/cdk/layout';
@@ -67,5 +68,12 @@ export class InicioComponent implements OnDestroy {
     dialogConfig.maxWidth = '600px';
     dialogConfig.width = '100%';
     this.dialogo.open(PagoComponent, dialogConfig)
+  }
+
+  pagoMasivo() {
+    const dialogConfig = new MatDialogConfig();
+    dialogConfig.maxWidth = '600px';
+    dialogConfig.width = '100%';
+    this.dialogo.open(MasivoComponent, dialogConfig)
   }
 }
