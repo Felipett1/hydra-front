@@ -1,3 +1,4 @@
+import { PagoService } from '@modules/pago/service/pago.service';
 import { DetalleComponent } from './../detalle/detalle.component';
 import { CookieService } from 'ngx-cookie-service';
 import { SolicitudService } from './../../../solicitud/service/solicitud.service';
@@ -38,7 +39,7 @@ export class ConsultarComponent {
   adminitrador: boolean = false
 
   constructor(private contratoService: ContratoService, private router: Router, public dialogo: MatDialog,
-    private solicitudService: SolicitudService, private cookieService: CookieService) {
+    private solicitudService: SolicitudService, private cookieService: CookieService, private pagoService:PagoService) {
   }
 
   ngOnInit(): void {
@@ -148,6 +149,11 @@ export class ConsultarComponent {
   modificar() {
     this.contratoService.consulta = this.consulta
     this.router.navigate(['/inicio/subcontrato/modificar']);
+  }
+
+  pago() {
+    this.pagoService.consulta = this.consulta
+    this.router.navigate(['/inicio/pago']);
   }
 
   solicitar() {
