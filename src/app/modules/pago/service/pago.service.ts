@@ -9,7 +9,7 @@ import { Observable, Subject } from 'rxjs';
 export class PagoService {
 
   private readonly URL = environment.api
-  private dataSubject = new Subject<any>();
+  public consulta: any
 
   constructor(private http: HttpClient) { }
 

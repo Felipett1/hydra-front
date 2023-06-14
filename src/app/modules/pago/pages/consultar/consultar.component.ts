@@ -17,18 +17,25 @@ export class ConsultarComponent implements OnInit {
   resultados: boolean = true
   hayConsulta: boolean = false
   listadoPagos: any = []
-  
+
 
   constructor(private pagoService: PagoService, public dialog: MatDialog) { }
 
   ngOnInit(): void {
+    let subcontrato = null
+    if (this.pagoService.consulta) {
+      subcontrato = this.pagoService.consulta.subcontrato.id
+    }
     this.formPagos = new FormGroup(
       {
-        subcontrato: new FormControl('',
+        subcontrato: new FormControl(subcontrato ? subcontrato : '',
           [
             Validators.required
           ])
       })
+    if (this.formPagos.value.subcontrato != '') {
+      this.consultar()
+    }
   }
   /*
     Estado
@@ -64,7 +71,7 @@ export class ConsultarComponent implements OnInit {
     this.listadoPagos = []
     try {
       var respuesta = await this.pagoService.consultarPagos(subcontrato).toPromise();
-      
+
       if (respuesta.valorPlan) {
         this.resultados = true;
         this.hayConsulta = true;
@@ -88,9 +95,10 @@ export class ConsultarComponent implements OnInit {
 
   detallePago(pago: any) {
     this.dialog.open(DetallePagoComponent, {
-      data: { pago,
+      data: {
+        pago,
         subcontrato: this.formPagos.value.subcontrato,
-        listado : this.listadoPagos,
+        listado: this.listadoPagos,
         valorTotal: this.consulta.totalCuota
       }
     })
@@ -98,9 +106,9 @@ export class ConsultarComponent implements OnInit {
 
   pagoAnticipado() {
     this.dialog.open(PagoAnticipadoComponent, {
-     // data: { pago,subcontrato: this.formPagos.value.subcontrato },
+      // data: { pago,subcontrato: this.formPagos.value.subcontrato },
     })
   }
-  
+
 
 }
