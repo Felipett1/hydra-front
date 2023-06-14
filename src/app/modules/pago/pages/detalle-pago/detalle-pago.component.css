@@ -8,6 +8,15 @@ mat-option {
     justify-content: center
 }
 .esperado{
-    color: brown;
+    color: rgb(165, 97, 97);
     font-weight: bold;
+    font-style: italic;
+    font-size: 12px;
+    
+}
+.esperado p{
+    display: inline;
+}
+.flex{
+    text-align: justify;
 }

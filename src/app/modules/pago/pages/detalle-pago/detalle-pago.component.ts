@@ -14,7 +14,6 @@ import { Router } from '@angular/router';
 })
 export class DetallePagoComponent {
   formulario: FormGroup = new FormGroup({});
-  placeholder = '';
   tipoFormulario: boolean = true;
   tipoPago: boolean = true;
   checked = false;
@@ -24,6 +23,7 @@ export class DetallePagoComponent {
   valorEsperado!: number;
   pendiente: boolean = false;
   descuento: any;
+  porcentajeInvalido: boolean = false;
 
   constructor(
     @Inject(MAT_DIALOG_DATA) public data: any,
@@ -34,9 +34,7 @@ export class DetallePagoComponent {
   ngOnInit(): void {
     /* this.accion = this.data?.accion; */
     this.formulario = new FormGroup({
-      pago: new FormControl(this.data.pago ? this.data.pago.valor : '', [
-        Validators.required,
-      ]),
+      pago: new FormControl(this.data.pago ? this.data.pago.valor : '', [Validators.required]),
       porcentaje: new FormControl('', [Validators.required]),
     });
     this.validarVista();
@@ -82,29 +80,34 @@ export class DetallePagoComponent {
     //Pago anticipado
     var listado = await this.data.listado;
     var valorPagar = 0;
-    var multiplo = 0;
+    var multiplo = 1;
     var pendientePorPagar = 0;
     var descuento = 0;
-    
+   
     for (let i = 0; i < listado.length; i++) {
       if (!listado[i].secuencia) {
-        multiplo += 1;
+        multiplo ++;
       }
     }
+    
     pendientePorPagar = this.data.valorTotal * multiplo;
     descuento = pendientePorPagar * (this.formulario.value.porcentaje / 100);
     valorPagar = pendientePorPagar - descuento;
+    
 
     if (this.checked == true) {
+      console.log("entro a antiio")
     this.consolidado.pendiente = pendientePorPagar;
     this.consolidado.porcentaje = this.formulario.value.porcentaje;
     this.consolidado.pagado = valorPagar;
     this.consolidado.descuento = descuento;
-
+    
     try {
+      console.log("entro al try")
       var respuesta = await this.pagoService
         .cargarPagoAnticipado(this.consolidado)
         .toPromise();
+        console.log(respuesta )
       if (respuesta && respuesta.codigo == 0) {
         this.alertaExitoso('¡Pago cargado exitosamente!');
       } else {
@@ -112,7 +115,7 @@ export class DetallePagoComponent {
       }
     } catch (error) {
       this.alertaError('No se pudo Modificar el pago');
-    }
+    }return
       //pago normal
     }
     /* subcontrato, fecha, periodo, valor, anticipado,mes */
@@ -120,7 +123,7 @@ export class DetallePagoComponent {
     this.consolidado.subcontrato = this.data.subcontrato;
     this.consolidado.fecha = this.fechaActual;
     this.consolidado.periodo = this.data.pago.periodo;
-    this.consolidado.valor = valorPagar
+    this.consolidado.valor = this.formulario.value.pago
     //this.consolidado.anticipado = null
     this.consolidado.mes = this.data.pago.mes;
     console.log(this.data);
@@ -169,6 +172,17 @@ export class DetallePagoComponent {
       this.tipoPago = true;
     }
     this.consolidarAnticipado();
+  }
+
+  validarInput(){
+    var input = this.formulario.value.porcentaje
+  
+  if (input < 0 || input > 100) {
+    this.porcentajeInvalido=true
+  }else{
+    this.porcentajeInvalido=false
+  }
+
   }
 
   async consolidarAnticipado() {
