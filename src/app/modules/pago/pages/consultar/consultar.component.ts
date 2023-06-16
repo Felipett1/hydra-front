@@ -3,7 +3,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { PagoService } from '@modules/pago/service/pago.service';
-import { PagoAnticipadoComponent } from '../pago-anticipado/pago-anticipado.component';
+
 
 @Component({
   selector: 'app-consultar',
@@ -103,12 +103,4 @@ export class ConsultarComponent implements OnInit {
       }
     })
   }
-
-  pagoAnticipado() {
-    this.dialog.open(PagoAnticipadoComponent, {
-      // data: { pago,subcontrato: this.formPagos.value.subcontrato },
-    })
-  }
-
-
 }

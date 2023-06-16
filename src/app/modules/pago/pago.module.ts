@@ -14,7 +14,6 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { DetallePagoComponent } from './pages/detalle-pago/detalle-pago.component';
 import { MatDialogModule } from '@angular/material/dialog';
-import { PagoAnticipadoComponent } from './pages/pago-anticipado/pago-anticipado.component';
 import {MatCheckboxModule} from '@angular/material/checkbox';
 import { FormsModule } from '@angular/forms';
 import { MasivoComponent } from './pages/masivo/masivo.component';
@@ -24,7 +23,6 @@ import { FlexLayoutModule } from '@angular/flex-layout';
   declarations: [
     ConsultarComponent,
     DetallePagoComponent,
-    PagoAnticipadoComponent,
     MasivoComponent
   ],
   imports: [

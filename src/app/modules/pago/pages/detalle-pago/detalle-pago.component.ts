@@ -96,38 +96,34 @@ export class DetallePagoComponent {
     
 
     if (this.checked == true) {
-      console.log("entro a antiio")
     this.consolidado.pendiente = pendientePorPagar;
     this.consolidado.porcentaje = this.formulario.value.porcentaje;
     this.consolidado.pagado = valorPagar;
     this.consolidado.descuento = descuento;
     
     try {
-      console.log("entro al try")
-      var respuesta = await this.pagoService
+      
+      var respuestaAnticipado = await this.pagoService
         .cargarPagoAnticipado(this.consolidado)
         .toPromise();
-        console.log(respuesta )
-      if (respuesta && respuesta.codigo == 0) {
-        this.alertaExitoso('¡Pago cargado exitosamente!');
-      } else {
-        this.alertaError(respuesta.mensaje);
-      }
+        console.log(respuestaAnticipado.resultado[0].secuencia)
+        
     } catch (error) {
-      this.alertaError('No se pudo Modificar el pago');
-    }return
-      //pago normal
+      this.alertaError('No se pudo Modificar el pago anticipado');
+      return
     }
+      
+    }
+    //pago normal
     /* subcontrato, fecha, periodo, valor, anticipado,mes */
     this.consolidado= {}
     this.consolidado.subcontrato = this.data.subcontrato;
     this.consolidado.fecha = this.fechaActual;
     this.consolidado.periodo = this.data.pago.periodo;
-    this.consolidado.valor = this.formulario.value.pago
-    //this.consolidado.anticipado = null
+    this.checked == true ? this.consolidado.valor = valorPagar : this.consolidado.valor = this.formulario.value.pago
+    this.consolidado.anticipado = respuestaAnticipado.resultado[0].secuencia
     this.consolidado.mes = this.data.pago.mes;
-    console.log(this.data);
-    console.log(this.consolidado);
+
     try {
       var respuesta = await this.pagoService
         .cargarPago(this.consolidado)
@@ -140,9 +136,6 @@ export class DetallePagoComponent {
     } catch (error) {
       this.alertaError('No se pudo Modificar el pago');
     }
-  }
-  async cargarPagoAnticipado() {
-    
   }
 
   alertaExitoso(mensaje: string): void {
