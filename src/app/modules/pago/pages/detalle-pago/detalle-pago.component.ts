@@ -1,9 +1,10 @@
-import { Component, Inject } from '@angular/core';
+import { Component, Inject, ViewChild } from '@angular/core';
 import { MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { PagoService } from '@modules/pago/service/pago.service';
 import Swal from 'sweetalert2';
 import { Router } from '@angular/router';
+
 
 
 
@@ -29,7 +30,8 @@ export class DetallePagoComponent {
     @Inject(MAT_DIALOG_DATA) public data: any,
     private pagoService: PagoService,
     private router: Router
-  ) {}
+  ) { }
+
 
   ngOnInit(): void {
     /* this.accion = this.data?.accion; */
@@ -60,7 +62,7 @@ export class DetallePagoComponent {
   async modificarPago() {
     this.consolidado.valor = this.formulario.value.pago;
     this.consolidado.secuencia = this.data.pago.secuencia;
-    console.log(this.data);
+    
 
     try {
       var respuesta = await this.pagoService
@@ -106,7 +108,7 @@ export class DetallePagoComponent {
       var respuestaAnticipado = await this.pagoService
         .cargarPagoAnticipado(this.consolidado)
         .toPromise();
-        console.log(respuestaAnticipado.resultado[0].secuencia)
+        
         
     } catch (error) {
       this.alertaError('No se pudo Modificar el pago anticipado');
@@ -121,14 +123,16 @@ export class DetallePagoComponent {
     this.consolidado.fecha = this.fechaActual;
     this.consolidado.periodo = this.data.pago.periodo;
     this.checked == true ? this.consolidado.valor = valorPagar : this.consolidado.valor = this.formulario.value.pago
-    this.consolidado.anticipado = respuestaAnticipado.resultado[0].secuencia
+    this.checked == true ? this.consolidado.anticipado = respuestaAnticipado.resultado[0].secuencia : this.consolidado.anticipado = null
     this.consolidado.mes = this.data.pago.mes;
 
     try {
       var respuesta = await this.pagoService
         .cargarPago(this.consolidado)
         .toPromise();
+        
       if (respuesta && respuesta.codigo == 0) {
+        
         this.alertaExitoso('¡Pago cargado exitosamente!');
       } else {
         this.alertaError(respuesta.mensaje);
@@ -136,6 +140,7 @@ export class DetallePagoComponent {
     } catch (error) {
       this.alertaError('No se pudo Modificar el pago');
     }
+
   }
 
   alertaExitoso(mensaje: string): void {
@@ -145,7 +150,7 @@ export class DetallePagoComponent {
       icon: 'success',
       confirmButtonText: 'Aceptar',
       preConfirm: () => {
-        return this.router.navigate(['inicio', 'pago']);
+        return this.pagoService.sendData(this.formulario.value);//this.router.navigate(['inicio', 'pago']);
       },
     });
   }

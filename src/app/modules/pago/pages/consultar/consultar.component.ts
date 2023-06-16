@@ -1,5 +1,5 @@
 import { DetallePagoComponent } from './../detalle-pago/detalle-pago.component';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit,EventEmitter, Output } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { PagoService } from '@modules/pago/service/pago.service';
@@ -17,9 +17,14 @@ export class ConsultarComponent implements OnInit {
   resultados: boolean = true
   hayConsulta: boolean = false
   listadoPagos: any = []
+  @Output() funcionLlamada: EventEmitter<any> = new EventEmitter();
 
 
-  constructor(private pagoService: PagoService, public dialog: MatDialog) { }
+  constructor(private pagoService: PagoService, public dialog: MatDialog) {
+    this.pagoService.getData().subscribe(() => {
+      this.consultar()
+    });
+   }
 
   ngOnInit(): void {
     let subcontrato = null
@@ -59,7 +64,7 @@ export class ConsultarComponent implements OnInit {
       case 5:
         return '#A664CC';
       case 6:
-        return '#F6F4EC';
+        return '#2879FF';
 
       default:
         return '';
@@ -102,5 +107,8 @@ export class ConsultarComponent implements OnInit {
         valorTotal: this.consulta.totalCuota
       }
     })
+  }
+  llamarFuncion (){
+    //this.consultar().emit();
   }
 }
