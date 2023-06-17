@@ -18,12 +18,14 @@ import {MatCheckboxModule} from '@angular/material/checkbox';
 import { FormsModule } from '@angular/forms';
 import { MasivoComponent } from './pages/masivo/masivo.component';
 import { FlexLayoutModule } from '@angular/flex-layout';
+import { AnticipadoComponent } from './pages/anticipado/anticipado.component';
 
 @NgModule({
   declarations: [
     ConsultarComponent,
     DetallePagoComponent,
-    MasivoComponent
+    MasivoComponent,
+    AnticipadoComponent
   ],
   imports: [
     CommonModule,

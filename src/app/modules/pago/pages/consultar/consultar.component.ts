@@ -3,6 +3,7 @@ import { Component, OnInit,EventEmitter, Output } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { PagoService } from '@modules/pago/service/pago.service';
+import { AnticipadoComponent } from '../anticipado/anticipado.component';
 
 
 @Component({
@@ -17,8 +18,6 @@ export class ConsultarComponent implements OnInit {
   resultados: boolean = true
   hayConsulta: boolean = false
   listadoPagos: any = []
-  @Output() funcionLlamada: EventEmitter<any> = new EventEmitter();
-
 
   constructor(private pagoService: PagoService, public dialog: MatDialog) {
     this.pagoService.getData().subscribe(() => {
@@ -50,6 +49,7 @@ export class ConsultarComponent implements OnInit {
     4:en mora
     5:Pago sobrepasa lo esperado
     6:En validacion
+    6:Anticipado
   */
   asignarColor(estado: any) {
     switch (estado) {
@@ -65,6 +65,8 @@ export class ConsultarComponent implements OnInit {
         return '#A664CC';
       case 6:
         return '#2879FF';
+      case 7:
+        return '#D0E799';
 
       default:
         return '';
@@ -72,11 +74,15 @@ export class ConsultarComponent implements OnInit {
   }
 
   async consultar() {
+    
+
+    
     const { subcontrato } = this.formPagos.value
     this.listadoPagos = []
     try {
       var respuesta = await this.pagoService.consultarPagos(subcontrato).toPromise();
 
+ 
       if (respuesta.valorPlan) {
         this.resultados = true;
         this.hayConsulta = true;
@@ -99,16 +105,28 @@ export class ConsultarComponent implements OnInit {
   }
 
   detallePago(pago: any) {
-    this.dialog.open(DetallePagoComponent, {
+    console.log(pago)
+    if(pago.estado==7){
+      this.pagoAnticipado(pago)
+    }else{
+      this.dialog.open(DetallePagoComponent, {
+        data: {
+          pago,
+          subcontrato: this.formPagos.value.subcontrato,
+          listado: this.listadoPagos,
+          valorTotal: this.consulta.totalCuota
+        }
+      })
+    }
+    
+  }
+  pagoAnticipado(pago:any) {
+    this.dialog.open(AnticipadoComponent, {
       data: {
-        pago,
-        subcontrato: this.formPagos.value.subcontrato,
+        
         listado: this.listadoPagos,
-        valorTotal: this.consulta.totalCuota
+        
       }
     })
-  }
-  llamarFuncion (){
-    //this.consultar().emit();
   }
 }
