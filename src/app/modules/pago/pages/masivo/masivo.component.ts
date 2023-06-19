@@ -1,3 +1,4 @@
+import { PagoService } from '@modules/pago/service/pago.service';
 import { Component } from '@angular/core';
 import { FormControl, Validators } from '@angular/forms';
 import Swal from 'sweetalert2';
@@ -11,6 +12,10 @@ export class MasivoComponent {
 
   soporte = new FormControl('', Validators.required);
   archivo: string = ''
+
+  constructor(private pagoService: PagoService) {
+
+  }
 
   cargarArchivo(event: any) {
     const file = event.target.files[0];
@@ -26,7 +31,7 @@ export class MasivoComponent {
         const reader = new FileReader();
         reader.onload = (e: any) => {
           try {
-            var base64textString = e.target.result;
+            var base64textString = e.target.result.split(",")[1];
             this.archivo = base64textString
           } catch (error) {
             this.soporte.setValue(null)
@@ -38,8 +43,11 @@ export class MasivoComponent {
     }
   }
 
-  cargarPagos() {
-    console.log(this.archivo)
+  async cargarPagos() {
+    let body = {
+      archivoEntrada: this.archivo
+    }
+    await this.pagoService.cargarPagoMasivo(body).toPromise()
   }
 
   alertaAdvertencia(mensaje: string): void {

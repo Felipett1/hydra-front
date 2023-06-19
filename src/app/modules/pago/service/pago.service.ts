@@ -35,5 +35,9 @@ export class PagoService {
     return this.http.put(`${this.URL}/pago_anticipado/cargar`, body)
   }
 
+  cargarPagoMasivo(body : any): Observable<any> {
+    return this.http.post(`${this.URL}/pago/masivo`, body)
+  }
+
  
 }
