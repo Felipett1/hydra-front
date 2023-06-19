@@ -10,6 +10,7 @@ export class PagoService {
 
   private readonly URL = environment.api
   public consulta: any
+  private dataSubject = new Subject<any>();
 
   constructor(private http: HttpClient) { }
 
@@ -33,6 +34,15 @@ export class PagoService {
   cargarPagoAnticipado(body : any): Observable<any> {
 
     return this.http.put(`${this.URL}/pago_anticipado/cargar`, body)
+  }
+  
+  sendData(data: any) {
+    
+    this.dataSubject.next(data);
+  }
+
+  getData() {
+    return this.dataSubject.asObservable();
   }
 
   cargarPagoMasivo(body : any): Observable<any> {

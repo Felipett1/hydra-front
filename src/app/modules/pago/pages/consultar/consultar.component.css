@@ -91,7 +91,12 @@ h2 {
     height: 10px;
 }
 #enValidacion{
-    background-color: #F6F4EC;
+    background-color: #2879FF;
+    width: 35px;
+    height: 10px;
+}
+#anticipado{
+    background-color: #D0E799;
     width: 35px;
     height: 10px;
 }
