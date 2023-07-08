@@ -59,3 +59,7 @@ h1.example-app-name {
     border-top: solid 2px;
 
 }
+
+.my-modal .mat-dialog-container {
+    background-color: rgba(0, 0, 0, 1); /* Fondo oscuro con una opacidad del 60% */
+  }

@@ -238,6 +238,16 @@
                         <label>Valor beneficiario</label>
                         <p>${{ consulta?.subcontrato?.adicional | number:'1.0-0'}}</p>
                     </div>
+                    <div fxFlex="25%">
+                        <label>Carnet</label>
+                        <br>
+                        <button mat-raised-button color="primary" (click)="generarCarnet()">
+                            Descargar
+                            <mat-icon>account_box</mat-icon>
+                        </button>
+                        <br>
+                        <pdf-viewer [src]="pdfSoporte"></pdf-viewer>
+                    </div>
                     <div *ngIf="!consulta?.subcontrato?.estado">
                         <label>Fecha de cierre</label>
                         <p>{{ consulta?.subcontrato?.cierre?.fecha_fin | date:'dd/MM/yyyy'}}</p>

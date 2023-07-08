@@ -2,6 +2,7 @@ import { PagoService } from '@modules/pago/service/pago.service';
 import { Component } from '@angular/core';
 import { FormControl, Validators } from '@angular/forms';
 import Swal from 'sweetalert2';
+import * as XLSX from 'xlsx';
 
 @Component({
   selector: 'app-masivo',
@@ -12,6 +13,7 @@ export class MasivoComponent {
 
   soporte = new FormControl('', Validators.required);
   archivo: string = ''
+  archivoSalida: string = ''
 
   constructor(private pagoService: PagoService) {
 
@@ -47,7 +49,37 @@ export class MasivoComponent {
     let body = {
       archivoEntrada: this.archivo
     }
-    await this.pagoService.cargarPagoMasivo(body).toPromise()
+    var respuesta = await this.pagoService.cargarPagoMasivo(body).toPromise()
+    if (respuesta) {
+      if (respuesta.resultado) {
+        this.archivoSalida = respuesta.resultado
+        this.alertaExitoso('Archivo procesado')
+      } else {
+        this.alertaError(respuesta.detalle)
+      }
+    } else {
+      this.alertaError('Error procesando el archivo')
+    }
+  }
+
+  descargarArchivoSalida() {
+    const currentDate = new Date();
+    const formattedDate = currentDate.toLocaleDateString('es-ES', {
+      day: '2-digit',
+      month: '2-digit',
+      year: 'numeric',
+      hour: '2-digit',
+      minute: '2-digit',
+      second: '2-digit'
+    }).replace(/[/\s:]/g, '').replace(',', '');;
+    const workbook = XLSX.read(this.archivoSalida, { type: 'base64' });
+    const excelBuffer = XLSX.write(workbook, { bookType: 'xlsx', type: 'array' });
+    const blob = new Blob([excelBuffer], { type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' });
+    const url = window.URL.createObjectURL(blob);
+    const link = document.createElement('a');
+    link.href = url;
+    link.download = `ResultadoCargueMasivo${formattedDate}.xlsx`;
+    link.click();
   }
 
   alertaAdvertencia(mensaje: string): void {
@@ -65,6 +97,18 @@ export class MasivoComponent {
       text: mensaje,
       icon: 'error',
       confirmButtonText: 'Aceptar'
+    });
+  }
+
+  alertaExitoso(mensaje: string): void {
+    Swal.fire({
+      title: 'Transacción exitosa',
+      text: mensaje,
+      icon: 'success',
+      confirmButtonText: 'Descargar resultados',
+      preConfirm: () => {
+        this.descargarArchivoSalida()
+      }
     });
   }
 }

@@ -74,6 +74,7 @@ export class InicioComponent implements OnDestroy {
     const dialogConfig = new MatDialogConfig();
     dialogConfig.maxWidth = '600px';
     dialogConfig.width = '100%';
+    dialogConfig.panelClass = 'my-modal'
     this.dialogo.open(MasivoComponent, dialogConfig)
   }
 }

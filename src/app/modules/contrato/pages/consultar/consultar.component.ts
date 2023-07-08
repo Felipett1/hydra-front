@@ -12,6 +12,8 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import Swal from 'sweetalert2';
 import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
+import { jsPDF } from 'jspdf';
+import { saveAs } from 'file-saver';
 
 @Component({
   selector: 'app-consultar',
@@ -39,7 +41,7 @@ export class ConsultarComponent {
   adminitrador: boolean = false
 
   constructor(private contratoService: ContratoService, private router: Router, public dialogo: MatDialog,
-    private solicitudService: SolicitudService, private cookieService: CookieService, private pagoService:PagoService) {
+    private solicitudService: SolicitudService, private cookieService: CookieService, private pagoService: PagoService) {
   }
 
   ngOnInit(): void {
@@ -219,6 +221,55 @@ export class ConsultarComponent {
     this.mensualidadTotal = mensualidad
   }
 
+  generarCarnet(): void {
+    console.log('Entro')
+    const imageSrc = 'assets/plantillaCarnet.jpg';
+    const pdf = new jsPDF();
+    const img = new Image();
+    img.src = imageSrc;
+    img.onload = () => {
+      const canvas = document.createElement('canvas');
+      const ctx = canvas.getContext('2d');
+      canvas.width = img.width;
+      canvas.height = img.height;
+
+      if (ctx) {
+        ctx.drawImage(img, 0, 0);
+      }
+      pdf.addImage(canvas.toDataURL('image/jpeg'), 'JPEG', 0, 0, pdf.internal.pageSize.getWidth(), pdf.internal.pageSize.getHeight());
+
+      // Sobreponer texto en el PDF
+      pdf.setFontSize(12);
+      pdf.text(this.insertarSaltoDeLinea(this.consulta.cliente.nombre_completo), 52, 147);
+      pdf.text('Documento', 108, 147);
+      pdf.text(this.consulta.cliente.documento, 110, 152);
+      pdf.text('Plan', 145, 147);
+      pdf.text(this.consulta.subcontrato.plan, 142, 152);
+
+      if (this.consulta.beneficiarios) {
+        let posicion = 162
+        for (let index = 0; index < this.consulta.beneficiarios.length; index++) {
+          const beneficiario = this.consulta.beneficiarios[index];
+          pdf.text(beneficiario.nombre, 60, posicion);
+          posicion += 8
+          if (index == 1 || index == 3 || index == 5) {
+            posicion -= 1
+          }
+        }
+      }
+
+      // Descargar el PDF
+      pdf.save(`Carnet${this.consulta.subcontrato.id}.pdf`);
+    }
+  }
+
+  insertarSaltoDeLinea(texto: string): string {
+    const espacios = texto.split(' ');
+    if (espacios.length >= 2) {
+      espacios.splice(2, 0, '\n');
+    }
+    return espacios.join(' ');
+  }
 
   homologarParentesco(valor: any) {
     switch (valor) {
