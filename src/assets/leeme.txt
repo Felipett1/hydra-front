@@ -1,0 +1,4 @@
+Nota: Se recomienda realizar backup de la imagen base.
+
+Si se requiere modificar el carnet tomar como base la imagen y sobre ella realizar los ajustes.
+*Ojo: No mover la posición porque podria afectar la generación del carnet.
