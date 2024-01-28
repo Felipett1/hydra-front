@@ -1,0 +1,22 @@
+div {
+    /*border: 2px solid;
+    border-color: red;*/
+    padding: 0px 5px 0px 5px;
+}
+
+mat-option {
+    justify-content: center
+}
+.esperado{
+    color: rgb(165, 97, 97);
+    font-weight: bold;
+    font-style: italic;
+    font-size: 12px;
+    
+}
+.esperado p{
+    display: inline;
+}
+.flex{
+    text-align: justify;
+}

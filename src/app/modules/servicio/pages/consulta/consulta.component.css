@@ -1,0 +1,51 @@
+/*div {
+    border: 2px solid;
+    border-color: red;
+}*/
+
+.seccionIzquierda {
+    text-align: right;
+    font-weight: bold;
+    justify-content: center;
+    padding-right: 1%;
+}
+
+.seccionDerecha {
+    padding-left: 1%;
+}
+
+.contenido {
+    margin: 2% 5% 2% 5%;
+}
+
+h1 {
+    font-weight: bold;
+    text-align: center;
+}
+
+.listado {
+    text-align: center;
+}
+
+mat-form-field,
+button {
+    height: 60px;
+}
+
+mat-form-field {
+    width: 60%;
+}
+
+label {
+    font-weight: bold;
+}
+
+.flex {
+    width: 100%;
+    text-align: center;
+    justify-content: center;
+}
+
+.detalle {
+    max-width: 400px;
+}

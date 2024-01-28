@@ -1,0 +1,89 @@
+<div class="encabezado">
+    <form [formGroup]="formPagos" (ngSubmit)="consultar()">
+        <mat-form-field appearance="outline" style="margin-right: 1em;">
+            <mat-label>No. Subcontrato</mat-label>
+            <input matInput formControlName="subcontrato">
+            <mat-icon matSuffix>search</mat-icon>
+        </mat-form-field>
+        <button mat-raised-button color="primary">Consultar</button>
+        <br />
+        <!-- mostrar dependiendo de la condicion -->
+        <mat-hint *ngIf="!resultados">
+            <strong style="color: crimson">No se encontraron resultados</strong>
+        </mat-hint>
+    </form>
+</div>
+<div class="encabezado" *ngIf="hayConsulta">
+    <fieldset class="item-encabezado">
+        <legend>Documento</legend>
+        <label>{{consulta.documento}}</label>
+    </fieldset>
+
+    <fieldset class="item-encabezado">
+        <legend>Grado</legend>
+        <label>{{consulta.grado}}</label>
+    </fieldset>
+</div>
+<div class="encabezado" *ngIf="hayConsulta">
+    <fieldset class="item-encabezado">
+        <legend>Valor del plan actual</legend>
+        <label>${{consulta.valorPlan | number:'1.0-0'}}</label>
+    </fieldset>
+
+    <fieldset class="item-encabezado">
+        <legend>Valor adicionales</legend>
+        <label>${{consulta.adicional | number:'1.0-0'}}</label>
+    </fieldset>
+
+    <fieldset class="item-encabezado">
+        <legend>Valor mascotas</legend>
+        <label>${{consulta.mascota | number:'1.0-0'}}</label>
+    </fieldset>
+
+    <fieldset class="item-encabezado">
+        <legend>Valor total</legend>
+        <label style="color:green">${{consulta.totalCuota | number:'1.0-0'}}</label>
+    </fieldset>
+</div>
+
+<div class="grilla" *ngIf="hayConsulta">
+    <mat-grid-list cols="6" rowHeight="60px">
+        <mat-grid-tile *ngFor="let tile of listadoPagos ">
+            <button mat-raised-button class="btnPago" (click)="detallePago(tile)" [disabled]="!consulta.estadoPlan"
+                [ngStyle]="{'background-color': asignarColor(tile.estado) }">{{tile.mes}}</button>
+        </mat-grid-tile>
+    </mat-grid-list>
+</div>
+<div class="leyenda" *ngIf="hayConsulta">
+    <mat-grid-list cols="3" rowHeight="5em">
+        <mat-grid-tile>
+            <h2 id="alDia"></h2>
+            <h3>Al dia</h3>
+        </mat-grid-tile>
+        <mat-grid-tile>
+            <h2 id="pendiente"></h2>
+            <h3>Pendiente</h3>
+        </mat-grid-tile>
+        <mat-grid-tile>
+            <h2 id="incompleto"></h2>
+            <h3>Pago incompleto</h3>
+        </mat-grid-tile>
+        <mat-grid-tile>
+            <h2 id="enMora"></h2>
+            <h3>En mora</h3>
+        </mat-grid-tile>
+        <mat-grid-tile>
+            <h2 id="sobrepago"></h2>
+            <h3>Sobrepago</h3>
+        </mat-grid-tile>
+        <mat-grid-tile>
+            <h2 id="enValidacion"></h2>
+            <h3>En Validacion</h3>
+        </mat-grid-tile>
+        <mat-grid-tile>
+            <h2 id="anticipado"></h2>
+            <h3>Anticipado</h3>
+        </mat-grid-tile>
+
+    </mat-grid-list>
+</div>

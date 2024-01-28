@@ -17,12 +17,25 @@ import { MatTableModule } from '@angular/material/table';
 import { MatTabsModule } from '@angular/material/tabs';
 import { MatSelectModule } from '@angular/material/select';
 import { MatStepperModule } from '@angular/material/stepper';
+import { BeneficiarioComponent } from './pages/beneficiario/beneficiario.component';
+import { MatDialogModule } from '@angular/material/dialog';
+import { MatAutocompleteModule } from '@angular/material/autocomplete';
+import { MatCheckboxModule } from '@angular/material/checkbox';
+import { PdfViewerModule } from 'ng2-pdf-viewer';
+import { SoporteComponent } from './pages/soporte/soporte.component';
+import { CerrarComponent } from './pages/cerrar/cerrar.component';
+import { DetalleComponent } from './pages/detalle/detalle.component';
+
 
 @NgModule({
   declarations: [
     ConsultarComponent,
     ModificarComponent,
-    CrearComponent
+    CrearComponent,
+    BeneficiarioComponent,
+    SoporteComponent,
+    CerrarComponent,
+    DetalleComponent
   ],
   imports: [
     CommonModule,
@@ -38,7 +51,13 @@ import { MatStepperModule } from '@angular/material/stepper';
     MatTableModule,
     MatTabsModule,
     MatSelectModule,
-    MatStepperModule
+    MatStepperModule,
+    MatDialogModule,
+    MatAutocompleteModule,
+    MatCheckboxModule,
+    PdfViewerModule
   ]
 })
 export class ContratoModule { }
+
+//platformBrowserDynamic().bootstrapModule(ContratoModule);

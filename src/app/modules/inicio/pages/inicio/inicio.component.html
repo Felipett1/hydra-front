@@ -1,7 +1,7 @@
 <div class="example-container" [class.example-is-mobile]="mobileQuery.matches">
     <mat-toolbar color="primary" class="example-toolbar">
         <button mat-icon-button (click)="snav.toggle()"><mat-icon>menu</mat-icon></button>
-        <h1 class="example-app-name">Hydra!</h1>
+        <h1 class="example-app-name">Hydra</h1>
     </mat-toolbar>
     <mat-sidenav-container class="example-sidenav-container" [style.marginTop.px]="mobileQuery.matches ? 56 : 0">
         <mat-sidenav #snav [mode]="mobileQuery.matches ? 'over' : 'side'" [fixedInViewport]="mobileQuery.matches"
@@ -13,52 +13,64 @@
                     </mat-expansion-panel-header>
 
                     <mat-list>
-                        <mat-list-item>Consultar Afiliacion</mat-list-item>
-                        <mat-list-item>Nueva Afiliacion</mat-list-item>
+                        <mat-list-item>
+                            <button mat-button routerLink="/inicio/subcontrato">
+                                Consultar Afiliacion
+                            </button>
+                        </mat-list-item>
+                        <mat-list-item *ngIf="adminitrador">
+                            <button mat-button routerLink="/inicio/subcontrato/crear">
+                                Nueva Afiliacion
+                            </button>
+                        </mat-list-item>
                     </mat-list>
 
                 </mat-expansion-panel>
 
-                <mat-expansion-panel>
+                <mat-expansion-panel *ngIf="adminitrador">
                     <mat-expansion-panel-header>
                         <mat-panel-title>Servicios</mat-panel-title>
                     </mat-expansion-panel-header>
                     <mat-list>
-                        <mat-list-item>Nuevo Servicio</mat-list-item>
-                        <mat-list-item>Item 2</mat-list-item>
-                        <mat-list-item>Item 3</mat-list-item>
+                        <mat-list-item><button mat-button routerLink="/inicio/servicio">Crear
+                                Servicio</button></mat-list-item>
                     </mat-list>
                 </mat-expansion-panel>
 
-                <mat-expansion-panel>
+                <mat-expansion-panel *ngIf="adminitrador">
                     <mat-expansion-panel-header>
                         <mat-panel-title>Pagos</mat-panel-title>
                     </mat-expansion-panel-header>
                     <mat-list>
-                        <mat-list-item>Consultar Pago</mat-list-item>
-                        <mat-list-item>Cargar Pago</mat-list-item>
+                        <mat-list-item><button mat-button routerLink="/inicio/pago">Cargar pago manual</button></mat-list-item>
+                        <mat-list-item><button mat-button (click)="pagoMasivo()">Cargar Pago masivo</button></mat-list-item>
                     </mat-list>
                 </mat-expansion-panel>
 
-                <mat-expansion-panel>
+                <mat-expansion-panel *ngIf="adminitrador">
                     <mat-expansion-panel-header>
                         <mat-panel-title>Reportes</mat-panel-title>
                     </mat-expansion-panel-header>
                     <mat-list>
-                        <mat-list-item>Pagos de Afiliado</mat-list-item>
-                        <mat-list-item>Pagos</mat-list-item>
-                        <mat-list-item>Servicios</mat-list-item>
+                        <mat-list-item><button mat-button (click)="reportePago()">Pagos</button></mat-list-item>
+                        <!--mat-list-item><button mat-button (click)="contruccion()">Historico Pagos</button></mat-list-item-->
+                        <mat-list-item><button mat-button (click)="reporteServicio()">Servicios</button></mat-list-item>
                     </mat-list>
                 </mat-expansion-panel>
 
-                <mat-expansion-panel>
+                <mat-expansion-panel *ngIf="adminitrador">
                     <mat-expansion-panel-header>
                         <mat-panel-title>Configuracion</mat-panel-title>
                     </mat-expansion-panel-header>
                     <mat-list>
-                        <mat-list-item>Cambiar contraseña</mat-list-item>
+                        <mat-list-item><button mat-button routerLink="/inicio/configuracion">Cambiar
+                                contraseña</button></mat-list-item>
                     </mat-list>
                 </mat-expansion-panel>
+                <div class="footer-sidebar">
+                    <button mat-button style="width: 100%; text-align: center;" (click)="cerrarSesion()">Cerrar
+                        sesión</button>
+                </div>
             </mat-accordion>
         </mat-sidenav>
         <mat-sidenav-content>

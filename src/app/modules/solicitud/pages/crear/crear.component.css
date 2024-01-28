@@ -1,0 +1,34 @@
+h1 {
+    font-weight: bold;
+    text-align: center;
+}
+
+h4 {
+    font-weight: bold;
+}
+
+.flex {
+    width: 100%;
+    text-align: center;
+    justify-content: center;
+}
+
+.contenido {
+    margin: 2% 10% 2% 10%;
+}
+
+mat-form-field {
+    width: 100%;
+}
+
+
+.seccionIzquierda {
+    text-align: right;
+    font-weight: bold;
+    justify-content: center;
+    padding-right: 1%;
+}
+
+.seccionDerecha {
+    padding-left: 1%;
+}

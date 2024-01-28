@@ -1,0 +1,52 @@
+<br />
+<h1>Cambiar contraseña</h1>
+<form [formGroup]="formulario">
+    <div fxLayout="row" fxLayout.xs="column" fxLayoutAlign="center center" style="width: 100%;">
+        <div fxFlex="100%" class="contenido">
+            <div fxLayout="row" fxLayout.xs="column">
+                <div fxFlex="100%">
+                    <mat-form-field>
+                        <mat-label>Usuario</mat-label>
+                        <mat-select name="tipo" formControlName="usuario">
+                            <mat-option *ngFor="let usuario of usuarios" [value]="usuario.id">
+                                {{usuario.usuario}}
+                            </mat-option>
+                        </mat-select>
+                    </mat-form-field>
+                </div>
+            </div>
+            <div fxLayout="row" fxLayout.xs="column">
+                <div fxFlex="100%">
+                    <mat-form-field>
+                        <mat-label>Contraseña actual</mat-label>
+                        <input matInput placeholder="Contraseña actual" formControlName="claveActual" [type]="'password'">
+                    </mat-form-field>
+                </div>
+            </div>
+            <div fxLayout="row" fxLayout.xs="column">
+                <div fxFlex="100%">
+                    <mat-form-field>
+                        <mat-label>Nueva contraseña</mat-label>
+                        <input matInput placeholder="Contraseña nueva" formControlName="claveNueva" [type]="'password'">
+                    </mat-form-field>
+                </div>
+            </div>
+            <div fxLayout="row" fxLayout.xs="column">
+                <div fxFlex="100%">
+                    <mat-form-field>
+                        <mat-label>Confirmar nueva contraseña</mat-label>
+                        <input matInput placeholder="Confirmar nueva contraseña" formControlName="confirmarNueva" [type]="'password'">
+                    </mat-form-field>
+                </div>
+            </div>
+            <div fxLayout="row" fxLayout.xs="column">
+                <div fxFlex="100%">
+                    <button mat-raised-button (click)="cambiarClave()">
+                        Cambiar
+                        <mat-icon>change_circle</mat-icon>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>

@@ -1,0 +1,81 @@
+<h2 mat-dialog-title>Beneficiario</h2>
+<mat-dialog-content class="mat-typography">
+    <form [formGroup]="formulario">
+        <div fxLayout="row" fxLayout.xs="column" fxLayoutAlign="center center" class="flex">
+            <div fxFlex="33%">
+                <mat-form-field>
+                    <mat-label>Nombre completo</mat-label>
+                    <input matInput placeholder="Nombre completo" formControlName="nombre">
+                </mat-form-field>
+            </div>
+            <div fxFlex="33%">
+                <mat-form-field>
+                    <mat-label>Edad</mat-label>
+                    <input matInput placeholder="Edad" formControlName="edad">
+                </mat-form-field>
+            </div>
+            <div fxFlex="34%">
+                <mat-form-field>
+                    <mat-label>Parentesco</mat-label>
+                    <mat-select name="Parentesco" formControlName="parentesco">
+                        <mat-option value="M">Madre</mat-option>
+                        <mat-option value="MC">Madre Crianza</mat-option>
+                        <mat-option value="P">Padre</mat-option>
+                        <mat-option value="PC">Padre Crianza</mat-option>
+                        <mat-option value="Su">Suegros</mat-option>
+                        <mat-option value="C">Conyugue o compañera</mat-option>
+                        <mat-option value="H">Hijos</mat-option>
+                        <mat-option value="E">Hermanos</mat-option>
+                        <mat-option value="Cu">Cuñado</mat-option>
+                        <mat-option value="R">Primos</mat-option>
+                        <mat-option value="Ti">Tios</mat-option>
+                        <mat-option value="S">Sobrinos</mat-option>
+                        <mat-option value="N">Nietos</mat-option>
+                        <mat-option value="A">Abuelos</mat-option>
+                        <mat-option value="O">Otros</mat-option>
+                        <mat-option value="MA">Mascota</mat-option>
+                    </mat-select>
+                </mat-form-field>
+            </div>
+        </div>
+        <div fxLayout="row" fxLayout.xs="column" fxLayoutAlign="center center" class="flex">
+            <div fxFlex="33%">
+                <mat-form-field>
+                    <mat-label>Contacto</mat-label>
+                    <input matInput placeholder="Contacto" formControlName="contacto">
+                </mat-form-field>
+            </div>
+            <div fxFlex="33%">
+                <mat-form-field>
+                    <mat-label>Estado</mat-label>
+                    <mat-select name="estado" formControlName="estado">
+                        <mat-option [value]="true">Activo</mat-option>
+                        <mat-option [value]="false">Inactivo</mat-option>
+                    </mat-select>
+                </mat-form-field>
+            </div>
+            <div fxFlex="34%">
+                <mat-checkbox name="adicional" formControlName="adicional">¿Adicional?</mat-checkbox>
+            </div>
+        </div>
+        <div fxLayout="row" fxLayout.xs="column" fxLayoutAlign="center center" class="flex">
+            <div fxFlex="33%">
+                <mat-form-field *ngIf="accion == 'M'">
+                    <mat-label>Ultimo servicio</mat-label>
+                    <mat-select formControlName="emoji">
+                        <mat-option value="local_hospital"><mat-icon>local_hospital</mat-icon></mat-option>
+                        <mat-option value="local_florist"><mat-icon>local_florist</mat-icon></mat-option>
+                        <mat-option value="gavel"><mat-icon>gavel</mat-icon></mat-option>
+                    </mat-select>
+                </mat-form-field>
+            </div>
+            <div fxFlex="67%">
+            </div>
+        </div>
+    </form>
+</mat-dialog-content>
+<mat-dialog-actions align="end">
+    <button mat-button mat-dialog-close>Cancel</button>
+    <button mat-button [disabled]="formulario.invalid" [mat-dialog-close]="true" (click)="confirmar()"
+        cdkFocusInitial>Confirmar</button>
+</mat-dialog-actions>

@@ -1,3 +1,5 @@
+import { SessionGuard } from './core/guards/session.guard';
+import { SoporteComponent } from './modules/contrato/pages/soporte/soporte.component';
 import { InicioComponent } from './modules/inicio/pages/inicio/inicio.component';
 import { NgModule } from '@angular/core';
 import { Router, RouterModule, Routes } from '@angular/router';
@@ -14,11 +16,12 @@ const routes: Routes = [
   {
     path: "inicio", //http://localhost:4200/inicio
     component: InicioComponent,
-    loadChildren: () => import('./modules/inicio/inicio.module').then(m => m.InicioModule)
+    loadChildren: () => import('./modules/inicio/inicio.module').then(m => m.InicioModule),
+    canActivate: [SessionGuard]
   },
   {
     path: "", //http://localhost:4200/
-    redirectTo: "/registro",
+    redirectTo: "/login",
     pathMatch: "full"
   }
 ];

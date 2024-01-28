@@ -1,49 +1,52 @@
 <br />
-<h1>Crear afiliación</h1>
+<h1>Crear subcontrato</h1>
 <div fxLayout="row" fxLayoutAlign="end center" style="width: 100%;">
     <div>
         <mat-form-field>
             <mat-label># Contrato</mat-label>
-            <input matInput placeholder="# Contrato">
+            <input matInput placeholder="# Contrato" [formControl]="idControl">
         </mat-form-field>
     </div>
     <div class="contenido2">
         <label>Fecha</label>
-        <p>16/02/2023</p>
+        <p>{{fechaActual | date:'dd/MM/yyyy'}}</p>
     </div>
 </div>
 <div fxLayout="row" fxLayout.xs="column" fxLayoutAlign="center center" style="width: 100%;">
     <div fxFlex="100%" class="contenido">
-        <mat-stepper class="example-stepper" [orientation]="(stepperOrientation | async)!">
-            <mat-step [stepControl]="firstFormGroup" label="Datos personales">
-                <form [formGroup]="firstFormGroup">
+        <mat-stepper [orientation]="(stepperOrientation | async)!">
+            <mat-step [stepControl]="datosGrupo" label="Datos personales" class="disabled-step">
+                <form [formGroup]="datosGrupo">
+                    <div>
+                        <button mat-button (click)="siguientePaso()">Siguiente</button>
+                    </div>
                     <div fxLayout="row" fxLayout.xs="column" fxLayoutAlign="center center" class="flex">
                         <div fxFlex="25%">
                             <mat-form-field>
                                 <mat-icon matSuffix>tag</mat-icon>
                                 <mat-label>Documento</mat-label>
-                                <input matInput placeholder="Documento">
+                                <input matInput placeholder="Documento" formControlName="documento">
                             </mat-form-field>
                         </div>
                         <div fxFlex="25%">
                             <mat-form-field>
                                 <mat-icon matSuffix>badge</mat-icon>
                                 <mat-label>Nombre completo</mat-label>
-                                <input matInput placeholder="Nombre completo">
+                                <input matInput placeholder="Nombre completo" formControlName="nombre_completo">
                             </mat-form-field>
                         </div>
                         <div fxFlex="25%">
                             <mat-form-field>
                                 <mat-icon matSuffix>phone_iphone</mat-icon>
                                 <mat-label>Celular</mat-label>
-                                <input matInput placeholder="Celular">
+                                <input matInput placeholder="Celular" formControlName="celular">
                             </mat-form-field>
                         </div>
                         <div fxFlex="25%">
                             <mat-form-field>
                                 <mat-icon matSuffix>call</mat-icon>
                                 <mat-label>Telefono</mat-label>
-                                <input matInput placeholder="Telefono">
+                                <input matInput placeholder="Telefono" formControlName="telefono">
                             </mat-form-field>
                         </div>
                     </div>
@@ -52,32 +55,34 @@
                             <mat-form-field>
                                 <mat-icon matSuffix>home</mat-icon>
                                 <mat-label>Dirección</mat-label>
-                                <input matInput placeholder="Dirección">
+                                <input matInput placeholder="Dirección" formControlName="direccion">
                             </mat-form-field>
                         </div>
                         <div fxFlex="25%">
                             <mat-form-field>
                                 <mat-icon matSuffix>pin_drop</mat-icon>
                                 <mat-label>Ciudad</mat-label>
-                                <mat-select name="ciudad">
-                                    <mat-option value="Bogota">Bogotá</mat-option>
-                                    <mat-option value="Medellin">Medellin</mat-option>
-                                    <mat-option value="Cali">Cali</mat-option>
-                                </mat-select>
+                                <input type="text" placeholder="Ciudad" aria-label="Ciudad" matInput
+                                    [matAutocomplete]="auto" name="ciudad" formControlName="ciudad">
+                                <mat-autocomplete #auto="matAutocomplete">
+                                    <mat-option *ngFor="let option of filteredOptions | async" [value]="option">
+                                        {{option}}
+                                    </mat-option>
+                                </mat-autocomplete>
                             </mat-form-field>
                         </div>
                         <div fxFlex="25%">
                             <mat-form-field>
                                 <mat-icon matSuffix>military_tech</mat-icon>
                                 <mat-label>Grado</mat-label>
-                                <input matInput placeholder="Grado">
+                                <input matInput placeholder="Grado" formControlName="grado">
                             </mat-form-field>
                         </div>
                         <div fxFlex="25%">
                             <mat-form-field>
                                 <mat-icon matSuffix>info</mat-icon>
                                 <mat-label>Código</mat-label>
-                                <input matInput placeholder="Código">
+                                <input matInput placeholder="Código" formControlName="codigo">
                             </mat-form-field>
                         </div>
                     </div>
@@ -86,27 +91,28 @@
                             <mat-form-field>
                                 <mat-icon matSuffix>alternate_email</mat-icon>
                                 <mat-label>Correo</mat-label>
-                                <input matInput placeholder="Correo">
+                                <input matInput placeholder="Correo" formControlName="correo">
                             </mat-form-field>
                         </div>
                         <div fxFlex="25%">
                             <mat-form-field>
                                 <mat-icon matSuffix>hub</mat-icon>
-                                <mat-label>Pertenece</mat-label>
-                                <mat-select name="ciudad">
+                                <mat-label>Pagaduria</mat-label>
+                                <mat-select name="ciudad" formControlName="dependencia">
+                                    <mat-option value="Ejército">Ejército</mat-option>
                                     <mat-option value="Armada">Armada</mat-option>
-                                    <mat-option value="Fuerza aerea">Fuerza aérea</mat-option>
-                                    <mat-option value="Policia">Policía</mat-option>
+                                    <mat-option value="Pensionados">Pensionados</mat-option>
+                                    <mat-option value="Policía">Policía</mat-option>
+                                    <mat-option value="Fuerza Aérea">Fuerza Aérea</mat-option>
+                                    <mat-option value="Caja de Retiro">Caja de Retiro</mat-option>
+                                    <mat-option value="Gabinete">Gabinete</mat-option>
+                                    <mat-option value="Comando General">Comando General</mat-option>
+                                    <mat-option value="Individual">Individual</mat-option>
+                                    <mat-option value="Otro">Otro</mat-option>
                                 </mat-select>
                             </mat-form-field>
                         </div>
-                        <div fxFlex="25%">
-                            <mat-form-field>
-                                <mat-icon matSuffix>Otro</mat-icon>
-                                <input matInput placeholder="Otro">
-                            </mat-form-field>
-                        </div>
-                        <div fxFlex="25%">
+                        <div fxFlex="50%">
                         </div>
                     </div>
                     <div fxLayout="row" fxLayout.xs="column" fxLayoutAlign="center center" class="flex">
@@ -114,123 +120,138 @@
                             <mat-form-field>
                                 <mat-icon matSuffix>forum</mat-icon>
                                 <mat-label>Observaciones</mat-label>
-                                <textarea matInput placeholder="Observaciones" rows="4"></textarea>
+                                <textarea matInput placeholder="Observaciones" rows="4"
+                                    formControlName="observaciones"></textarea>
                             </mat-form-field>
                         </div>
                     </div>
-                    <div>
-                        <button mat-button matStepperNext>Siguiente</button>
-                    </div>
                 </form>
             </mat-step>
-            <mat-step [stepControl]="secondFormGroup" label="Beneficiarios">
-                <form [formGroup]="secondFormGroup">
+            <mat-step [stepControl]="beneficiariosGrupo" label="Beneficiarios" class="disabled-step">
+                <form [formGroup]="beneficiariosGrupo">
                     <div>
-                        <table mat-table [dataSource]="dataSource" matSort>
-
+                        <button mat-button matStepperPrevious>Atrás</button>
+                        <button mat-button matStepperNext>Siguiente</button>
+                    </div>
+                    <div>
+                        <table mat-table [dataSource]="beneficiarios" *ngIf="beneficiarios.data.length > 0">
                             <ng-container matColumnDef="nombre">
-                                <th mat-header-cell *matHeaderCellDef mat-sort-header> Nombre </th>
+                                <th mat-header-cell *matHeaderCellDef> Nombre </th>
                                 <td mat-cell *matCellDef="let row"> {{row.nombre}} </td>
                             </ng-container>
 
                             <ng-container matColumnDef="edad">
-                                <th mat-header-cell *matHeaderCellDef mat-sort-header> Edad </th>
+                                <th mat-header-cell *matHeaderCellDef> Edad </th>
                                 <td mat-cell *matCellDef="let row"> {{row.edad}} años </td>
                             </ng-container>
 
                             <ng-container matColumnDef="parentesco">
-                                <th mat-header-cell *matHeaderCellDef mat-sort-header> Parentesco </th>
-                                <td mat-cell *matCellDef="let row"> {{row.parentesco}} </td>
+                                <th mat-header-cell *matHeaderCellDef> Parentesco </th>
+                                <td mat-cell *matCellDef="let row"> {{homologarParentesco(row.parentesco)}} </td>
                             </ng-container>
 
                             <ng-container matColumnDef="contacto">
-                                <th mat-header-cell *matHeaderCellDef mat-sort-header> Contacto </th>
+                                <th mat-header-cell *matHeaderCellDef> Contacto </th>
                                 <td mat-cell *matCellDef="let row"> {{row.contacto}} </td>
                             </ng-container>
 
-                            <ng-container matColumnDef="emoji">
-                                <th mat-header-cell *matHeaderCellDef mat-sort-header> </th>
-                                <td mat-cell *matCellDef="let row"> {{row.emoji}} </td>
+                            <ng-container matColumnDef="adicional">
+                                <th mat-header-cell *matHeaderCellDef>Adicional</th>
+                                <td mat-cell *matCellDef="let row">{{row.adicional ? "Si" : "No"}}
+                                </td>
+                            </ng-container>
+
+                            <ng-container matColumnDef="estado">
+                                <th mat-header-cell *matHeaderCellDef>Estado</th>
+                                <td mat-cell *matCellDef="let row">{{row.estado ? "Activo" :
+                                    "Inactivo"}}</td>
                             </ng-container>
 
                             <ng-container matColumnDef="borrar">
-                                <th mat-header-cell *matHeaderCellDef mat-sort-header></th>
-                                <td mat-cell *matCellDef="let row">
-                                    <button mat-mini-fab color="warn">
+                                <th mat-header-cell *matHeaderCellDef></th>
+                                <td mat-cell *matCellDef="let row; let i = index">
+                                    <button mat-mini-fab color="warn" (click)="eliminarBeneficiario(i)">
                                         <mat-icon>delete</mat-icon>
                                     </button>
                                 </td>
                             </ng-container>
-
-
                             <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
                             <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
                         </table>
-
-                        <mat-paginator [pageSizeOptions]="[5, 10, 25, 100]"
-                            aria-label="Select page of users"></mat-paginator>
                     </div>
-
+                    <br>
                     <div fxLayout="column" fxLayoutAlign="center center" style="width: 100%;">
                         <div fxFlex="100%">
-                            <button mat-raised-button color="yellow" class="amarillo">
+                            <button mat-raised-button color="yellow" class="amarillo" (click)="agregarBeneficiario()">
                                 Nuevo beneficiario
                                 <mat-icon>add</mat-icon>
                             </button>
                         </div>
                     </div>
-                    <div>
-                        <button mat-button matStepperPrevious>Atrás</button>
-                        <button mat-button matStepperNext>Siguiente</button>
-                    </div>
                 </form>
             </mat-step>
-            <mat-step [stepControl]="thirdFormGroup" label="Plan">
-                <form [formGroup]="thirdFormGroup">
+            <mat-step [stepControl]="planGrupo" label="Plan" class="disabled-step">
+                <form [formGroup]="planGrupo">
+                    <div>
+                        <button mat-button matStepperPrevious>Atrás</button>
+                        <button mat-button class="azul" (click)="crearSubContrato()"
+                            [disabled]="planGrupo.invalid || datosGrupo.invalid">Enviar</button>
+                    </div>
                     <div fxLayout="row" fxLayout.xs="column" fxLayoutAlign="center center" class="flex">
                         <div fxFlex="25%">
                             <mat-form-field>
                                 <mat-label>Tipo plan</mat-label>
-                                <mat-select name="tipo">
+                                <mat-select name="tipo" formControlName="plan">
+                                    <mat-option value="Esmeralda">Esmeralda</mat-option>
+                                    <mat-option value="Rubí">Rubí</mat-option>
                                     <mat-option value="Zafiro">Zafiro</mat-option>
-                                    <mat-option value="Oro">Oro</mat-option>
-                                    <mat-option value="Plata">Plata</mat-option>
-                                    <mat-option value="Basico">Basico</mat-option>
+                                    <mat-option value="Diamante">Diamante</mat-option>
+                                    <mat-option value="Otro">Otro</mat-option>
                                 </mat-select>
                             </mat-form-field>
                         </div>
                         <div fxFlex="25%">
                             <mat-form-field>
-                                <mat-label>Costo plan</mat-label>
-                                <input matInput placeholder="Costo plan">
+                                <mat-label>Cuota mensual</mat-label>
+                                <input type="number" matInput placeholder="Cuota mensual" formControlName="valor"
+                                    (input)="calcularValorTotal()">
                             </mat-form-field>
                         </div>
                         <div fxFlex="25%">
                             <mat-form-field>
                                 <mat-label># de cuotas</mat-label>
-                                <mat-select name="cuotas">
-                                    <mat-option value="12">12</mat-option>
-                                    <mat-option value="24">24</mat-option>
-                                    <mat-option value="36">36</mat-option>
-                                    <mat-option value="48">48</mat-option>
-                                </mat-select>
+                                <input type="number" matInput placeholder="# de cuotas" formControlName="cuotas"
+                                    (input)="calcularValorTotal()">
                             </mat-form-field>
                         </div>
                         <div fxFlex="25%">
-                            <label>Valor mensual</label>
-                            <p>$XXXXXX</p>
+                            <label>Valor Contrato</label>
+                            <p>${{valor_total | number:'1.0-0'}}</p>
                         </div>
                     </div>
-                    <div fxLayout="row" fxLayout.xs="column" class="flex">
-                        <div>
+                    <div fxLayout="row" fxLayout.xs="column" fxLayoutAlign="center center" class="flex">
+                        <div fxFlex="25%">
                             <mat-form-field>
-                                <mat-label>Adjuntar soporte</mat-label>
-                                <input matInput>
+                                <mat-label>Beneficiario adicional</mat-label>
+                                <input matInput type="number" placeholder="Valor adicional" formControlName="adicional"
+                                    (input)="calcularMensualidadTotal()">
                             </mat-form-field>
                         </div>
-                    </div>
-                    <div>
-                        <button mat-button matStepperPrevious>Atrás</button>
+                        <div fxFlex="25%">
+                            <mat-form-field>
+                                <mat-label>Mascota</mat-label>
+                                <input matInput type="number" placeholder="Valor mascota" formControlName="mascota"
+                                    (input)="calcularMensualidadTotal()">
+                            </mat-form-field>
+                        </div>
+                        <div fxFlex="25%">
+                            <label>Mensualidad total</label>
+                            <p>${{mensualidadTotal | number:'1.0-0'}}</p>
+                        </div>
+                        <div fxFlex="25%">
+                            <label>Adjuntar soporte</label><br>
+                            <input accept=".pdf" type="file" formControlName="soporte" (change)="cargarSoporte($event)">
+                        </div>
                     </div>
                 </form>
             </mat-step>

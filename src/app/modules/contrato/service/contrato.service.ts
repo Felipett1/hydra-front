@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
+import { Observable, Subject } from 'rxjs';
 import { environment } from 'src/environments/environments';
 
 @Injectable({
@@ -9,6 +9,8 @@ import { environment } from 'src/environments/environments';
 export class ContratoService {
 
   private readonly URL = environment.api
+  public consulta: any
+  private dataSubject = new Subject<any>();
 
   constructor(private http: HttpClient) {
   }
@@ -17,55 +19,86 @@ export class ContratoService {
     const body = {
       cliente
     }
-    return this.http.post(`${this.URL}/contrato/cliente`, body)
+    return this.http.post(`${this.URL}/subcontrato/cliente`, body)
   }
 
   consultarCliente(cliente: number): Observable<any> {
-    const body = {
-      cliente
-    }
     return this.http.get(`${this.URL}/cliente/${cliente}`)
   }
 
-  consultarBeneficiario(contrato: number): Observable<any> {
+  consultarBeneficiario(subcontrato: number): Observable<any> {
     const body = {
-      contrato
+      subcontrato
     }
     return this.http.post(`${this.URL}/beneficiario`, body)
   }
 
-  consultarEstadoContrato(cliente: number): Observable<any> {
-    const body = {
-      cliente
-    }
-    return this.http.post(`${this.URL}/contrato/clienteEstado`, body)
-  }
-
-  consultarHistoricoServicios(id: number): Observable<any> {
+  consultarEstadoContrato(id: number): Observable<any> {
     const body = {
       id
     }
-    return this.http.post(`${this.URL}/servicio/contrato`, body)
+    return this.http.post(`${this.URL}/subcontrato/IdEstado`, body)
   }
 
-  crear(usuario: string): Observable<any> {
+  consultarServicioAbierto(id: number): Observable<any> {
     const body = {
-      usuario
+      id
     }
-    return this.http.post(`${this.URL}/notificacion/Recuperacion`, body)
+    return this.http.post(`${this.URL}/servicio/subcontrato/activo`, body)
   }
 
-  modificar(usuario: string): Observable<any> {
+  consultarServicioCerrado(id: number): Observable<any> {
     const body = {
-      usuario
+      id
     }
-    return this.http.post(`${this.URL}/notificacion/Recuperacion`, body)
+    return this.http.post(`${this.URL}/servicio/subcontrato/cerrado`, body)
   }
 
-  cerrar(usuario: string): Observable<any> {
+  consultarServicioGeneral(id: number): Observable<any> {
     const body = {
-      usuario
+      id
     }
-    return this.http.post(`${this.URL}/notificacion/Recuperacion`, body)
+    return this.http.post(`${this.URL}/servicio/subcontrato`, body)
+  }
+
+  consultarCiudades(): Observable<any> {
+    return this.http.get(`https://www.datos.gov.co/resource/xdk5-pm3f.json`)
+  }
+
+  crearSubcontrato(body: any): Observable<any> {
+    return this.http.post(`${this.URL}/subcontrato`, body)
+  }
+
+  modificarSubcontrato(body: any): Observable<any> {
+    return this.http.put(`${this.URL}/subcontrato`, body)
+  }
+
+
+  cerrarSubcontrato(body: any): Observable<any> {
+    return this.http.put(`${this.URL}/cierreSubcontrato`, body)
+  }
+
+  //Utilidades
+  agregarBeneficiario(item: any) {
+    if (this.consulta) {
+      if (this.consulta.beneficiarios) {
+        this.consulta.beneficiarios.push(item)
+      } else {
+        this.consulta.beneficiarios = [item]
+      }
+    }
+  }
+
+  modificarBeneficiario(item: any, index: any) {
+    //console.log(this.consulta)
+    //this.consulta.beneficiarios[index] = item;
+  }
+
+  sendData(data: any): void {
+    this.dataSubject.next(data);
+  }
+
+  getData(): Subject<any> {
+    return this.dataSubject;
   }
 }

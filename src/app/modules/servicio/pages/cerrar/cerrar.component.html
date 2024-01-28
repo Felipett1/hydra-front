@@ -1,0 +1,19 @@
+<h1 mat-dialog-title class="titulo">Cerrar Servicio</h1>
+<mat-dialog-content class="mat-typography">
+    <form [formGroup]="formulario">
+        <div fxLayout="row" fxLayout.xs="column" fxLayoutAlign="center center">
+            <div fxFlex="100%">
+                <mat-form-field>
+                    <mat-label>Detalle del cierre</mat-label>
+                    <textarea matInput placeholder="Indique los detalles del cierre para este servicio..." formControlName="detalle_final"
+                        rows="4"></textarea>
+                </mat-form-field>
+            </div>
+        </div>
+    </form>
+</mat-dialog-content>
+<mat-dialog-actions align="end">
+    <button mat-button mat-dialog-close>Cancel</button>
+    <button mat-button [disabled]="formulario.invalid" [mat-dialog-close]="true" (click)="confirmar()"
+        cdkFocusInitial>Confirmar</button>
+</mat-dialog-actions>

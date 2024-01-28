@@ -6,10 +6,17 @@ import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatGridListModule } from '@angular/material/grid-list';
+import { CookieService } from 'ngx-cookie-service';
+import { MatDialogModule } from '@angular/material/dialog';
+import { MatDatepickerModule } from '@angular/material/datepicker';
+import { DatePipe } from '@angular/common';
+import { MatNativeDateModule } from '@angular/material/core';
+
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
+ 
   ],
   imports: [
     BrowserModule,
@@ -17,13 +24,17 @@ import { MatGridListModule } from '@angular/material/grid-list';
     HttpClientModule,
     BrowserAnimationsModule,
     MatFormFieldModule,
-    MatGridListModule
+    MatGridListModule,
+    MatDialogModule,
+    DatePipe,
+    MatDatepickerModule,
+    MatNativeDateModule
   ],
   exports: [
     MatFormFieldModule,
     MatGridListModule
   ],
-  providers: [],
+  providers: [CookieService, MatDatepickerModule],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

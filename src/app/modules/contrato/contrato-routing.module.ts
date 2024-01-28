@@ -1,3 +1,4 @@
+import { SoporteComponent } from './pages/soporte/soporte.component';
 import { CrearComponent } from './pages/crear/crear.component';
 import { ModificarComponent } from './pages/modificar/modificar.component';
 import { ConsultarComponent } from './pages/consultar/consultar.component';
@@ -16,6 +17,10 @@ const routes: Routes = [
   {
     path: "crear", //http:localhost:4200/inicio/contrato/crear
     component: CrearComponent
+  },
+  {
+    path: "soporte", //http:localhost:4200/inicio/contrato/crear
+    component: SoporteComponent
   }
 ];
 

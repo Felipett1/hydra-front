@@ -1,0 +1,21 @@
+<br />
+<h1>Reporte de servicios en un periodo de tiempo</h1>
+
+<div fxLayout="row" fxLayout.xs="column" fxLayoutAlign="center center" style="width: 100%;">
+    <div fxFlex="70%" class="seccionIzquierda">
+        <mat-form-field>
+            <mat-label>Ingrese un rango de fechas</mat-label>
+            <mat-date-range-input [rangePicker]="picker" [formGroup]="formulario">
+                <input matStartDate placeholder="Fecha inicio" formControlName="fechaInicio">
+                <input matEndDate placeholder="Fecha fin" formControlName="fechaFin">
+            </mat-date-range-input>
+            <mat-hint>MM/DD/YYYY – MM/DD/YYYY</mat-hint>
+            <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+            <mat-date-range-picker #picker></mat-date-range-picker>
+        </mat-form-field>
+    </div>
+    <div fxFlex="30%" class="seccionDerecha">
+        <button mat-raised-button color="primary" [disabled]="formulario.invalid"
+            (click)="generarReporte()">Generar</button>
+    </div>
+</div>

@@ -1,0 +1,11 @@
+.contenido {
+    margin: 2% 5% 2% 5%;
+}
+
+h1 {
+    font-weight: bold;
+    text-align: center;
+}
+.my-modal {
+    background-color: rgba(0, 0, 0, 0.6); /* Fondo oscuro con una opacidad del 60% */
+  }

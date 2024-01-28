@@ -1,0 +1,18 @@
+<h1 mat-dialog-title class="titulo">Detalle cierre servicio</h1>
+<mat-dialog-content class="mat-typography">
+    <div fxLayout="row" fxLayout.xs="column">
+        <div>
+            <label>Fecha de cierre:</label>
+            <p>{{ servicio.fecha_final | date:'dd/MM/yyyy'}}</p>
+        </div>
+    </div>
+    <div fxLayout="row" fxLayout.xs="column">
+        <div>
+            <label>Detalle:</label>
+            <p>{{ servicio.detalle_final}}</p>
+        </div>
+    </div>
+</mat-dialog-content>
+<mat-dialog-actions align="end">
+    <button mat-button mat-dialog-close>Cerrar</button>
+</mat-dialog-actions>

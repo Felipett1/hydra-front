@@ -46,3 +46,20 @@ h1.example-app-name {
        `<body>` to be our scrolling element for mobile layouts. */
     flex: 1 0 auto;
 }
+
+.example-toolbar {
+    background-color: #73B490;
+}
+
+.footer-sidebar {
+    width: 100%;
+    position: absolute;
+    display: inline-block;
+    bottom: 1em;
+    border-top: solid 2px;
+
+}
+
+.my-modal .mat-dialog-container {
+    background-color: rgba(0, 0, 0, 1); /* Fondo oscuro con una opacidad del 60% */
+  }
