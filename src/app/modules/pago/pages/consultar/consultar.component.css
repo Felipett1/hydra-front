@@ -85,17 +85,20 @@ h2 {
     width: 35px;
     height: 10px;
 }
-#sobrepago{
+
+#sobrepago {
     background-color: #A664CC;
     width: 35px;
     height: 10px;
 }
-#enValidacion{
+
+#enValidacion {
     background-color: #2879FF;
     width: 35px;
     height: 10px;
 }
-#anticipado{
+
+#anticipado {
     background-color: #D0E799;
     width: 35px;
     height: 10px;
@@ -112,4 +115,8 @@ h2 {
 
 h3 {
     padding-left: 1em;
+}
+
+.contenido {
+    margin: 2% 5% 2% 5%;
 }

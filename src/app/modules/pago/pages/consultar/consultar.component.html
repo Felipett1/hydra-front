@@ -15,6 +15,17 @@
 </div>
 <div class="encabezado" *ngIf="hayConsulta">
     <fieldset class="item-encabezado">
+        <legend>Documento</legend>
+        <label>{{consulta.documento}}</label>
+    </fieldset>
+
+    <fieldset class="item-encabezado">
+        <legend>Grado</legend>
+        <label>{{consulta.grado}}</label>
+    </fieldset>
+</div>
+<div class="encabezado" *ngIf="hayConsulta">
+    <fieldset class="item-encabezado">
         <legend>Valor del plan actual</legend>
         <label>${{consulta.valorPlan | number:'1.0-0'}}</label>
     </fieldset>
@@ -38,8 +49,7 @@
 <div class="grilla" *ngIf="hayConsulta">
     <mat-grid-list cols="6" rowHeight="60px">
         <mat-grid-tile *ngFor="let tile of listadoPagos ">
-            <button mat-raised-button class="btnPago"
-            (click)="detallePago(tile)"
+            <button mat-raised-button class="btnPago" (click)="detallePago(tile)" [disabled]="!consulta.estadoPlan"
                 [ngStyle]="{'background-color': asignarColor(tile.estado) }">{{tile.mes}}</button>
         </mat-grid-tile>
     </mat-grid-list>

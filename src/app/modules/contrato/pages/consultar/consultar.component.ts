@@ -22,7 +22,8 @@ import { jsPDF } from 'jspdf';
 })
 export class ConsultarComponent {
   formulario: FormGroup = new FormGroup({});
-  displayedColumns: string[] = ['nombre', 'edad', 'parentesco', 'contacto', 'adicional', 'estado', 'emoji'];
+  fgSubcontrato: FormGroup = new FormGroup({});
+  displayedColumns: string[] = ['nombre', 'edad', 'parentesco', 'estado'];
   beneficiarios!: MatTableDataSource<any>;
   consulta!: any
   resultados: boolean = true
@@ -33,10 +34,9 @@ export class ConsultarComponent {
   @ViewChild(MatSort) sort!: MatSort;
   //Ver PDF
   public pdfSoporte: any = null;
-  columasServicio: string[] = ['secuencia', 'fecha_inicial', 'tipo', 'detalle'];
-  columasServicioCerrado: string[] = ['secuencia', 'fecha_inicial', 'tipo', 'detalle', 'consulta'];
+  columasServicio: string[] = ['secuencia', 'fecha_inicial', 'tipo', 'detalle', 'fecha_final'];
   servicios!: MatTableDataSource<any>;
-  serviciosCerrados!: MatTableDataSource<any>;
+  //serviciosCerrados!: MatTableDataSource<any>;
   mensualidadTotal = 0
   adminitrador: boolean = false
 
@@ -48,6 +48,14 @@ export class ConsultarComponent {
     this.formulario = new FormGroup(
       {
         cliente: new FormControl('',
+          [
+            Validators.required
+          ])
+      }
+    )
+    this.fgSubcontrato = new FormGroup(
+      {
+        subcontrato: new FormControl('',
           [
             Validators.required
           ])
@@ -68,7 +76,6 @@ export class ConsultarComponent {
     var consolidado: any = {}
     try {
       var respuesta = await this.contratoService.consultarCliente(cliente).toPromise();
-      console.log(respuesta)
       if (respuesta.resultados) {
         consolidado.cliente = respuesta.resultados[0]
       }
@@ -85,7 +92,7 @@ export class ConsultarComponent {
           }
         }
         this.consulta = consolidado
-        if (consolidado.subcontratos.length == 1) {
+        if (consolidado.subcontratos) {
           await this.consultarDetalleSubContrato(consolidado.subcontratos[0])
           this.seleccion = true
         } else {
@@ -104,33 +111,37 @@ export class ConsultarComponent {
 
   async consultarDetalleSubContrato(subcontrato: any) {
     this.servicios = new MatTableDataSource();
-    this.serviciosCerrados = new MatTableDataSource();
+    //this.serviciosCerrados = new MatTableDataSource();
     this.beneficiarios = new MatTableDataSource();
     try {
       this.consulta.subcontrato = subcontrato
+      console.log(subcontrato.id)
+      this.fgSubcontrato.get('subcontrato')?.setValue(subcontrato)
       var respuesta = await this.contratoService.consultarBeneficiario(subcontrato.id).toPromise();
       if (respuesta.resultados) {
         this.consulta.beneficiarios = respuesta.resultados
       }
 
-      //Consulta servicios Abiertos
-      respuesta = await this.contratoService.consultarServicioAbierto(subcontrato.id).toPromise();
+      //Consulta servicios General
+      respuesta = await this.contratoService.consultarServicioGeneral(subcontrato.id).toPromise();
       if (respuesta.resultados) {
-        this.consulta.servicioAbierto = respuesta.resultados
+        this.consulta.servicios = respuesta.resultados
+      } else {
+        this.consulta.servicios = []
       }
 
-      //Consulta servicios Cerrados
+      /*//Consulta servicios Cerrados
       respuesta = await this.contratoService.consultarServicioCerrado(subcontrato.id).toPromise();
       if (respuesta.resultados) {
         this.consulta.servicioCerrado = respuesta.resultados
-      }
+      }*/
 
-      if (this.consulta.servicioAbierto) {
-        this.servicios = new MatTableDataSource(this.consulta.servicioAbierto);
+      if (this.consulta.servicios) {
+        this.servicios = new MatTableDataSource(this.consulta.servicios);
       }
-      if (this.consulta.servicioCerrado) {
+      /*if (this.consulta.servicioCerrado) {
         this.serviciosCerrados = new MatTableDataSource(this.consulta.servicioCerrado);
-      }
+      }*/
       if (this.consulta.beneficiarios) {
         this.beneficiarios = new MatTableDataSource(this.consulta.beneficiarios);
       }
@@ -139,13 +150,18 @@ export class ConsultarComponent {
       // Refrescamos el paginador después de que se muestre la tabla
       setTimeout(() => {
         this.servicios.paginator = this.paginator;
-        this.serviciosCerrados.paginator = this.paginatorServicioCerrado;
+        //this.serviciosCerrados.paginator = this.paginatorServicioCerrado;
         this.beneficiarios.paginator = this.paginatorBeneficiario;
       }, 0);
       this.calcularMensualidadTotal()
     } catch (error) {
       console.log('Error consolidando la consulta: ' + error)
     }
+  }
+
+  async cambiarSubcontrato() {
+    const { subcontrato } = this.fgSubcontrato.value
+    await this.consultarDetalleSubContrato(subcontrato)
   }
 
   modificar() {
@@ -222,7 +238,6 @@ export class ConsultarComponent {
   }
 
   generarCarnet(): void {
-    console.log('Entro')
     const imageSrc = 'assets/plantillaCarnet.jpg';
     const pdf = new jsPDF();
     const img = new Image();
@@ -232,7 +247,7 @@ export class ConsultarComponent {
     pdf.addFont("Poppins-Regular.ttf", "Poppins", "normal");
     pdf.setFont("Poppins");
     pdf.setTextColor("#50A3AF")
-    
+
     img.src = imageSrc;
     img.onload = () => {
       const canvas = document.createElement('canvas');

@@ -54,6 +54,13 @@ export class ContratoService {
     return this.http.post(`${this.URL}/servicio/subcontrato/cerrado`, body)
   }
 
+  consultarServicioGeneral(id: number): Observable<any> {
+    const body = {
+      id
+    }
+    return this.http.post(`${this.URL}/servicio/subcontrato`, body)
+  }
+
   consultarCiudades(): Observable<any> {
     return this.http.get(`https://www.datos.gov.co/resource/xdk5-pm3f.json`)
   }
@@ -66,7 +73,7 @@ export class ContratoService {
     return this.http.put(`${this.URL}/subcontrato`, body)
   }
 
-  
+
   cerrarSubcontrato(body: any): Observable<any> {
     return this.http.put(`${this.URL}/cierreSubcontrato`, body)
   }

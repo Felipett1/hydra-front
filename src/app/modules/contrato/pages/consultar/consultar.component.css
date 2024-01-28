@@ -23,6 +23,15 @@ h1 {
     text-align: center;
 }
 
+legend {
+    font-weight: bold;
+    font-size: 22px;
+}
+
+fieldset{
+    border-radius: 10px;
+}
+
 .listado {
     text-align: center;
 }
@@ -42,4 +51,22 @@ label {
 
 .amarillo {
     background-color: #F1CD3B !important;
+}
+
+.verdeClaro {
+    background-color: rgb(179, 213, 222);
+    padding-left: 2px;
+    padding-top: 5px;
+}
+
+.gris {
+    background-color: rgb(219, 226, 236);
+    padding-left: 2px;
+    padding-top: 5px;
+}
+
+.verdeOscuro {
+    background-color: rgb(2, 129, 128);
+    padding-left: 2px;
+    padding-top: 5px;
 }
