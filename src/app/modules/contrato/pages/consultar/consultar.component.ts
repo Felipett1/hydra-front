@@ -34,7 +34,7 @@ export class ConsultarComponent {
   @ViewChild(MatSort) sort!: MatSort;
   //Ver PDF
   public pdfSoporte: any = null;
-  columasServicio: string[] = ['secuencia', 'fecha_inicial', 'tipo', 'detalle', 'fecha_final'];
+  columasServicio: string[] = ['secuencia', 'fecha_inicial', 'tipo', 'detalle', 'fecha_final', 'consulta'];
   servicios!: MatTableDataSource<any>;
   //serviciosCerrados!: MatTableDataSource<any>;
   mensualidadTotal = 0
