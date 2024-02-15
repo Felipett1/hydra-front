@@ -85,8 +85,7 @@
                     </div>
 
                     <p [style.color]="consulta?.subcontrato?.estado ? consulta?.subcontrato?.mora ? '#B40404' : '#088A29' : '083F8A'"
-                        style="font-weight: bold;">{{ consulta?.subcontrato?.estado ? consulta?.subcontrato?.mora ? 'En
-                        mora' : 'Al día' : 'Cerrado'}}</p>
+                        style="font-weight: bold;">{{ consulta?.subcontrato?.estado ? consulta?.subcontrato?.mora ? 'En mora' : 'Al día' : 'Cerrado'}}</p>
                     <p>{{ consulta?.cliente?.documento }}</p>
                     <p>{{ consulta?.cliente?.nombre_completo }}</p>
                     <p>{{ consulta?.subcontrato?.celular ? consulta?.subcontrato?.celular : 'N/A'}}</p>
@@ -191,7 +190,8 @@
                     <ng-container matColumnDef="consulta">
                         <th mat-header-cell *matHeaderCellDef mat-sort-header></th>
                         <td mat-cell *matCellDef="let row">
-                            <button mat-mini-fab color="primary" (click)="verDetalleCierre(row)" style="height: 40px;">
+                            <button mat-mini-fab color="primary" (click)="verDetalleCierre(row)" style="height: 40px;"
+                            *ngIf="row.fecha_final">
                                 <mat-icon>search</mat-icon>
                             </button>
                         </td>
