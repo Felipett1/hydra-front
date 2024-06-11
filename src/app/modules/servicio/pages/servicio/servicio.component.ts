@@ -13,7 +13,7 @@ import { Router } from '@angular/router';
 export class ServicioComponent {
   formulario: FormGroup = new FormGroup({});
 
-  constructor(@Inject(MAT_DIALOG_DATA) public data: any, private router: Router, private servicioService: ServicioService,) {
+  constructor(@Inject(MAT_DIALOG_DATA) public data: any, private servicioService: ServicioService,) {
 
   }
 

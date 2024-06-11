@@ -2,7 +2,7 @@ import { Component, ViewChild } from '@angular/core';
 import { FormBuilder, FormControl, Validators } from '@angular/forms';
 import { BreakpointObserver } from '@angular/cdk/layout';
 import { MatStepper, StepperOrientation } from '@angular/material/stepper';
-import { Observable } from 'rxjs';
+import { Observable, Subscription } from 'rxjs';
 import { map, startWith } from 'rxjs/operators';
 import { MatTableDataSource } from '@angular/material/table';
 import { ContratoService } from '@modules/contrato/service/contrato.service';
@@ -53,7 +53,7 @@ export class CrearComponent {
   fechaActual: Date = new Date();
   valor_total: number = 0
   mensualidadTotal = 0
-
+  private subscription?: Subscription;
   constructor(private _formBuilder: FormBuilder, breakpointObserver: BreakpointObserver,
     private contratoService: ContratoService, public dialogo: MatDialog, private router: Router) {
     this.stepperOrientation = breakpointObserver
@@ -63,7 +63,7 @@ export class CrearComponent {
     this.beneficiarios = new MatTableDataSource();
 
     //Se suscribe al agregar un nuevo beneficiario
-    this.contratoService.getData().subscribe(beneficiario => {
+    this.subscription = this.contratoService.getData().subscribe(beneficiario => {
       const data = this.beneficiarios.data;
       data.push(beneficiario);
       this.beneficiarios.data = data;
@@ -83,6 +83,10 @@ export class CrearComponent {
       startWith(''),
       map(value => this._filter(value || '')),
     );
+  }
+
+  ngOnDestroy() {
+    this.subscription?.unsubscribe();
   }
 
   private _filter(value: string): string[] {

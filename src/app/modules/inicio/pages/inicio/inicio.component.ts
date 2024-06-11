@@ -40,11 +40,13 @@ export class InicioComponent implements OnDestroy {
   }
 
   cerrarSesion() {
-    console.log('Entro!')
     this.cookieService.delete('token', '/')
     this.cookieService.delete('usuario', '/')
     this.cookieService.delete('rol', '/')
+    localStorage.clear();
+    sessionStorage.clear();
     this.router.navigate(['/', 'login'])
+
   }
 
   contruccion(): void {

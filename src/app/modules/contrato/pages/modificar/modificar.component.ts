@@ -7,7 +7,7 @@ import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 import { ContratoService } from './../../service/contrato.service';
 import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
-import { map, Observable, startWith } from 'rxjs';
+import { map, Observable, startWith, Subscription } from 'rxjs';
 import Swal from 'sweetalert2';
 import { Router } from '@angular/router';
 import { Location } from '@angular/common';
@@ -30,11 +30,11 @@ export class ModificarComponent {
   //Soporte
   soporte: string = '';
   mensualidadTotal = 0
-
+  private subscription?: Subscription;
   constructor(private contratoService: ContratoService, public dialog: MatDialog, private router: Router,
     private location: Location) {
     //Se suscribe al agregar un nuevo beneficiario
-    this.contratoService.getData().subscribe(beneficiario => {
+    this.subscription = this.contratoService.getData().subscribe(beneficiario => {
       if (this.beneficiarios) {
         const data = this.beneficiarios.data;
         if (beneficiario.index >= 0) {
@@ -78,7 +78,6 @@ export class ModificarComponent {
       this.soporte = this.consulta.subcontrato.soporte
       this.calcularMensualidadTotal()
     }
-
     //Ciudades
     var ciudades = await this.contratoService.consultarCiudades().toPromise();
     if (ciudades) {
@@ -91,6 +90,10 @@ export class ModificarComponent {
       startWith(''),
       map(value => this._filter(value || '')),
     );
+  }
+
+  ngOnDestroy() {
+    this.subscription?.unsubscribe();
   }
 
   private _filter(value: string): string[] {

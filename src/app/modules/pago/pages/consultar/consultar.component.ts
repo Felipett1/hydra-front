@@ -1,9 +1,10 @@
 import { DetallePagoComponent } from './../detalle-pago/detalle-pago.component';
-import { Component, OnInit,EventEmitter, Output } from '@angular/core';
+import { Component, OnInit, EventEmitter, Output } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { PagoService } from '@modules/pago/service/pago.service';
 import { AnticipadoComponent } from '../anticipado/anticipado.component';
+import { Subscription } from 'rxjs';
 
 
 @Component({
@@ -18,12 +19,12 @@ export class ConsultarComponent implements OnInit {
   resultados: boolean = true
   hayConsulta: boolean = false
   listadoPagos: any = []
-
+  private subscription?: Subscription;
   constructor(private pagoService: PagoService, public dialog: MatDialog) {
-    this.pagoService.getData().subscribe(() => {
+    this.subscription = this.pagoService.getData().subscribe(() => {
       this.consultar()
     });
-   }
+  }
 
   ngOnInit(): void {
     let subcontrato = null
@@ -40,6 +41,10 @@ export class ConsultarComponent implements OnInit {
     if (this.formPagos.value.subcontrato != '') {
       this.consultar()
     }
+  }
+
+  ngOnDestroy() {
+    this.subscription?.unsubscribe();
   }
   /*
     Estado
@@ -74,15 +79,15 @@ export class ConsultarComponent implements OnInit {
   }
 
   async consultar() {
-    
 
-    
+
+
     const { subcontrato } = this.formPagos.value
     this.listadoPagos = []
     try {
       var respuesta = await this.pagoService.consultarPagos(subcontrato).toPromise();
 
- 
+
       if (respuesta.valorPlan) {
         this.resultados = true;
         this.hayConsulta = true;
@@ -106,9 +111,9 @@ export class ConsultarComponent implements OnInit {
 
   detallePago(pago: any) {
     console.log(pago)
-    if(pago.estado==7){
+    if (pago.estado == 7) {
       this.pagoAnticipado(pago)
-    }else{
+    } else {
       this.dialog.open(DetallePagoComponent, {
         data: {
           pago,
@@ -118,14 +123,14 @@ export class ConsultarComponent implements OnInit {
         }
       })
     }
-    
+
   }
-  pagoAnticipado(pago:any) {
+  pagoAnticipado(pago: any) {
     this.dialog.open(AnticipadoComponent, {
       data: {
-        
+
         listado: this.listadoPagos,
-        
+
       }
     })
   }
