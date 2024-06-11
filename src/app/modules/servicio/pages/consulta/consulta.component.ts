@@ -10,6 +10,7 @@ import Swal from 'sweetalert2';
 import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import { DatePipe } from '@angular/common';
 import { CerrarComponent } from '../cerrar/cerrar.component';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-consulta',
@@ -25,11 +26,11 @@ export class ConsultaComponent {
   @ViewChild(MatSort) sort!: MatSort;
   columasServicio: string[] = ['secuencia', 'fecha_inicial', 'tipo', 'detalle', 'fecha_final', 'cerrar'];
   servicios!: MatTableDataSource<any>;
-
-  constructor(private servicioService: ServicioService, private router: Router, public dialogo: MatDialog,
+  private subscription?: Subscription;
+  constructor(private servicioService: ServicioService, public dialogo: MatDialog,
     private datePipe: DatePipe) {
     //Se suscribe al agregar un nuevo servicio
-    this.servicioService.getData().subscribe(servicio => {
+     this.subscription = this.servicioService.getData().subscribe(servicio => {
       this.crearServicio(servicio)
     });
   }
@@ -43,6 +44,10 @@ export class ConsultaComponent {
           ])
       }
     )
+  }
+
+  ngOnDestroy() {
+    this.subscription?.unsubscribe();
   }
 
   async consultar() {
