@@ -13,7 +13,7 @@ import { Router } from '@angular/router';
 import Swal from 'sweetalert2';
 import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import { jsPDF } from 'jspdf';
-//import { font } from "./../../../../../assets/font";
+import { HistoricoComponent } from './../../../servicio/pages/historico/historico.component';
 
 @Component({
   selector: 'app-consultar',
@@ -115,7 +115,6 @@ export class ConsultarComponent {
     this.beneficiarios = new MatTableDataSource();
     try {
       this.consulta.subcontrato = subcontrato
-      console.log(subcontrato.id)
       this.fgSubcontrato.get('subcontrato')?.setValue(subcontrato)
       var respuesta = await this.contratoService.consultarBeneficiario(subcontrato.id).toPromise();
       if (respuesta.resultados) {
@@ -207,10 +206,15 @@ export class ConsultarComponent {
     this.dialogo.open(SoporteComponent, dialogConfig)
   }
 
-  verDetalleCierre(servicio: any) {
-    this.dialogo.open(DetalleComponent, {
-      data: servicio,
-      maxWidth: '600px',
+  async consultarNovedades(servicio: any) {
+    var respuesta = await this.contratoService.consultarNovedadServicio({ servicio: servicio.secuencia }).toPromise()
+    this.dialogo.open(HistoricoComponent, {
+      data: {
+        secuencia: servicio.secuencia,
+        novedades: respuesta.resultados
+      },
+      maxWidth: '700px',
+      width: '100%'
     })
   }
 

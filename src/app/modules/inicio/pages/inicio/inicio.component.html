@@ -4,7 +4,7 @@
         <h1 class="example-app-name">Hydra</h1>
     </mat-toolbar>
     <mat-sidenav-container class="example-sidenav-container" [style.marginTop.px]="mobileQuery.matches ? 56 : 0">
-        <mat-sidenav #snav [mode]="mobileQuery.matches ? 'over' : 'side'" [fixedInViewport]="mobileQuery.matches"
+        <mat-sidenav #snav [opened]="true" [mode]="mobileQuery.matches ? 'over' : 'side'" [fixedInViewport]="mobileQuery.matches"
             fixedTopGap="56">
             <mat-accordion>
                 <mat-expansion-panel>
@@ -32,8 +32,8 @@
                         <mat-panel-title>Servicios</mat-panel-title>
                     </mat-expansion-panel-header>
                     <mat-list>
-                        <mat-list-item><button mat-button routerLink="/inicio/servicio">Crear
-                                Servicio</button></mat-list-item>
+                        <mat-list-item><button mat-button routerLink="/inicio/servicio">Gestión de
+                                Servicios</button></mat-list-item>
                     </mat-list>
                 </mat-expansion-panel>
 
