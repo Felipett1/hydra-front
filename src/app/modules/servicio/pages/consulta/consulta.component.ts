@@ -1,16 +1,17 @@
 import { ServicioComponent } from './../servicio/servicio.component';
 import { ServicioService } from './../../service/servicio.service';
-import { AfterViewInit, Component, ViewChild } from '@angular/core';
+import { Component, ViewChild } from '@angular/core';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { Router } from '@angular/router';
 import Swal from 'sweetalert2';
 import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import { DatePipe } from '@angular/common';
 import { CerrarComponent } from '../cerrar/cerrar.component';
 import { Subscription } from 'rxjs';
+import { NovedadComponent } from '../novedad/novedad.component';
+import { HistoricoComponent } from '../historico/historico.component';
 
 @Component({
   selector: 'app-consulta',
@@ -24,13 +25,13 @@ export class ConsultaComponent {
   seleccion: boolean = false
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
-  columasServicio: string[] = ['secuencia', 'fecha_inicial', 'tipo', 'detalle', 'fecha_final', 'cerrar'];
+  columasServicio: string[] = ['secuencia', 'fecha_inicial', 'tipo', 'detalle', 'cerrado', 'agregar', 'consultar', 'cerrar'];
   servicios!: MatTableDataSource<any>;
   private subscription?: Subscription;
   constructor(private servicioService: ServicioService, public dialogo: MatDialog,
     private datePipe: DatePipe) {
     //Se suscribe al agregar un nuevo servicio
-     this.subscription = this.servicioService.getData().subscribe(servicio => {
+    this.subscription = this.servicioService.getData().subscribe(servicio => {
       this.crearServicio(servicio)
     });
   }
@@ -81,7 +82,6 @@ export class ConsultaComponent {
 
   async consultarServicios(subcontrato: any) {
     this.servicios = new MatTableDataSource();
-    //this.paginator = document.getElementById('myPaginator') as MatPaginator;
     try {
       this.consulta.subcontrato = subcontrato
       var respuesta = await this.servicioService.consultarEstadoContrato(subcontrato.id).toPromise();
@@ -149,8 +149,28 @@ export class ConsultaComponent {
 
   cerrarServicio(servicio: any) {
     this.dialogo.open(CerrarComponent, {
-      data: { secuencia : servicio.secuencia },
+      data: { secuencia: servicio.secuencia },
       maxWidth: '600px',
+      width: '100%'
+    })
+  }
+
+  agregarNovedad(servicio: any) {
+    this.dialogo.open(NovedadComponent, {
+      data: { secuencia: servicio.secuencia },
+      maxWidth: '600px',
+      width: '100%'
+    })
+  }
+
+  async consultarNovedades(servicio: any) {
+    var respuesta = await this.servicioService.consultarNovedadServicio({ servicio: servicio.secuencia }).toPromise()
+    this.dialogo.open(HistoricoComponent, {
+      data: {
+        secuencia: servicio.secuencia,
+        novedades: respuesta.resultados
+      },
+      maxWidth: '700px',
       width: '100%'
     })
   }

@@ -21,12 +21,16 @@ import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { DatePipe } from '@angular/common';
 import { CerrarComponent } from './pages/cerrar/cerrar.component';
+import { NovedadComponent } from './pages/novedad/novedad.component';
+import { HistoricoComponent } from './pages/historico/historico.component';
 
 @NgModule({
   declarations: [
     ConsultaComponent,
     ServicioComponent,
-    CerrarComponent
+    CerrarComponent,
+    NovedadComponent,
+    HistoricoComponent
   ],
   imports: [
     CommonModule,

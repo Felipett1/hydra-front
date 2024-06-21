@@ -52,6 +52,14 @@ export class ServicioService {
     return this.http.put(`${this.URL}/servicio/cerrar`, body)
   }
 
+  crearNovedadServicio(body: any): Observable<any> {
+    return this.http.put(`${this.URL}/novedad/servicio/crear`, body)
+  }
+
+  consultarNovedadServicio(body: any): Observable<any> {
+    return this.http.post(`${this.URL}/novedad/servicio/consulta`, body)
+  }
+
   notificarServicio(body: any): Observable<any> {
     return this.http.post(`${this.URL}/notificacion/servicio`, body)
   }

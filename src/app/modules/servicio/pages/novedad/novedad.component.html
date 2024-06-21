@@ -1,11 +1,11 @@
-<h1 mat-dialog-title class="titulo">Cerrar Servicio</h1>
+<h1 mat-dialog-title class="titulo">Novedad Servicio</h1>
 <mat-dialog-content class="mat-typography">
     <form [formGroup]="formulario">
         <div fxLayout="row" fxLayout.xs="column" fxLayoutAlign="center center">
             <div fxFlex="100%">
                 <mat-form-field>
-                    <mat-label>Detalle del cierre</mat-label>
-                    <textarea matInput placeholder="Indique los detalles del cierre para este servicio..." formControlName="detalle_final"
+                    <mat-label>Detalle de la novedad</mat-label>
+                    <textarea matInput placeholder="Indique los detalles de la novedad para este servicio..." formControlName="detalle"
                         rows="4"></textarea>
                 </mat-form-field>
             </div>
@@ -13,7 +13,7 @@
     </form>
 </mat-dialog-content>
 <mat-dialog-actions align="end">
-    <button mat-button mat-dialog-close>Cancelar</button>
+    <button mat-button mat-dialog-close>Cerrar</button>
     <button mat-button [disabled]="formulario.invalid" [mat-dialog-close]="true" (click)="confirmar()"
         cdkFocusInitial>Confirmar</button>
 </mat-dialog-actions>
