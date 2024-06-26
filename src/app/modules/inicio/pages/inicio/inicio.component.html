@@ -18,7 +18,7 @@
                                 Consultar Afiliacion
                             </button>
                         </mat-list-item>
-                        <mat-list-item *ngIf="adminitrador">
+                        <mat-list-item *ngIf="administrador">
                             <button mat-button routerLink="/inicio/subcontrato/crear">
                                 Nueva Afiliacion
                             </button>
@@ -27,7 +27,7 @@
 
                 </mat-expansion-panel>
 
-                <mat-expansion-panel *ngIf="adminitrador">
+                <mat-expansion-panel *ngIf="administrador">
                     <mat-expansion-panel-header>
                         <mat-panel-title>Servicios</mat-panel-title>
                     </mat-expansion-panel-header>
@@ -37,7 +37,7 @@
                     </mat-list>
                 </mat-expansion-panel>
 
-                <mat-expansion-panel *ngIf="adminitrador">
+                <mat-expansion-panel *ngIf="administrador">
                     <mat-expansion-panel-header>
                         <mat-panel-title>Pagos</mat-panel-title>
                     </mat-expansion-panel-header>
@@ -47,18 +47,18 @@
                     </mat-list>
                 </mat-expansion-panel>
 
-                <mat-expansion-panel *ngIf="adminitrador">
+                <mat-expansion-panel *ngIf="administrador">
                     <mat-expansion-panel-header>
                         <mat-panel-title>Reportes</mat-panel-title>
                     </mat-expansion-panel-header>
                     <mat-list>
                         <mat-list-item><button mat-button (click)="reportePago()">Pagos</button></mat-list-item>
-                        <!--mat-list-item><button mat-button (click)="contruccion()">Historico Pagos</button></mat-list-item-->
                         <mat-list-item><button mat-button (click)="reporteServicio()">Servicios</button></mat-list-item>
+                        <mat-list-item><button mat-button (click)="reporteConsolidadoGeneral()">Consolidado general</button></mat-list-item>
                     </mat-list>
                 </mat-expansion-panel>
 
-                <mat-expansion-panel *ngIf="adminitrador">
+                <mat-expansion-panel *ngIf="administrador">
                     <mat-expansion-panel-header>
                         <mat-panel-title>Configuracion</mat-panel-title>
                     </mat-expansion-panel-header>

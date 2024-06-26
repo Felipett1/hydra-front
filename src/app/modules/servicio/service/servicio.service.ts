@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable, Subject } from 'rxjs';
 import { environment } from 'src/environments/environments';
+import { CookieService } from 'ngx-cookie-service';
 
 @Injectable({
   providedIn: 'root'
@@ -10,7 +11,9 @@ export class ServicioService {
   private readonly URL = environment.api
   private dataSubject = new Subject<any>();
 
-  constructor(private http: HttpClient) { }
+
+  constructor(private http: HttpClient, private cookieService: CookieService) { 
+  }
 
   consultarContrato(cliente: number): Observable<any> {
     const body = {
@@ -45,14 +48,17 @@ export class ServicioService {
   }
 
   crearServicio(body: any): Observable<any> {
+    body.usuario = this.cookieService.get('usuario')
     return this.http.put(`${this.URL}/servicio`, body)
   }
 
   cerrarServicio(body: any): Observable<any> {
+    body.usuario = this.cookieService.get('usuario')
     return this.http.put(`${this.URL}/servicio/cerrar`, body)
   }
 
   crearNovedadServicio(body: any): Observable<any> {
+    body.usuario = this.cookieService.get('usuario')
     return this.http.put(`${this.URL}/novedad/servicio/crear`, body)
   }
 
