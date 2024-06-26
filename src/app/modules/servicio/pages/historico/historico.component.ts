@@ -8,7 +8,7 @@ import { MAT_DIALOG_DATA } from '@angular/material/dialog';
   styleUrls: ['./historico.component.css']
 })
 export class HistoricoComponent {
-  columasNovedad: string[] = ['fecha', 'tipo', 'detalle'];
+  columasNovedad: string[] = ['fecha', 'tipo', 'detalle', 'usuario'];
   novedades!: MatTableDataSource<any>;
 
   constructor(@Inject(MAT_DIALOG_DATA) public data: any) {

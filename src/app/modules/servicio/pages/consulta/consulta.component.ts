@@ -25,7 +25,7 @@ export class ConsultaComponent {
   seleccion: boolean = false
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
-  columasServicio: string[] = ['secuencia', 'fecha_inicial', 'tipo', 'detalle', 'cerrado', 'agregar', 'consultar', 'cerrar'];
+  columasServicio: string[] = ['secuencia', 'fecha_inicial', 'tipo', 'detalle', 'cerrado', 'consultar', 'agregar', 'cerrar'];
   servicios!: MatTableDataSource<any>;
   private subscription?: Subscription;
   constructor(private servicioService: ServicioService, public dialogo: MatDialog,
@@ -88,7 +88,7 @@ export class ConsultaComponent {
       if (respuesta.resultados) {
         this.consulta.subcontrato.mora = respuesta.resultados[0].mora
       }
-      respuesta = await this.servicioService.consultarHistoricoServiciosActivos(subcontrato.id).toPromise();
+      respuesta = await this.servicioService.consultarHistoricoServicios(subcontrato.id).toPromise();
       if (respuesta.resultados) {
         this.consulta.servicios = respuesta.resultados
       }
@@ -118,7 +118,7 @@ export class ConsultaComponent {
     if (respuesta && respuesta?.codigo == 0) {
       this.alertaExitoso('Servicio creado exitosamente!');
       //Consultar nuevamente los servicios
-      respuesta = await this.servicioService.consultarHistoricoServiciosActivos(this.consulta.subcontrato.id).toPromise();
+      respuesta = await this.servicioService.consultarHistoricoServicios(this.consulta.subcontrato.id).toPromise();
       if (respuesta.resultados) {
         this.consulta.servicios = respuesta.resultados
         let actual = this.servicios.data

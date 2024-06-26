@@ -18,4 +18,8 @@ export class ReporteService {
   obtenerPagoTiempo(body: any): Observable<any> {
     return this.http.post(`${this.URL}/pago/reporte`, body)
   }
+
+  obtenerConsolidadoGeneral(): Observable<any> {
+    return this.http.get(`${this.URL}/subcontrato/reporte`)
+  }
 }
