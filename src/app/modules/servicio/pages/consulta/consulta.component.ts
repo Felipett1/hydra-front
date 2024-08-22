@@ -194,9 +194,9 @@ export class ConsultaComponent {
       fecha_inicial: this.datePipe.transform(new Date(), 'dd/MM/yyyy'),
       documento: this.consulta.cliente.documento,
       nombre_completo: this.consulta.cliente.nombre_completo,
-      celular: this.consulta.subcontrato.celular,
-      correo: this.consulta.subcontrato.correo,
-      detalle_inicial: servicio.detalle_inicial,
+      celular: this.consulta.subcontrato.celular == "0" ? "No registra" : this.consulta.subcontrato.celular,
+      correo: this.consulta.subcontrato.correo == null ? "No registra" : this.consulta.subcontrato.correo,
+      detalle_inicial: servicio.novedades[0].detalle,
       contacto: servicio.contacto,
       para: servicio.correo
     }
