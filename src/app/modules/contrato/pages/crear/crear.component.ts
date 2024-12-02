@@ -44,9 +44,6 @@ export class CrearComponent {
   idControl = new FormControl('', Validators.required);
   stepperOrientation: Observable<StepperOrientation>;
   soporte: string = '';
-  //Select de ciudades
-  options: string[] = [];
-  filteredOptions!: Observable<string[]> | undefined;
   //Tabla
   displayedColumns: string[] = ['nombre', 'edad', 'parentesco', 'contacto', 'adicional', 'estado', 'borrar'];
   beneficiarios!: MatTableDataSource<any>;
@@ -71,27 +68,8 @@ export class CrearComponent {
     });
   }
 
-  async ngOnInit() {
-    var ciudades = await this.contratoService.consultarCiudades().toPromise();
-    if (ciudades) {
-      for (var i = 0; i < ciudades.length; i++) {
-        this.options[i] = `${ciudades[i].municipio} - ${ciudades[i].departamento}`
-      }
-    }
-
-    this.filteredOptions = this.datosGrupo.get('ciudad')?.valueChanges.pipe(
-      startWith(''),
-      map(value => this._filter(value || '')),
-    );
-  }
-
   ngOnDestroy() {
     this.subscription?.unsubscribe();
-  }
-
-  private _filter(value: string): string[] {
-    const filterValue = value.toLowerCase();
-    return this.options.filter(option => option.toLowerCase().includes(filterValue));
   }
 
   agregarBeneficiario() {

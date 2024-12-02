@@ -28,8 +28,7 @@ export class ConsultarComponent {
   consulta!: any
   resultados: boolean = true
   seleccion: boolean = false
-  @ViewChild('pgtServcios') paginator!: MatPaginator;
-  @ViewChild('pgtServicioCerrado') paginatorServicioCerrado!: MatPaginator;
+  @ViewChild('pgtServcios') paginatorServicio!: MatPaginator;
   @ViewChild('pgtBeneficiario') paginatorBeneficiario!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
   //Ver PDF
@@ -148,8 +147,7 @@ export class ConsultarComponent {
       this.seleccion = true
       // Refrescamos el paginador después de que se muestre la tabla
       setTimeout(() => {
-        this.servicios.paginator = this.paginator;
-        //this.serviciosCerrados.paginator = this.paginatorServicioCerrado;
+        this.servicios.paginator = this.paginatorServicio;
         this.beneficiarios.paginator = this.paginatorBeneficiario;
       }, 0);
       this.calcularMensualidadTotal()
@@ -277,11 +275,10 @@ export class ConsultarComponent {
         let posicion = 180
         for (let index = 0; index < this.consulta.beneficiarios.length; index++) {
           const beneficiario = this.consulta.beneficiarios[index];
-          pdf.text(beneficiario.nombre, 40, posicion);
-          posicion += 10
-          /*if (index == 1 || index == 3 || index == 5) {
-            posicion -= 1
-          }*/
+          if(beneficiario.estado == true){
+            pdf.text(beneficiario.nombre, 40, posicion);
+            posicion += 10
+          }
         }
       }
 

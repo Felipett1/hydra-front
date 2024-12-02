@@ -62,13 +62,7 @@
                             <mat-form-field>
                                 <mat-icon matSuffix>pin_drop</mat-icon>
                                 <mat-label>Ciudad</mat-label>
-                                <input type="text" placeholder="Ciudad" aria-label="Ciudad" matInput
-                                    [matAutocomplete]="auto" name="ciudad" formControlName="ciudad">
-                                <mat-autocomplete #auto="matAutocomplete">
-                                    <mat-option *ngFor="let option of filteredOptions | async" [value]="option">
-                                        {{option}}
-                                    </mat-option>
-                                </mat-autocomplete>
+                                <input matInput placeholder="Ciudad" formControlName="ciudad">
                             </mat-form-field>
                         </div>
                         <div fxFlex="25%">
