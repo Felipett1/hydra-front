@@ -40,7 +40,7 @@
                 </div>
                 <div fxFlex="16%" class="listado">
                     <label>Estado</label>
-                    <p [style.color]="item.estado ? item.mora ? '#B40404' : '#088A29' : '083F8A'"
+                    <p [style.color]="item.estado ? item.mora ? '#B40404' : '#088A29' : '#083F8A'"
                         style="font-weight: bold;">{{ item.estado ? item.mora ? 'En mora' : 'Al día' : 'Cerrado'}}</p>
                 </div>
                 <div class="listado">
@@ -73,7 +73,7 @@
     </div>
     <div fxFlex="20%">
         <label>Estado</label>
-        <p [style.color]="consulta?.subcontrato?.estado ? consulta?.subcontrato?.mora ? '#B40404' : '#088A29' : '083F8A'" style="font-weight: bold;">{{
+        <p [style.color]="consulta?.subcontrato?.estado ? consulta?.subcontrato?.mora ? '#B40404' : '#088A29' : '#083F8A'" style="font-weight: bold;">{{
             consulta?.subcontrato?.estado ? consulta?.subcontrato?.mora ? 'En mora' : 'Al día' : 'Cerrado'}}</p>
     </div>
 </div>

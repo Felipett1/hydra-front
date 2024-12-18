@@ -85,8 +85,8 @@ export class ConsultaComponent {
     try {
       this.consulta.subcontrato = subcontrato
       var respuesta = await this.servicioService.consultarEstadoContrato(subcontrato.id).toPromise();
-      if (respuesta.resultados) {
-        this.consulta.subcontrato.mora = respuesta.resultados[0].mora
+      if (respuesta) {
+        this.consulta.subcontrato.mora = respuesta.resultado
       }
       respuesta = await this.servicioService.consultarHistoricoServicios(subcontrato.id).toPromise();
       if (respuesta.resultados) {
